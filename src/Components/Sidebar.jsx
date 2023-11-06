@@ -9,7 +9,7 @@ import {
   FaCog,
   FaBookmark,
 } from "react-icons/fa";
-import {AiFillHome} from "react-icons/ai"
+import { AiFillHome } from "react-icons/ai";
 import { Link } from "react-router-dom";
 export function SideBar() {
   const [open, setOpen] = useState(true);
@@ -48,12 +48,24 @@ export function SideBar() {
             <AiFillHome />
             <Link
               className={`${!open && "hidden"} origin-left duration-200`}
-              to={"/dashboard2"}
+              to={"/"}
             >
               Dashboard
             </Link>
           </li>
 
+          <li
+            className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
+              "
+          >
+            <AiFillHome />
+            <Link
+              className={`${!open && "hidden"} origin-left duration-200`}
+              to={"/dashboard2"}
+            >
+              Dashboard
+            </Link>
+          </li>
           <li
             className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
               "
