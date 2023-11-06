@@ -52,7 +52,7 @@ export function Register() {
                 className="bg-grisOscuro h-36 border-black/40 border-r-4 border-b-4 w-full rounded-md text-lg text-center"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                Crear Empresa
+                Crear Usuario
             </button>
 
             {isOpen && (
