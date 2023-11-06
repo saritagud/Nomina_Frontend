@@ -18,7 +18,7 @@ export function SideBar() {
     <div className="flex">
       <div
         className={` ${
-          open ? "w-60" : "w-20 "
+          open ? "w-64" : "w-20 "
         } bg-azulClaro p-5 h-full pt-20 relative duration-300`}
       >
         <FaArrowLeft
@@ -40,7 +40,7 @@ export function SideBar() {
             @user
           </h1>
         </div>
-        <ul className="flex flex-col gap-5 pt-24">
+        <ul className="flex flex-col gap-5 pt-10">
           <li
             className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
               "

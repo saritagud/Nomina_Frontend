@@ -3,6 +3,32 @@ import { useState } from "react";
 
 export function CreateCompany() {
   const [isOpen, setIsOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [type, setType] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const data = {
+      Name: name,
+      Type: type,
+    };
+
+    fetch("http://localhost:3000/company/create-company", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
   return (
     <>
@@ -19,25 +45,28 @@ export function CreateCompany() {
             onClick={() => setIsOpen(!isOpen)}
           ></BiArrowBack>
           <h1 className="text-3xl text-start ">Crear Empresa</h1>
-          <form className="flex flex-col gap-5 ">
+          <form className="flex flex-col gap-5 " onSubmit={handleSubmit}>
             <label htmlFor="name" className="text-xl">
               Nombre
             </label>
             <input
               type="text"
-              name="name"
+              value={name}
               id="name"
+              onChange={(e) => setName(e.target.value)}
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               placeholder="Ingresa el nombre de tu empresa"
             />
 
-            <label htmlFor="tipo" className="text-xl">
+            <label htmlFor="type" className="text-xl">
               Tipo
             </label>
             <input
               type="text"
-              name="name"
-              id="name"
+              name="type"
+              id="type"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               placeholder="Ingresa el tipo de tu empresa"
             />

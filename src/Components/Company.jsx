@@ -1,7 +1,23 @@
 import { SideBar } from "./Sidebar";
+import { useState, useEffect } from "react";
 
 export function Company() {
-  const company = [5];
+  const [company, setCompany] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:3000/company/all", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        setCompany(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, []);
+
   return (
     <>
       <div className="flex">
@@ -13,26 +29,26 @@ export function Company() {
           {company?.length === 0 ? (
             <strong className="text-xl">No hay empresas creadas aun</strong>
           ) : (
-            company?.length > 0 && (
-              <>
-                <table className="bg-grisClaro rounded-md shadow-right-dark w-full px-4 border-separate border-spacing-0 border-spacing-y-4">
-                  <thead className="px-5">
-                    <tr>
-                      <th className="p-4 text-lg text-start">Nombre</th>
-                      <th className="p-4 text-lg text-start">Tipo</th>
-                    </tr>
-                  </thead>
-                  <tbody className="px-5">
-                    <tr className="bg-grisOscuro">
-                      <td className="p-4 text-lg rounded-l-2xl">
-                        ASAL Company
+            <>
+              <table className="bg-grisClaro rounded-md shadow-right-dark w-full px-4 border-separate border-spacing-0 border-spacing-y-5">
+                <thead className="px-5">
+                  <tr>
+                    <th className="p-4 text-lg text-start ">Nombre</th>
+                    <th className="p-4 text-lg text-start">Tipo</th>
+                  </tr>
+                </thead>
+                {company.allCompanies.map((companys) => (
+                  <tbody key={companys.id} className="px-5">
+                    <tr className="bg-grisOscuro ">
+                      <td className="p-4 text-lg rounded-l-2xl ">
+                        {companys.Name}
                       </td>
-                      <td className="p-4 text-lg">Desarrollo</td>
+                      <td className="p-4 text-lg">{companys.Type}</td>
                     </tr>
                   </tbody>
-                </table>
-              </>
-            )
+                ))}
+              </table>
+            </>
           )}
         </main>
       </div>
