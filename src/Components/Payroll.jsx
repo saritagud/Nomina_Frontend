@@ -1,8 +1,8 @@
 import { SideBar } from "./Sidebar"
 
 export function Payroll() {
-  const payroll = null // Asi se ve cuando entra a la vista
-  // const payroll = [] // Colocar un numero en el arreglo para activar la tabla, dejar el arreglo vacio, simula que no hay empleados para esa nomina
+  //const payroll = null // Asi se ve cuando entra a la vista
+  const payroll = [5] // Colocar un numero en el arreglo para activar la tabla, dejar el arreglo vacio, simula que no hay empleados para esa nomina
   return (
     <div className="flex">
       <SideBar />
