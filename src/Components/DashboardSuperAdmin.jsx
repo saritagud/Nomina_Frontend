@@ -1,6 +1,7 @@
 import { SideBar } from "./Sidebar";
 import { Link } from "react-router-dom";
-
+import { CreateCompany } from "./CreateCompany";
+import { Register } from "./Register";
 export function DashboardSuperAdmin() {
   let styleLink =
     "bg-grisOscuro h-36 border-black/40 border-r-4 border-b-4 w-full rounded-md text-lg text-center flex justify-center items-center";
@@ -18,13 +19,17 @@ export function DashboardSuperAdmin() {
 
         <section className="flex justify-between w-full gap-10">
           <div className="flex flex-col gap-10 w-full">
-            <Link className={styleLink}>Crear Empresa</Link>
-            <Link className={styleLink}>Agregar Usuarios</Link>
+            <CreateCompany />
+            <Register />
           </div>
 
           <div className="flex flex-col gap-10 w-full">
-            <Link className={styleLink}>Ver Empresas</Link>
-            <Link className={styleLink}>Todos los usuarios</Link>
+            <Link className={styleLink} to={"/empresas"}>
+              Ver Empresas
+            </Link>
+            <Link className={styleLink} to={"/usuarios"}>
+              Todos los usuarios
+            </Link>
           </div>
         </section>
       </section>

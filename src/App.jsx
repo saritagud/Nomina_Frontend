@@ -8,6 +8,8 @@ import { Deductions } from "./Components/Deductions";
 import { Perceptions } from "./Components/Perceptions";
 import { Employees } from "./Components/Employees";
 import { Settings } from "./Components/Settings";
+import { Company } from "./Components/Company";
+import { Users } from "./Components/Users";
 function App() {
   return (
     <>
@@ -21,6 +23,8 @@ function App() {
         <Route path="/empleados" element={<Employees />} />
         <Route path="/configuraciones" element={<Settings />} />
         <Route path="/dashboard2" element={<DashboardAdmin2 />} />
+        <Route path="/empresas" element={<Company />} />
+        <Route path="/usuarios" element={<Users />} />
       </Routes>
     </>
   );

@@ -1,5 +1,15 @@
 import { useState } from "react";
-import { FaCalculator, FaArrowLeft, FaUserCircle } from "react-icons/fa";
+import {
+  FaCalculator,
+  FaArrowLeft,
+  FaUserCircle,
+  FaClipboardList,
+  FaMoneyCheckAlt,
+  FaFileInvoiceDollar,
+  FaCog,
+  FaBookmark,
+} from "react-icons/fa";
+import { AiFillHome } from "react-icons/ai";
 import { Link } from "react-router-dom";
 export function SideBar() {
   const [open, setOpen] = useState(true);
@@ -18,14 +28,14 @@ export function SideBar() {
         />
         <div className="flex gap-x-4 items-center">
           <FaUserCircle
-            className={`cursor-pointer duration-500 text-3xl text-white ${
+            className={` duration-500 text-3xl text-white ${
               open && "rotate-[360deg]"
             }`}
           />
           <h1
-            className={`text-white origin-left font-medium text-xl duration-200 ${
-              !open && "scale-0"
-            }`}
+            className={`${
+              !open && "hidden"
+            } origin-left duration-200 text-white font-medium text-xl`}
           >
             @user
           </h1>
@@ -35,9 +45,12 @@ export function SideBar() {
             className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
               "
           >
-            <FaCalculator />
-            <Link className={`${!open && "hidden"} origin-left duration-200`}>
-              Nomina
+            <AiFillHome />
+            <Link
+              className={`${!open && "hidden"} origin-left duration-200`}
+              to={"/"}
+            >
+              Dashboard
             </Link>
           </li>
 
@@ -45,9 +58,24 @@ export function SideBar() {
             className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
               "
           >
+            <AiFillHome />
+            <Link
+              className={`${!open && "hidden"} origin-left duration-200`}
+              to={"/dashboard2"}
+            >
+              Dashboard
+            </Link>
+          </li>
+          <li
+            className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
+              "
+          >
             <FaCalculator />
-            <Link className={`${!open && "hidden"} origin-left duration-200`}>
-              Nomina
+            <Link
+              className={`${!open && "hidden"} origin-left duration-200`}
+              to={"/nomina"}
+            >
+              Nómina
             </Link>
           </li>
 
@@ -55,9 +83,12 @@ export function SideBar() {
             className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
               "
           >
-            <FaCalculator />
-            <Link className={`${!open && "hidden"} origin-left duration-200`}>
-              Nomina
+            <FaClipboardList />
+            <Link
+              className={`${!open && "hidden"} origin-left duration-200`}
+              to={"/empleados"}
+            >
+              Empleados
             </Link>
           </li>
 
@@ -65,9 +96,12 @@ export function SideBar() {
             className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
               "
           >
-            <FaCalculator />
-            <Link className={`${!open && "hidden"} origin-left duration-200`}>
-              Nomina
+            <FaMoneyCheckAlt />
+            <Link
+              className={`${!open && "hidden"} origin-left duration-200`}
+              to={"/deducciones"}
+            >
+              Deducciones
             </Link>
           </li>
 
@@ -75,9 +109,12 @@ export function SideBar() {
             className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
               "
           >
-            <FaCalculator />
-            <Link className={`${!open && "hidden"} origin-left duration-200`}>
-              Nomina
+            <FaFileInvoiceDollar />
+            <Link
+              className={`${!open && "hidden"} origin-left duration-200`}
+              to={"/percepciones"}
+            >
+              Percepciones
             </Link>
           </li>
 
@@ -85,9 +122,25 @@ export function SideBar() {
             className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
               "
           >
-            <FaCalculator />
-            <Link className={`${!open && "hidden"} origin-left duration-200`}>
-              Nomina
+            <FaCog />
+            <Link
+              className={`${!open && "hidden"} origin-left duration-200`}
+              to={"/configuraciones"}
+            >
+              Configuraciones
+            </Link>
+          </li>
+
+          <li
+            className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
+              "
+          >
+            <FaBookmark />
+            <Link
+              className={`${!open && "hidden"} origin-left duration-200`}
+              to={"/historial"}
+            >
+              Historial
             </Link>
           </li>
         </ul>
