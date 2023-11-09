@@ -11,8 +11,8 @@ export function CreateCompany({setModalCreateCompany}) {
     event.preventDefault();
 
     const data = {
-      Name: name,
-      Type: type,
+      name: name,
+      type: type,
     };
 
     fetch("http://localhost:3000/company/create-company", {

@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function Login() {
-  const [Email, setEmail] = useState('');
-  const [Password, setPassword] = useState('');
+  const navegar = useNavigate()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   let styleInput =
     "bg-azulClaro p-2 rounded-md text-white placeholder:text-white placeholder:font-extralight w-full";
@@ -12,8 +14,8 @@ export function Login() {
     event.preventDefault();
 
     const userData = {
-        Email: Email,
-        Password: Password,
+        email: email,
+        password: password,
     };
 
     fetch('http://localhost:3000/user/login', {
@@ -25,7 +27,13 @@ export function Login() {
     })
         .then((response) => response.json())
         .then((data) => {
-            console.log('Success:', data);
+            console.log('Success:', data.userInfo);
+            if (data.userInfo) {
+              localStorage.setItem('user', JSON.stringify(data.userInfo))
+              navegar('/')
+            } else {
+              console.log("Error:", data.error);
+            }
             // Aquí puedes manejar la respuesta, como almacenar el token o redirigir al usuario.
         })
         .catch((error) => {
@@ -51,7 +59,7 @@ export function Login() {
             <label className={styleLabel}>Usuario</label>
             <input
               type="text"
-              value={Email}
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               className={styleInput}
               placeholder="Ingresa tu email"
@@ -60,7 +68,7 @@ export function Login() {
             <label className={styleLabel}>Contraseña</label>
             <input
               type="password"
-              value={Password}
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={styleInput}
               placeholder="Ingresa tu contraseña"

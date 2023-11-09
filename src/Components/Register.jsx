@@ -4,14 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export function Register() {
     const navegar = useNavigate()
-    const [Name, setName] = useState('');
-    const [Last_name, setLast_name] = useState('');
-    const [Email, setEmail] = useState('');
-    const [Phone, setPhone] = useState('');
-    const [Address, setAddress] = useState('');
-    const [Password, setPassword] = useState('');
-    const [Role, setRole] = useState('');
-    const Company_ID = JSON.parse(localStorage.getItem('company')).id;
+    const [name, setName] = useState('');
+    const [lastName, setLast_name] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [address, setAddress] = useState('');
+    const [password, setPassword] = useState('');
+    const [role, setRole] = useState('');
+    const companyID = JSON.parse(localStorage.getItem('company')).id;
 
     let styleInput = 'bg-azulClaro p-4 rounded-md text-white placeholder:text-white placeholder:font-extralight w-full';
     let styleLabel = 'text-lg';
@@ -20,18 +20,17 @@ export function Register() {
         event.preventDefault();
 
         const userData = {
-          Name: Name,
-          Last_name: Last_name,
-          Email: Email,
-          Phone: Phone,
-          Address: Address,
-          Password: Password,
-          Role: Role,
-          Company_ID: parseInt(Company_ID),
+          name: name,
+          lastName: lastName,
+          email: email,
+          phone: phone,
+          address: address,
+          password: password,
+          role: role
         };
 
         // console.log(userData);
-        fetch('http://localhost:3000/user/signup', {
+        fetch(`http://localhost:3000/user/signup/${companyID}`, {
             method: 'POST',
             body: JSON.stringify(userData),
             headers: {
@@ -40,8 +39,8 @@ export function Register() {
         })
             .then((response) => response.json())
             .then((data) => {
-                // console.log('Success:', data);
-                if (data.newUser) {
+                console.log('Success:', data);
+                if (data.message) {
                   navegar('/')
                 } else {
                   console.log("Error:", data.error);
@@ -64,7 +63,7 @@ export function Register() {
                             <label className={styleLabel}>Nombre</label>
                             <input
                                 type="text"
-                                value={Name}
+                                value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 className={styleInput}
                                 placeholder="Ingresa el nombre"
@@ -74,17 +73,17 @@ export function Register() {
                             <label className={styleLabel}>Apellido</label>
                             <input
                                 type="text"
-                                value={Last_name}
+                                value={lastName}
                                 onChange={(e) => setLast_name(e.target.value)}
                                 className={styleInput}
                                 placeholder="Ingresa el apellido"
                             ></input>
                         </div>
                         <div className="flex flex-col gap-1">
-                            <label className={styleLabel}>Email</label>
+                            <label className={styleLabel}>email</label>
                             <input
                                 type="email"
-                                value={Email}
+                                value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 className={styleInput}
                                 placeholder="Ingresa el email"
@@ -94,7 +93,7 @@ export function Register() {
                             <label className={styleLabel}>Numero de telefono</label>
                             <input
                                 type="tel"
-                                value={Phone}
+                                value={phone}
                                 onChange={(e) => setPhone(e.target.value)}
                                 className={styleInput}
                                 placeholder="Ingresa el telefono"
@@ -106,7 +105,7 @@ export function Register() {
                             <label className={styleLabel}>Contrasena</label>
                             <input
                                 type="password"
-                                value={Password}
+                                value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className={styleInput}
                                 placeholder="Ingresa tu contrasena"
@@ -116,7 +115,7 @@ export function Register() {
                             <label className={styleLabel}>Direccion</label>
                             <input
                                 type="text"
-                                value={Address}
+                                value={address}
                                 onChange={(e) => setAddress(e.target.value)}
                                 className={styleInput}
                                 placeholder="Ingresa tu direccion"
