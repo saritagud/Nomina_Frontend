@@ -1,7 +1,7 @@
 import { SideBar } from "./Sidebar";
 import { useState, useEffect } from "react";
 
-export function Company() {
+export function Companies() {
   const [company, setCompany] = useState([]);
   useEffect(() => {
     fetch("http://localhost:3000/company/all", {
