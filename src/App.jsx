@@ -10,6 +10,7 @@ import { Employees } from "./Components/Employees";
 import { Settings } from "./Components/Settings";
 import { Companies } from "./Components/Companies";
 import { Users } from "./Components/Users";
+import { PrePayroll } from "./Components/PrePayroll";
 import { Employe } from "./Components/Employe";
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route index element={<DashboardSuperAdmin />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
+        <Route path="/pre-nomina" element={<PrePayroll />} />
         <Route path="/nomina" element={<Payroll />} />
         <Route path="/deducciones" element={<Deductions />} />
         <Route path="/percepciones" element={<Perceptions />} />
