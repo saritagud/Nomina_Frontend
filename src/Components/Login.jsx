@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
-  const navegar = useNavigate()
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const navegar = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   let styleInput =
     "bg-azulClaro p-2 rounded-md text-white placeholder:text-white placeholder:font-extralight w-full";
@@ -14,34 +14,41 @@ export function Login() {
     event.preventDefault();
 
     const userData = {
-        email: email,
-        password: password,
+      email: email,
+      password: password,
     };
 
-    fetch('http://localhost:3000/user/login', {
-        method: 'POST',
-        body: JSON.stringify(userData),
-        headers: {
-            'Content-Type': 'application/json',
-        },
+    fetch("http://localhost:3000/user/login", {
+      method: "POST",
+      body: JSON.stringify(userData),
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log('Success:', data.userInfo);
-            if (data.userInfo) {
-              localStorage.setItem('user', JSON.stringify(data.userInfo))
-              navegar('/')
-            } else {
-              console.log("Error:", data.error);
-            }
-            // Aquí puedes manejar la respuesta, como almacenar el token o redirigir al usuario.
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            // Manejar errores, como mostrar un mensaje de error al usuario.
-        });
-};
-
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data.userInfo);
+        if (data.userInfo) {
+          localStorage.setItem("user", JSON.stringify(data.userInfo));
+          localStorage.setItem("company", JSON.stringify(data.userInfo));
+          
+          if (data.userInfo.role == "superAdmin") {
+            navegar("/superAdmin");
+          } else if (data.userInfo.role == "admin") {
+            navegar("/admin");
+          } else {
+            navegar("/nomina");
+          }
+        } else {
+          console.log("Error:", data.error);
+        }
+        // Aquí puedes manejar la respuesta, como almacenar el token o redirigir al usuario.
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Manejar errores, como mostrar un mensaje de error al usuario.
+      });
+  };
 
   return (
     <>
@@ -74,7 +81,10 @@ export function Login() {
               placeholder="Ingresa tu contraseña"
             ></input>
 
-            <button className="bg-azulOscuro p-2 text-white w-1/2 rounded-md" onClick={handleSubmit}>
+            <button
+              className="bg-azulOscuro p-2 text-white w-1/2 rounded-md"
+              onClick={handleSubmit}
+            >
               Ingresar
             </button>
           </form>

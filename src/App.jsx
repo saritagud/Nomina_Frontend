@@ -25,7 +25,7 @@ function App() {
         <Route path="/percepciones" element={<Perceptions />} />
         <Route path="/empleados" element={<Employees />} />
         <Route path="/configuraciones" element={<Settings />} />
-        <Route path="/dashboard2" element={<DashboardAdmin2 />} />
+        <Route path="/admin" element={<DashboardAdmin2 />} />
         <Route path="/empresas" element={<Companies />} />
         <Route path="/usuarios" element={<Users />} />
         <Route path="/emplo" element={<Employe />} />
