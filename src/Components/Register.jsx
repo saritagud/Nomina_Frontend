@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
+import { Link } from 'react-router-dom';
 
 export function Register() {
   const [isOpen, setIsOpen] = useState(false);
@@ -85,9 +86,9 @@ export function Register() {
                 ></input>
               </div>
               <div className="text-center">
-                <button className="bg-azulOscuro p-4 text-white w-1/2 rounded-md mt-6">
-                  Registrar Usuario
-                </button>
+              <button className="bg-azulOscuro p-4 text-white w-1/2 rounded-md mt-6">
+                <Link to="/">Registrar Usuario</Link>
+              </button>
               </div>
             </div>
           </form>
