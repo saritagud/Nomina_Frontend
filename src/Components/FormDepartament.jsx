@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export function FormDepartament({ setModalDepartament }) {
   const navegar = useNavigate();
   const [name, setName] = useState("");
-  const companyId = JSON.parse(localStorage.getItem("company")).id;
+  const companyId = JSON.parse(localStorage.getItem("company")).companyId;
 
   const handleSubmit = (event) => {
     event.preventDefault();
