@@ -1,6 +1,16 @@
 import { BiArrowBack } from "react-icons/bi";
+import { userRoles } from "../logic/constantes";
+import { authComponent } from "../logic/authComponent";
+import { useNavigate } from "react-router-dom";
 
 export function FormEmployeed({setModalRegister}) {
+  const navegar = useNavigate()
+  const { Admin, User } = userRoles
+
+  // Comprueba que el componente siga teniendo una sesion activa y el rol sea permitido
+  const auth = authComponent([Admin, User])
+  if (!auth) return navegar('/admin')
+
   return (
     <section className="absolute top-0 left-0 bottom-0 right-0 bg-grisClaro flex justify-center items-center">
       <BiArrowBack className="absolute top-2 left-3 z-10 text-3xl cursor-pointer" onClick={() => setModalRegister(false)}></BiArrowBack>

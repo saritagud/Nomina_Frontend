@@ -4,34 +4,34 @@ import { Link } from "react-router-dom"
 
 export function PrePayroll() {
   const [departments, setDepartments] = useState([])
-  const [companySelected, setCompanySelected] = useState(null)
+  const [departmentSelected, setDepartmentSelected] = useState(null)
   const [payroll, setPayroll] = useState(false)
   const [employeeDelete, setEmployeeDelete] = useState(null)
   const companyID = JSON.parse(localStorage.getItem('company')).id;
 
-  console.log(payroll);
-
   useEffect(() => {
-    // fetch(`http://localhost:3000/department/all`, {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     // console.log("Success:", data.departments);
-    //     if (data.departments) {
-    //       setDepartments(data.departments)
-    //     } else {
-    //       console.log("Error:", data.error);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
+    fetch(`http://localhost:3000/department/all`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log("Success:", data.departments);
+        if (data.departments) {
+          setDepartments(data.departments)
+        } else {
+          console.log("Error:", data.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }, [])
   
+
+  // console.log(payroll);
 
   const handleEmployeeDelete = (id) => {
     if (!employeeDelete) {
@@ -140,12 +140,12 @@ export function PrePayroll() {
               <option
                 value="0"
                 disabled
-                selected={companySelected === '0'}
+                selected={departmentSelected === '0'}
               >
                 Elegir Nomina
               </option>
               {departments.map(department => (
-                <option key={department.id} value={department.name} selected={companySelected === department.id}>Nomina</option>
+                <option key={department.id} value={department.name} selected={departmentSelected === department.id}>{department.name}</option>
               ))}
             </select>
           </form>
@@ -200,7 +200,7 @@ export function PrePayroll() {
                 <div className="flex gap-4">
                   <button className="bg-azulClaro px-3 py-2 m-auto rounded-md placeholder-grisClaro text-grisClaro outline-none w-40 font-semibold"
                     onClick={() => {
-                      setCompanySelected("0")
+                      setDepartmentSelected("0")
                       setPayroll(null)
                     }}>
                     Cancelar Nomina

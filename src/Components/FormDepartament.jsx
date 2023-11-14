@@ -1,11 +1,19 @@
 import { BiArrowBack } from "react-icons/bi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { userRoles } from "../logic/constantes";
+import { authComponent } from "../logic/authComponent";
 
 export function FormDepartament({ setModalDepartament }) {
   const navegar = useNavigate();
   const [name, setName] = useState("");
-  const companyId = JSON.parse(localStorage.getItem("company")).companyId;
+  const companyId = JSON.parse(localStorage.getItem("company")).id;
+  const { Admin } = userRoles
+
+  // Comprueba que el componente siga teniendo una sesion activa y el rol sea permitido
+  const auth = authComponent([Admin])
+  if (!auth) return navegar('/admin')
+
 
   const handleSubmit = (event) => {
     event.preventDefault();

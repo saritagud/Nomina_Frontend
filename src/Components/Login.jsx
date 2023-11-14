@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { userRoles } from "../logic/constantes";
 
 export function Login() {
   const navegar = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { SuperAdmin, Admin } = userRoles
+  localStorage.removeItem('user')
+  localStorage.removeItem('company')
 
   let styleInput =
     "bg-azulClaro p-2 rounded-md text-white placeholder:text-white placeholder:font-extralight w-full";
@@ -27,17 +31,17 @@ export function Login() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data.userInfo);
+        // console.log("Success:", data.userInfo);
         if (data.userInfo) {
           localStorage.setItem("user", JSON.stringify(data.userInfo));
-          localStorage.setItem("company", JSON.stringify(data.userInfo));
+          localStorage.setItem("company", JSON.stringify({'id': data.userInfo.companyId}));
           
-          if (data.userInfo.role == "superAdmin") {
-            navegar("/superAdmin");
-          } else if (data.userInfo.role == "admin") {
+          if (data.userInfo.role == SuperAdmin) {
+            navegar("/");
+          } else if (data.userInfo.role == Admin) {
             navegar("/admin");
           } else {
-            navegar("/nomina");
+            navegar("/pre-nomina");
           }
         } else {
           console.log("Error:", data.error);

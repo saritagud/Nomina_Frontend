@@ -1,11 +1,18 @@
 import { BiArrowBack } from "react-icons/bi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { authComponent } from "../logic/authComponent";
+import { userRoles } from "../logic/constantes";
 
 export function CreateCompany({setModalCreateCompany}) {
   const navegar = useNavigate()
   const [name, setName] = useState("");
   const [type, setType] = useState("");
+  const { SuperAdmin } = userRoles
+
+  // Comprueba que el componente siga teniendo una sesion activa y el rol sea permitido
+  const auth = authComponent([SuperAdmin])
+  if (!auth) return navegar('/')
 
   const handleSubmit = (event) => {
     event.preventDefault();
