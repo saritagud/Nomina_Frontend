@@ -19,6 +19,8 @@ export function SideBar() {
   const name = JSON.parse(localStorage.getItem("user")).name;
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("company");
     navegar("/login");
   };
   return (

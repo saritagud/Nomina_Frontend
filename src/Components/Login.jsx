@@ -31,8 +31,9 @@ export function Login() {
     })
       .then((response) => response.json())
       .then((data) => {
+        localStorage.setItem("token", JSON.stringify(data.token));
         if (data.userInfo) {
-          console.log(data.userInfo)
+          console.log(data);
           localStorage.setItem("user", JSON.stringify(data.userInfo));
           localStorage.setItem(
             "company",
