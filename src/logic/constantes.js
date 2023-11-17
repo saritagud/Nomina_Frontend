@@ -3,6 +3,6 @@
 
 export const userRoles = {
    "SuperAdmin": 'superAdmin',
-   "Admin": 'admin',
+   "Admin": 'Admin',
    "User": 'user'
 }
