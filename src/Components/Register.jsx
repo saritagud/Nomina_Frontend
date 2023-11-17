@@ -54,7 +54,11 @@ export function Register() {
       .then((data) => {
         console.log("Success:", data);
         if (data.message) {
-          navegar("/");
+          if (rol == SuperAdmin) {
+            navegar("/");
+          } else if (rol == Admin) {
+            navegar("/admin");
+          }
         } else {
           console.log("Error:", data.error);
         }
