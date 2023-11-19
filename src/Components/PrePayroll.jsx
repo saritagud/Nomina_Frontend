@@ -1,0 +1,223 @@
+import { useEffect, useState } from "react"
+import { SideBar } from "./Sidebar"
+import { Link } from "react-router-dom"
+
+export function PrePayroll() {
+  const [departments, setDepartments] = useState([])
+  const [departmentSelected, setDepartmentSelected] = useState(null)
+  const [payroll, setPayroll] = useState(false)
+  const [employeeDelete, setEmployeeDelete] = useState(null)
+  const companyID = JSON.parse(localStorage.getItem('company')).id;
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/department/all`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log("Success:", data.departments);
+        if (data.departments) {
+          setDepartments(data.departments)
+        } else {
+          console.log("Error:", data.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }, [])
+  
+
+  // console.log(payroll);
+
+  const handleEmployeeDelete = (id) => {
+    if (!employeeDelete) {
+      setEmployeeDelete(id)
+    } else if (employeeDelete === id) {
+      setEmployeeDelete(null)
+    } else {
+      setEmployeeDelete(id)
+    }
+  }
+
+  const deleteEmployee = () => {
+    const indexItem = payroll.findIndex(item => item.id === employeeDelete)
+    if (indexItem >= 0) {
+      const newPayroll = [...payroll]
+      newPayroll.splice(indexItem, 1)
+      setEmployeeDelete(null)
+      setPayroll(newPayroll)
+    }
+  }
+  
+  const handlePayroll = (e) => {
+    // const departmentID = e.target.value
+
+    setPayroll([
+      {
+        "id": 1,
+        "name": "Alexander",
+        "lastName": "Avendaño",
+        "identityCard": 29694896,
+        "charge": "Full Stack",
+        "periodicity": 30,
+        "baseSalary": 400.50,
+        "perceptions": 50.50,
+        "deductions": 10.00
+      },
+      {
+        "id": 2,
+        "name": "Luis",
+        "lastName": "Paredes",
+        "identityCard": 45687814,
+        "charge": "Backend",
+        "periodicity": 30,
+        "baseSalary": 350.50,
+        "perceptions": 50.50,
+        "deductions": 10.00
+      },
+      {
+        "id": 3,
+        "name": "Sara",
+        "lastName": "Gudiño",
+        "identityCard": 2846545,
+        "charge": "Frontend",
+        "periodicity": 30,
+        "baseSalary": 500.50,
+        "perceptions": 50.50,
+        "deductions": 20.00
+      },
+      {
+        "id": 4,
+        "name": "Añilio",
+        "lastName": "Garcia",
+        "identityCard": 544864251,
+        "charge": "Full Stack",
+        "periodicity": 30,
+        "baseSalary": 520.50,
+        "perceptions": 80.00,
+        "deductions": 15.00
+      }
+    ])
+
+    // fetch(`http://localhost:3000/payroll/create-payroll/${companyID}/${departmentID}`, {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     // console.log("Success:", data.newCompany);
+    //     if (data.payroll) {
+    //       setPayroll(data.payroll)
+    //     } else {
+    //       console.log("Error:", data.error);
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error:", error);
+    //   });
+  }
+  
+  return (
+    <div className="flex">
+      <SideBar />
+      <main className="w-screen h-screen p-10 flex flex-col gap-10">
+        <section className="flex justify-between items-center">
+          <h1 className="text-3xl">Pre-Nomina</h1>
+          <form className="flex gap-2">
+            <select
+              name="payroll"
+              id="payroll"
+              className="bg-azulClaro px-3 py-2 rounded-md text-grisClaro outline-none w-60"
+              defaultValue={"0"}
+              onChange={handlePayroll}
+            >
+              <option
+                value="0"
+                disabled
+                selected={departmentSelected === '0'}
+              >
+                Elegir Nomina
+              </option>
+              {departments.map(department => (
+                <option key={department.id} value={department.name} selected={departmentSelected === department.id}>{department.name}</option>
+              ))}
+            </select>
+          </form>
+        </section>
+        {payroll?.length === 0 ? (
+          <strong className="text-xl">
+            No hay empleados para asignar a esta nomina
+          </strong>
+        ) : (
+          payroll?.length > 0 ? (
+            <>
+              <table className="bg-grisClaro rounded-md shadow-right-dark w-full px-4 border-separate border-spacing-0 border-spacing-y-4">
+                <thead className="px-5">
+                  <tr>
+                    <th className="p-4 text-lg text-start">Empleado</th>
+                    <th className="p-4 text-lg text-start">Cedula</th>
+                    <th className="p-4 text-lg text-start">Cargo</th>
+                    <th className="p-4 text-lg text-start">Periodo de pago</th>
+                    <th className="p-4 text-lg text-start">Salario</th>
+                    <th className="p-4 text-lg text-start">Percep.</th>
+                    <th className="p-4 text-lg text-start">Deduc.</th>
+                    <th className="p-4 text-lg text-start">Total</th>
+                  </tr>
+                </thead>
+                <tbody className="px-5 relative">
+                  {payroll.map(employee => (
+                    <tr key={employee.id} className={`relative ${employee.id === employeeDelete ? 'bg-azulClaro text-white' : 'bg-grisOscuro'} hover:bg-blue-300 cursor-pointer`} onClick={() => {handleEmployeeDelete(employee.id)}}>
+                      <td className="p-4 text-lg rounded-l-2xl">{employee.name} {employee.lastName}</td>
+                      <td className="p-4 text-lg">{employee.identityCard}</td>
+                      <td className="p-4 text-lg">{employee.charge}</td>
+                      <td className="p-4 text-lg">{employee.periodicity} Dias</td>
+                      <td className="p-4 text-lg">{employee.baseSalary} Bs.</td>
+                      <td className="p-4 text-lg">{employee.perceptions} Bs.</td>
+                      <td className="p-4 text-lg">{employee.deductions} Bs.</td>
+                      <td className="p-4 text-lg rounded-r-2xl">{(employee.baseSalary + employee.perceptions) - employee.deductions} Bs.</td>
+                      {employeeDelete && employeeDelete === employee.id && (
+                        <span 
+                          className="absolute -top-12 right-1/2 bg-red-600 px-3 py-2 rounded-md text-grisClaro font-semibold flex items-center text-center"
+                          onClick={deleteEmployee}
+                        >
+                          Eliminar
+                        </span>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <section className="flex justify-between w-full px-5">
+                <p className="bg-azulClaro px-5 py-3 rounded-md text-grisClaro font-semibold">
+                  Total de pagos: 40
+                </p>
+                <div className="flex gap-4">
+                  <button className="bg-azulClaro px-3 py-2 m-auto rounded-md placeholder-grisClaro text-grisClaro outline-none w-40 font-semibold"
+                    onClick={() => {
+                      setDepartmentSelected("0")
+                      setPayroll(null)
+                    }}>
+                    Cancelar Nomina
+                  </button>
+                  <Link to={'/nomina'} className="bg-azulClaro px-3 py-2 m-auto rounded-md placeholder-grisClaro text-grisClaro outline-none w-40 font-semibold text-center">
+                    Generar Nomina
+                  </Link>
+                </div>
+              </section>
+            </>
+          ) : (
+            <strong className="text-xl">
+              No se ha seleccionado una nomina
+            </strong>
+          )
+        )}
+      </main>
+    </div>
+  )
+}
