@@ -1,153 +1,164 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SideBar } from "./Sidebar"
 import { Link } from 'react-router-dom';
 
 export function Employees() {
-      const empleyoees = [5] 
-      const handleVerNominaClick = (empleado) => {
-        // Lógica para ver la nómina del empleado
-        console.log(`Ver nómina de ${empleado.nombre}`);
-        // Puedes redirigir a la página de la nómina del empleado, o realizar la acción necesaria
-      };
+  const [employees, setEmployees] = useState([
+    {
+      id: 1,
+      nombre: 'Sara Gudiño',
+      identificacion: '30391704',
+      cargo: 'Asesor',
+      departamento: 'Recursos Humanos'
+    },
+    {
+      id: 2,
+      nombre: 'Sara Gudiño',
+      identificacion: '30391704',
+      cargo: 'Asesor',
+      departamento: 'Recursos Humanos'
+    },
+    {
+      id: 3,
+      nombre: 'Sara Gudiño',
+      identificacion: '30391704',
+      cargo: 'Asesor',
+      departamento: 'Recursos Humanos'
+    },
+  ]);
 
-      return (
-        <div className="flex">
-          <SideBar />
-          <main className="w-screen h-screen p-10 flex flex-col gap-10">
-            <section className="flex justify-between items-center">
-              <h1 className="text-3xl">Empleados</h1>
-              <form className="flex gap-2">
-                <button className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-40 font-semibold">
-                  Agregar
-                </button>
-              </form>
-            </section>
-            {empleyoees?.length === 0 ? (
-              <strong className="text-xl">
-                No hay nomina de este empleado
-              </strong>
-            ) : (
-                empleyoees?.length > 0 && (
-                <>
-                  <table className="bg-grisClaro rounded-md shadow-right-dark w-full px-4 border-separate border-spacing-0 border-spacing-y-4">
-                    <thead className="px-5">
-                      <tr>
-                        <th className="p-4 text-lg text-start">Empleado</th>
-                        <th className="p-4 text-lg text-start">Identificación</th>
-                        <th className="p-4 text-lg text-start">Cargo</th>
-                        <th className="p-4 text-lg text-start">Departamento</th>
-                        <th className="p-4 text-lg text-start"></th>
-                      </tr>
-                    </thead>
-                    <tbody className="px-5">
-                      <tr className="bg-grisOscuro">
-                        <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
-                        <td className="p-4 text-lg">30391704</td>
-                        <td className="p-4 text-lg">Asesor</td>
-                        <td className="p-4 text-lg">
-                          Recursos Humanos
-                        </td>
-                        <td className="p-4 text-lg rounded-r-2xl"> 
-                        <svg
-                        width="34"
-                        height="52"
-                        viewBox="0 0 34 52"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        onClick={() => handleVerNominaClick(empleado)}
+  const [editingId, setEditingId] = useState(null);
+  const [editedData, setEditedData] = useState({ nombre: '', identificacion: '', cargo: '', departamento: '' });
+
+  const handleEditar = (id) => {
+    setEditingId(id);
+    const employeeToEdit = employees.find((employee) => employee.id === id);
+    setEditedData({ nombre: employeeToEdit.nombre, identificacion: employeeToEdit.identificacion, cargo: employeeToEdit.cargo, departamento: employeeToEdit.departamento });
+  };
+
+  const handleGuardar = () => {
+    const updatedEmployees = employees.map((employee) => {
+      if (employee.id === editingId) {
+        return { ...employee, ...editedData };
+      }
+      return employee;
+    });
+    setEmployees(updatedEmployees);
+    setEditingId(null);
+  };
+
+  const handleEliminar = (id) => {
+    const updatedEmployees = employees.filter((employee) => employee.id !== id);
+    setEmployees(updatedEmployees);
+  };
+
+  return (
+    <div className="flex">
+      <SideBar />
+      <main className="w-screen h-screen p-10 flex flex-col gap-10">
+        {/* Resto de tu código ... */}
+        <table className="bg-grisClaro rounded-md shadow-right-dark w-full px-4 border-separate border-spacing-0 border-spacing-y-4">
+          <thead className="px-5">
+            <tr>
+              <th className="p-4 text-lg text-start">Empleado</th>
+              <th className="p-4 text-lg text-start">Identificación</th>
+              <th className="p-4 text-lg text-start">Cargo</th>
+              <th className="p-4 text-lg text-start">Departamento</th>
+              <th className="p-4 text-lg text-start">Acciones</th>
+            </tr>
+          </thead>
+          <tbody className="px-5">
+            {employees.map((employee) => (
+              <tr className="bg-grisOscuro" key={employee.id}>
+                <td className="p-4 text-lg rounded-l-2xl">
+                  {editingId === employee.id ? (
+                    <input
+                      type="text"
+                      value={editedData.nombre}
+                      onChange={(e) => setEditedData({ ...editedData, nombre: e.target.value })}
+                    />
+                  ) : (
+                    employee.nombre
+                  )}
+                </td>
+                <td className="p-4 text-lg">
+                  {editingId === employee.id ? (
+                    <input
+                      type="text"
+                      value={editedData.identificacion}
+                      onChange={(e) => setEditedData({ ...editedData, identificacion: e.target.value })}
+                    />
+                  ) : (
+                    employee.identificacion
+                  )}
+                </td>
+                <td className="p-4 text-lg">
+                  {editingId === employee.id ? (
+                    <input
+                      type="text"
+                      value={editedData.cargo}
+                      onChange={(e) => setEditedData({ ...editedData, cargo: e.target.value })}
+                    />
+                  ) : (
+                    employee.cargo
+                  )}
+                </td>
+                <td className="p-4 text-lg">
+                  {editingId === employee.id ? (
+                    <input
+                      type="text"
+                      value={editedData.departamento}
+                      onChange={(e) => setEditedData({ ...editedData, departamento: e.target.value })}
+                    />
+                  ) : (
+                    employee.departamento
+                  )}
+                </td>
+                <td className="p-4 text-lg flex gap-4">
+                  {editingId === employee.id ? (
+                    <button
+                      className="bg-green-500 px-3 py-1 ml-2 rounded-md text-white font-semibold"
+                      onClick={handleGuardar}
+                    >
+                      Guardar
+                    </button>
+                  ) : (
+                    <>
+                      <svg
+                                width="30"
+                                height="30"
+                                viewBox="0 0 41 42"
+                                xmlns="http://www.w3.org/2000/svg"
+                                style={{ display: 'block', cursor: 'pointer', marginRight: '10px' }}
+                        onClick={() => handleEditar(employee.id)}
                       >
-                        <Link to="/nomina">
-                          <path
-                            d="M19.8333 13.8125V0H2.125C0.947396 0 0 1.08672 0 2.4375V49.5625C0 50.9133 0.947396 52 2.125 52H31.875C33.0526 52 34 50.9133 34 49.5625V16.25H21.9583C20.7896 16.25 19.8333 15.1531 19.8333 13.8125ZM25.5 37.7812C25.5 38.4516 25.0219 39 24.4375 39H9.5625C8.97812 39 8.5 38.4516 8.5 37.7812V36.9688C8.5 36.2984 8.97812 35.75 9.5625 35.75H24.4375C25.0219 35.75 25.5 36.2984 25.5 36.9688V37.7812ZM25.5 31.2812C25.5 31.9516 25.0219 32.5 24.4375 32.5H9.5625C8.97812 32.5 8.5 31.9516 8.5 31.2812V30.4688C8.5 29.7984 8.97812 29.25 9.5625 29.25H24.4375C25.0219 29.25 25.5 29.7984 25.5 30.4688V31.2812ZM25.5 23.9688V24.7812C25.5 25.4516 25.0219 26 24.4375 26H9.5625C8.97812 26 8.5 25.4516 8.5 24.7812V23.9688C8.5 23.2984 8.97812 22.75 9.5625 22.75H24.4375C25.0219 22.75 25.5 23.2984 25.5 23.9688ZM34 12.3805V13H22.6667V0H23.2068C23.7734 0 24.3135 0.253906 24.712 0.710938L33.3802 10.6641C33.7786 11.1211 34 11.7406 34 12.3805Z"
-                            fill="black"
-                          />
-                        </Link>
+                        <path
+                                  d="M23.4102 7.96637L33.4118 18.218L11.6938 40.4789L2.77663 41.4879C1.58288 41.6232 0.574286 40.5886 0.707098 39.365L1.69929 30.2185L23.4102 7.96637ZM39.5977 6.44008L34.9016 1.62659C33.4368 0.125122 31.061 0.125122 29.5962 1.62659L25.1782 6.155L35.1798 16.4066L39.5977 11.8782C41.0626 10.3759 41.0626 7.94155 39.5977 6.44008Z"
+                                  fill="black"
+                                />
                       </svg>
-                      </td>
-                      </tr>
-                      <tr className="bg-grisOscuro">
-                        <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
-                        <td className="p-4 text-lg">30391704</td>
-                        <td className="p-4 text-lg">Asesor</td>
-                        <td className="p-4 text-lg">
-                          Recursos Humanos
-                        </td>
-                        <td className="p-4 text-lg rounded-r-2xl"> 
                         <svg
-                        width="34"
-                        height="52"
-                        viewBox="0 0 34 52"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        onClick={() => handleVerNominaClick(empleado)}
+                            width="30"
+                            height="30"
+                            viewBox="0 0 42 44"
+                            xmlns="http://www.w3.org/2000/svg"
+                            style={{ display: 'block', cursor: 'pointer' }}
+                        onClick={() => handleEliminar(employee.id)}
                       >
-                        <Link to="/nomina">
-                          <path
-                            d="M19.8333 13.8125V0H2.125C0.947396 0 0 1.08672 0 2.4375V49.5625C0 50.9133 0.947396 52 2.125 52H31.875C33.0526 52 34 50.9133 34 49.5625V16.25H21.9583C20.7896 16.25 19.8333 15.1531 19.8333 13.8125ZM25.5 37.7812C25.5 38.4516 25.0219 39 24.4375 39H9.5625C8.97812 39 8.5 38.4516 8.5 37.7812V36.9688C8.5 36.2984 8.97812 35.75 9.5625 35.75H24.4375C25.0219 35.75 25.5 36.2984 25.5 36.9688V37.7812ZM25.5 31.2812C25.5 31.9516 25.0219 32.5 24.4375 32.5H9.5625C8.97812 32.5 8.5 31.9516 8.5 31.2812V30.4688C8.5 29.7984 8.97812 29.25 9.5625 29.25H24.4375C25.0219 29.25 25.5 29.7984 25.5 30.4688V31.2812ZM25.5 23.9688V24.7812C25.5 25.4516 25.0219 26 24.4375 26H9.5625C8.97812 26 8.5 25.4516 8.5 24.7812V23.9688C8.5 23.2984 8.97812 22.75 9.5625 22.75H24.4375C25.0219 22.75 25.5 23.2984 25.5 23.9688ZM34 12.3805V13H22.6667V0H23.2068C23.7734 0 24.3135 0.253906 24.712 0.710938L33.3802 10.6641C33.7786 11.1211 34 11.7406 34 12.3805Z"
-                            fill="black"
-                          />
-                        </Link>
+                        <path
+                                  d="M40.232 2.75001H29.2499L28.3896 1.14298C28.2074 0.799417 27.9266 0.510417 27.579 0.308495C27.2314 0.106573 26.8307 -0.000260216 26.422 1.50672e-05H15.9615C15.5536 -0.00145709 15.1536 0.104977 14.8072 0.307124C14.4609 0.509271 14.1821 0.798954 14.003 1.14298L13.1427 2.75001H2.16057C1.77222 2.75001 1.39978 2.89488 1.12517 3.15274C0.850562 3.4106 0.696289 3.76034 0.696289 4.12501L0.696289 6.87501C0.696289 7.23969 0.850562 7.58942 1.12517 7.84728C1.39978 8.10515 1.77222 8.25001 2.16057 8.25001H40.232C40.6204 8.25001 40.9928 8.10515 41.2674 7.84728C41.542 7.58942 41.6963 7.23969 41.6963 6.87501V4.12501C41.6963 3.76034 41.542 3.4106 41.2674 3.15274C40.9928 2.89488 40.6204 2.75001 40.232 2.75001ZM5.56504 40.1328C5.63488 41.1801 6.12711 42.163 6.94152 42.8814C7.75593 43.5999 8.83131 43.9999 9.94874 44H32.4438C33.5613 43.9999 34.6366 43.5999 35.4511 42.8814C36.2655 42.163 36.7577 41.1801 36.8275 40.1328L38.7677 11H3.62486L5.56504 40.1328Z"
+                                  fill="black"
+                                />
                       </svg>
-                      </td>
-                      </tr>
-                      <tr className="bg-grisOscuro">
-                        <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
-                        <td className="p-4 text-lg">30391704</td>
-                        <td className="p-4 text-lg">Asesor</td>
-                        <td className="p-4 text-lg">
-                          Recursos Humanos
-                        </td>
-                        <td className="p-4 text-lg rounded-r-2xl"> 
-                        <svg
-                        width="34"
-                        height="52"
-                        viewBox="0 0 34 52"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        onClick={() => handleVerNominaClick(empleado)}
-                      >
-                        <Link to="/nomina">
-                          <path
-                            d="M19.8333 13.8125V0H2.125C0.947396 0 0 1.08672 0 2.4375V49.5625C0 50.9133 0.947396 52 2.125 52H31.875C33.0526 52 34 50.9133 34 49.5625V16.25H21.9583C20.7896 16.25 19.8333 15.1531 19.8333 13.8125ZM25.5 37.7812C25.5 38.4516 25.0219 39 24.4375 39H9.5625C8.97812 39 8.5 38.4516 8.5 37.7812V36.9688C8.5 36.2984 8.97812 35.75 9.5625 35.75H24.4375C25.0219 35.75 25.5 36.2984 25.5 36.9688V37.7812ZM25.5 31.2812C25.5 31.9516 25.0219 32.5 24.4375 32.5H9.5625C8.97812 32.5 8.5 31.9516 8.5 31.2812V30.4688C8.5 29.7984 8.97812 29.25 9.5625 29.25H24.4375C25.0219 29.25 25.5 29.7984 25.5 30.4688V31.2812ZM25.5 23.9688V24.7812C25.5 25.4516 25.0219 26 24.4375 26H9.5625C8.97812 26 8.5 25.4516 8.5 24.7812V23.9688C8.5 23.2984 8.97812 22.75 9.5625 22.75H24.4375C25.0219 22.75 25.5 23.2984 25.5 23.9688ZM34 12.3805V13H22.6667V0H23.2068C23.7734 0 24.3135 0.253906 24.712 0.710938L33.3802 10.6641C33.7786 11.1211 34 11.7406 34 12.3805Z"
-                            fill="black"
-                          />
-                        </Link>
-                      </svg>
-                      </td>
-                      </tr>
-                      <tr className="bg-grisOscuro">
-                        <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
-                        <td className="p-4 text-lg">30391704</td>
-                        <td className="p-4 text-lg">Asesor</td>
-                        <td className="p-4 text-lg">
-                          Recursos Humanos
-                        </td>
-                        <td className="p-4 text-lg rounded-r-2xl"> 
-                        <svg
-                        width="34"
-                        height="52"
-                        viewBox="0 0 34 52"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        onClick={() => handleVerNominaClick(empleado)}
-                      >
-                        <Link to="/nomina">
-                          <path
-                            d="M19.8333 13.8125V0H2.125C0.947396 0 0 1.08672 0 2.4375V49.5625C0 50.9133 0.947396 52 2.125 52H31.875C33.0526 52 34 50.9133 34 49.5625V16.25H21.9583C20.7896 16.25 19.8333 15.1531 19.8333 13.8125ZM25.5 37.7812C25.5 38.4516 25.0219 39 24.4375 39H9.5625C8.97812 39 8.5 38.4516 8.5 37.7812V36.9688C8.5 36.2984 8.97812 35.75 9.5625 35.75H24.4375C25.0219 35.75 25.5 36.2984 25.5 36.9688V37.7812ZM25.5 31.2812C25.5 31.9516 25.0219 32.5 24.4375 32.5H9.5625C8.97812 32.5 8.5 31.9516 8.5 31.2812V30.4688C8.5 29.7984 8.97812 29.25 9.5625 29.25H24.4375C25.0219 29.25 25.5 29.7984 25.5 30.4688V31.2812ZM25.5 23.9688V24.7812C25.5 25.4516 25.0219 26 24.4375 26H9.5625C8.97812 26 8.5 25.4516 8.5 24.7812V23.9688C8.5 23.2984 8.97812 22.75 9.5625 22.75H24.4375C25.0219 22.75 25.5 23.2984 25.5 23.9688ZM34 12.3805V13H22.6667V0H23.2068C23.7734 0 24.3135 0.253906 24.712 0.710938L33.3802 10.6641C33.7786 11.1211 34 11.7406 34 12.3805Z"
-                            fill="black"
-                          />
-                        </Link>
-                      </svg>
-                      </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <section className="flex justify-between w-full px-5"></section>
-                </>
-              )
-            )}
-          </main>
-        </div>
-      )
-    }
-    
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <section className="flex justify-between w-full px-5"></section>
+      </main>
+    </div>
+  );
+}

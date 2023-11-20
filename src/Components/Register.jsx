@@ -12,7 +12,7 @@ export function Register() {
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  const companyID = JSON.parse(localStorage.getItem("company")).id;
+  const companyId = JSON.parse(localStorage.getItem("company")).id;
   const rol = JSON.parse(localStorage.getItem("user")).role;
 
   const { SuperAdmin, Admin } = userRoles;
@@ -43,7 +43,7 @@ export function Register() {
     };
 
     // console.log(userData);
-    fetch(`http://localhost:3000/user/signup/${companyID}`, {
+    fetch(`http://localhost:3000/user/signup/${companyId}`, {
       method: "POST",
       body: JSON.stringify(userData),
       headers: {

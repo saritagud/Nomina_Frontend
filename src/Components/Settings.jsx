@@ -8,6 +8,7 @@ export function Settings() {
     { id: 3, nombre: 'Configuración 3' },
     { id: 4, nombre: 'Configuración 4' },
     { id: 5, nombre: 'Configuración 5' },
+    { id: 6, nombre: 'Configuración 6' },
   ]);
 
   const handleEliminar = (id) => {
