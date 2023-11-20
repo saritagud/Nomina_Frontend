@@ -18,6 +18,8 @@ export function Companies() {
       });
   }, []);
 
+  console.log(company)
+
   return (
     <>
       <div className="flex">
@@ -41,9 +43,10 @@ export function Companies() {
                   <tbody key={companys.id} className="px-5">
                     <tr className="bg-grisOscuro ">
                       <td className="p-4 text-lg rounded-l-2xl ">
-                        {companys.Name}
+                        {companys.name}
                       </td>
-                      <td className="p-4 text-lg">{companys.Type}</td>
+                      <td className="p-4 text-lg">{companys.type}</td>
+                      <button className="bg-azulClaro p-2 mt-2 text-white w-1/2 rounded-md">Seleccionar</button>
                     </tr>
                   </tbody>
                 ))}
