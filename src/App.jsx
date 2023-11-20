@@ -38,7 +38,7 @@ function App() {
           <Route path="/percepciones" element={<Perceptions />} />
           <Route path="/empleados" element={<Employees />} />
           <Route path="/configuraciones" element={<Settings />} />
-          <Route path="/emplo" element={<Employe />} />
+          <Route path="/empleado/:emploID" element={<Employe />} />
         </Route>
       </Routes>
     </>
