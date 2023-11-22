@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react"
 import { SideBar } from "./Sidebar"
 import { Link } from "react-router-dom"
+import { FaEllipsisV } from "react-icons/fa";
+import ModalDelete from "./ModalDelete"
 
 export function PrePayroll() {
   const [departments, setDepartments] = useState([])
   const [departmentSelected, setDepartmentSelected] = useState(null)
   const [payroll, setPayroll] = useState(false)
   const [employeeDelete, setEmployeeDelete] = useState(null)
+  const [modalDelete, setModalDelete] = useState(false)
   const companyID = JSON.parse(localStorage.getItem('company')).id;
+  // const token = JSON.parse(localStorage.getItem('token'));
 
   useEffect(() => {
-    fetch(`http://localhost:3000/department/all`, {
+    fetch(`http://localhost:3000/department/all/${companyID}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -30,19 +34,6 @@ export function PrePayroll() {
       });
   }, [])
   
-
-  // console.log(payroll);
-
-  const handleEmployeeDelete = (id) => {
-    if (!employeeDelete) {
-      setEmployeeDelete(id)
-    } else if (employeeDelete === id) {
-      setEmployeeDelete(null)
-    } else {
-      setEmployeeDelete(id)
-    }
-  }
-
   const deleteEmployee = () => {
     const indexItem = payroll.findIndex(item => item.id === employeeDelete)
     if (indexItem >= 0) {
@@ -50,6 +41,7 @@ export function PrePayroll() {
       newPayroll.splice(indexItem, 1)
       setEmployeeDelete(null)
       setPayroll(newPayroll)
+      setModalDelete(false)
     }
   }
   
@@ -172,7 +164,7 @@ export function PrePayroll() {
                 </thead>
                 <tbody className="px-5 relative">
                   {payroll.map(employee => (
-                    <tr key={employee.id} className={`relative ${employee.id === employeeDelete ? 'bg-azulClaro text-white' : 'bg-grisOscuro'} hover:bg-blue-300 cursor-pointer`} onClick={() => {handleEmployeeDelete(employee.id)}}>
+                    <tr key={employee.id} className="bg-grisOscuro hover:bg-blue-300">
                       <td className="p-4 text-lg rounded-l-2xl">{employee.name} {employee.lastName}</td>
                       <td className="p-4 text-lg">{employee.identityCard}</td>
                       <td className="p-4 text-lg">{employee.charge}</td>
@@ -180,15 +172,20 @@ export function PrePayroll() {
                       <td className="p-4 text-lg">{employee.baseSalary} Bs.</td>
                       <td className="p-4 text-lg">{employee.perceptions} Bs.</td>
                       <td className="p-4 text-lg">{employee.deductions} Bs.</td>
-                      <td className="p-4 text-lg rounded-r-2xl">{(employee.baseSalary + employee.perceptions) - employee.deductions} Bs.</td>
-                      {employeeDelete && employeeDelete === employee.id && (
-                        <span 
-                          className="absolute -top-12 right-1/2 bg-red-600 px-3 py-2 rounded-md text-grisClaro font-semibold flex items-center text-center"
-                          onClick={deleteEmployee}
-                        >
-                          Eliminar
-                        </span>
-                      )}
+                      <td className="p-4 text-lg">{(employee.baseSalary + employee.perceptions) - employee.deductions} Bs.</td>
+                      <td className="relative p-4 text-lg rounded-r-2xl">
+                        <input type="checkbox" name={`action${employee.id}`} id={`action${employee.id}`} className="hidden peer/action"/>
+                        <label htmlFor={`action${employee.id}`} className="cursor-pointer">
+                          <FaEllipsisV/>
+                        </label>
+                        <div className="hidden absolute peer-checked/action:flex gap-4 right-14 -top-2 bg-grisClaro shadow-right-dark p-5 rounded-lg z-10">
+                          <Link to={`/empleado/${employee.id}`} className="text-white w-28 text-center rounded-md bg-azulClaro px-2 py-1 font-semibold">Ver</Link>
+                          <button className="text-white w-28 rounded-md bg-red-600 px-2 py-1 font-semibold" onClick={() => {
+                            setEmployeeDelete(employee.id)
+                            setModalDelete(true)
+                          }}>Eliminar</button>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -216,6 +213,9 @@ export function PrePayroll() {
               No se ha seleccionado una nomina
             </strong>
           )
+        )}
+        {modalDelete && (
+          <ModalDelete peticion={deleteEmployee} setStateModal={setModalDelete}/>
         )}
       </main>
     </div>

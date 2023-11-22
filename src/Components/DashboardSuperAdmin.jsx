@@ -11,7 +11,7 @@ export function DashboardSuperAdmin() {
   return (
     <div className="flex">
       <SideBar />
-      <section className="flex flex-col justify-center h-screen  w-screen items-center p-20 gap-10 font-Quicksand">
+      <section className="flex flex-col h-screen  w-screen items-center p-20 gap-10 font-Quicksand pb-20">
         <section className="bg-grisOscuro rounded-md p-7 w-full flex justify-between h-40 border-black/40 border-r-4 border-b-4">
           <div className="flex flex-col justify-between h-full ">
             <p className="text-lg">Bienvenido @user!</p>
@@ -28,20 +28,10 @@ export function DashboardSuperAdmin() {
             >
               Crear Empresa
             </button>
-            <Link
-              className={styleLink}
-              to={'/registro'}
-            >
-              Crear Usuario
-            </Link>
           </div>
-
           <div className="flex flex-col gap-10 w-full">
             <Link className={styleLink} to={"/empresas"}>
               Ver Empresas
-            </Link>
-            <Link className={styleLink} to={"/usuarios"}>
-              Todos los usuarios
             </Link>
           </div>
         </section>
