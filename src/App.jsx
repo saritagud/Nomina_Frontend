@@ -14,6 +14,7 @@ import { PrePayroll } from "./Components/PrePayroll";
 import { Employe } from "./Components/Employe";
 import ProtectedRouter from "./Components/ProtectedRouter";
 import { userRoles } from "./logic/constantes";
+import { UserInfo } from "./Components/InforUser";
 function App() {
   const { SuperAdmin, Admin, User } = userRoles
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/empleados" element={<Employees />} />
           <Route path="/configuraciones" element={<Settings />} />
           <Route path="/empleado/:emploID" element={<Employe />} />
+          <Route path="/infouser/:id" element={<UserInfo />} />
         </Route>
       </Routes>
     </>
