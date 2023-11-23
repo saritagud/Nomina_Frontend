@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SideBar } from './Sidebar';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-//
+
 export function UserInfo() {
   const { id } = useParams();
   const [user, setUser] = useState(null);
