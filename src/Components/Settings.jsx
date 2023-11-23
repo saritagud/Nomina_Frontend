@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SideBar } from './Sidebar';
 import { Link } from 'react-router-dom';
-
+//
 export function Settings() {
   const [empleyoees, setEmpleyoees] = useState([
     { id: 1, nombre: 'Configuración 1' },
