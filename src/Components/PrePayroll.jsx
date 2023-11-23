@@ -6,7 +6,7 @@ import ModalDelete from "./ModalDelete"
 
 export function PrePayroll() {
   const [departments, setDepartments] = useState([])
-  const [departmentSelected, setDepartmentSelected] = useState(null)
+  const [departmentSelected, setDepartmentSelected] = useState('0')
   const [payroll, setPayroll] = useState(false)
   const [employeeDelete, setEmployeeDelete] = useState(null)
   const [modalDelete, setModalDelete] = useState(false)
@@ -32,7 +32,7 @@ export function PrePayroll() {
       .catch((error) => {
         console.error("Error:", error);
       });
-  }, [])
+  }, [companyID])
   
   const deleteEmployee = () => {
     const indexItem = payroll.findIndex(item => item.id === employeeDelete)
@@ -46,73 +46,73 @@ export function PrePayroll() {
   }
   
   const handlePayroll = (e) => {
-    // const departmentID = e.target.value
+    const departmentID = e.target.value
 
-    setPayroll([
-      {
-        "id": 1,
-        "name": "Alexander",
-        "lastName": "Avendaño",
-        "identityCard": 29694896,
-        "charge": "Full Stack",
-        "periodicity": 30,
-        "baseSalary": 400.50,
-        "perceptions": 50.50,
-        "deductions": 10.00
-      },
-      {
-        "id": 2,
-        "name": "Luis",
-        "lastName": "Paredes",
-        "identityCard": 45687814,
-        "charge": "Backend",
-        "periodicity": 30,
-        "baseSalary": 350.50,
-        "perceptions": 50.50,
-        "deductions": 10.00
-      },
-      {
-        "id": 3,
-        "name": "Sara",
-        "lastName": "Gudiño",
-        "identityCard": 2846545,
-        "charge": "Frontend",
-        "periodicity": 30,
-        "baseSalary": 500.50,
-        "perceptions": 50.50,
-        "deductions": 20.00
-      },
-      {
-        "id": 4,
-        "name": "Añilio",
-        "lastName": "Garcia",
-        "identityCard": 544864251,
-        "charge": "Full Stack",
-        "periodicity": 30,
-        "baseSalary": 520.50,
-        "perceptions": 80.00,
-        "deductions": 15.00
-      }
-    ])
-
-    // fetch(`http://localhost:3000/payroll/create-payroll/${companyID}/${departmentID}`, {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json",
+    // setPayroll([
+    //   {
+    //     "id": 1,
+    //     "name": "Alexander",
+    //     "lastName": "Avendaño",
+    //     "identityCard": 29694896,
+    //     "charge": "Full Stack",
+    //     "periodicity": 30,
+    //     "baseSalary": 400.50,
+    //     "perceptions": 50.50,
+    //     "deductions": 10.00
     //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     // console.log("Success:", data.newCompany);
-    //     if (data.payroll) {
-    //       setPayroll(data.payroll)
-    //     } else {
-    //       console.log("Error:", data.error);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error:", error);
-    //   });
+    //   {
+    //     "id": 2,
+    //     "name": "Luis",
+    //     "lastName": "Paredes",
+    //     "identityCard": 45687814,
+    //     "charge": "Backend",
+    //     "periodicity": 30,
+    //     "baseSalary": 350.50,
+    //     "perceptions": 50.50,
+    //     "deductions": 10.00
+    //   },
+    //   {
+    //     "id": 3,
+    //     "name": "Sara",
+    //     "lastName": "Gudiño",
+    //     "identityCard": 2846545,
+    //     "charge": "Frontend",
+    //     "periodicity": 30,
+    //     "baseSalary": 500.50,
+    //     "perceptions": 50.50,
+    //     "deductions": 20.00
+    //   },
+    //   {
+    //     "id": 4,
+    //     "name": "Añilio",
+    //     "lastName": "Garcia",
+    //     "identityCard": 544864251,
+    //     "charge": "Full Stack",
+    //     "periodicity": 30,
+    //     "baseSalary": 520.50,
+    //     "perceptions": 80.00,
+    //     "deductions": 15.00
+    //   }
+    // ])
+
+    fetch(`http://localhost:3000/payroll/create-payroll/${companyID}/${departmentID}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // console.log("Success:", data.newCompany);
+        if (data.employees) {
+          setPayroll(data.employees)
+        } else {
+          console.log("Error:", data.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   }
   
   return (
@@ -126,18 +126,17 @@ export function PrePayroll() {
               name="payroll"
               id="payroll"
               className="bg-azulClaro px-3 py-2 rounded-md text-grisClaro outline-none w-60"
-              defaultValue={"0"}
+              value={departmentSelected}
               onChange={handlePayroll}
             >
               <option
                 value="0"
                 disabled
-                selected={departmentSelected === '0'}
               >
                 Elegir Nomina
               </option>
               {departments.map(department => (
-                <option key={department.id} value={department.name} selected={departmentSelected === department.id}>{department.name}</option>
+                <option key={department.id} value={department.id}>{department.name}</option>
               ))}
             </select>
           </form>
@@ -178,7 +177,7 @@ export function PrePayroll() {
                         <label htmlFor={`action${employee.id}`} className="cursor-pointer">
                           <FaEllipsisV/>
                         </label>
-                        <div className="hidden absolute peer-checked/action:flex gap-4 right-14 -top-2 bg-grisClaro shadow-right-dark p-5 rounded-lg z-10">
+                        <div className="hidden absolute peer-checked/action:flex gap-4 right-14 top-1/2 transform -translate-y-1/2 bg-grisClaro shadow-right-dark p-5 rounded-lg z-10">
                           <Link to={`/empleado/${employee.id}`} className="text-white w-28 text-center rounded-md bg-azulClaro px-2 py-1 font-semibold">Ver</Link>
                           <button className="text-white w-28 rounded-md bg-red-600 px-2 py-1 font-semibold" onClick={() => {
                             setEmployeeDelete(employee.id)
