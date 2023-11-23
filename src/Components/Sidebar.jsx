@@ -25,7 +25,7 @@ export function SideBar() {
     navegar("/login");
   };
   return (
-    <div className="">
+    <div className="h-screen">
       <div
         className={` ${
           open ? "w-64" : "w-20 "
