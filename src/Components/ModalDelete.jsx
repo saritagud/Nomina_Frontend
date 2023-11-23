@@ -1,9 +1,16 @@
-function ModalDelete({ peticion, setStateModal }) {
+function ModalDelete({ peticion, setStateModal, id }) {
   const token = JSON.parse(localStorage.getItem("token"))
   const companyID = JSON.parse(localStorage.getItem("company")).id
 
-  const handleDelete = () => {
-    peticion(token, companyID)
+  // Debe modificarse para que funcione mejor y se adapte a cualquier peticion
+  const handleDelete = async () => {
+    const res = await peticion(token, companyID, id)
+    if (res.message) {
+      // console.log(res.message);
+      setStateModal(false)
+    } else {
+      console.error('hubo un error')
+    }
   }
 
   return (
