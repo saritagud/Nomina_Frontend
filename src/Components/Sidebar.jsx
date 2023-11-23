@@ -7,6 +7,7 @@ import {
   FaCog,
   FaBookmark,
 } from "react-icons/fa";
+import { CiLogout } from "react-icons/ci";
 import { AiFillHome } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { userRoles } from "../logic/constantes";
@@ -24,7 +25,7 @@ export function SideBar() {
     navegar("/login");
   };
   return (
-    <div className="flex">
+    <div className="">
       <div
         className={` ${
           open ? "w-64" : "w-20 "
@@ -35,7 +36,7 @@ export function SideBar() {
           border-2 rounded-full  ${!open && "rotate-180"}`}
           onClick={() => setOpen(!open)}
         />
-        <div className="flex gap-x-4 items-center">
+        <div className="flex gap-x-4 items-center ">
           <FaUserCircle
             className={` duration-500 text-3xl text-white ${
               open && "rotate-[360deg]"
@@ -72,14 +73,22 @@ export function SideBar() {
                 Empresas
               </p>
             </Link>
-            <button className="p-2 bg-white rounded-md" onClick={logout}>
-              Cerrar sesion
-            </button>
+
+            <div
+              className="flex  p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 hover:rounded-md border-t-2 border-grisClaro/60 mt-80
+              "
+              onClick={logout}
+            >
+              <CiLogout />
+              <p className={`${!open && "hidden"} origin-left duration-200`}>
+                Cerrar Sesion
+              </p>
+            </div>
           </div>
         ) : (
           <>
             {rol == Admin ? (
-              <div className="flex flex-col gap-5 pt-10">
+              <div className="flex flex-col   gap-6 pt-10">
                 <Link
                   className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
               "
@@ -144,9 +153,18 @@ export function SideBar() {
                   </p>
                 </Link>
 
-                <button className="p-2 bg-white rounded-md" onClick={logout}>
-                  Cerrar sesion
-                </button>
+                <div
+                  className="flex  p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 mt-28 border-t-2 border-grisClaro/70 hover:rounded-md  
+              "
+                  onClick={logout}
+                >
+                  <CiLogout />
+                  <p
+                    className={`${!open && "hidden"} origin-left duration-200`}
+                  >
+                    Cerrar Sesion
+                  </p>
+                </div>
               </div>
             ) : (
               <div>
@@ -181,12 +199,20 @@ export function SideBar() {
                         Empleados
                       </p>
                     </Link>
-                    <button
-                      className="p-2 bg-white rounded-md"
+                    <div
+                      className="flex  p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4  
+              "
                       onClick={logout}
                     >
-                      Cerrar sesion
-                    </button>
+                      <CiLogout />
+                      <p
+                        className={`${
+                          !open && "hidden"
+                        } origin-left duration-200`}
+                      >
+                        Cerrar Sesion
+                      </p>
+                    </div>
                   </div>
                 )}
               </div>
