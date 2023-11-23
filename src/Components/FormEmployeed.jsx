@@ -33,6 +33,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
         ...dataEdit,
         birthdate: formatearFecha(dataEdit.birthdate),
         startDate: formatearFecha(dataEdit.startDate),
+        baseSalary: dataEdit.baseSalary.toString(),
       })
       setDepartmentSelected(dataEdit.departmentId)
       console.log(dataEdit);
@@ -96,9 +97,9 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
       if (employee.identityCard !== dataEdit.identityCard) 
         data = {
           ...data,
-          identityCard: employee.identityCard
+          identityCard: Number(employee.identityCard)
         }
-      if (employee.birthdate !== dataEdit.birthdate) 
+      if (employee.birthdate !== formatearFecha(dataEdit.birthdate)) 
         data = {
           ...data,
           birthdate: employee.birthdate
@@ -128,7 +129,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
           ...data,
           civilStatus: employee.civilStatus
         }
-      if (employee.startDate !== dataEdit.startDate) 
+      if (employee.startDate !== formatearFecha(dataEdit.startDate)) 
         data = {
           ...data,
           startDate: employee.startDate
@@ -141,7 +142,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
       if (employee.baseSalary !== dataEdit.baseSalary) 
         data = {
           ...data,
-          baseSalary: employee.baseSalary
+          baseSalary: parseFloat(employee.baseSalary)
         }
       if (departmentSelected !== dataEdit.departmentId) 
         data = {
@@ -165,15 +166,19 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
           if (data.message) {
             setStateModal(false);
           } else {
-            console.log("Error:", data.error)
+            console.log("Error:", data)
           }
         })
         .catch(error => {
           console.error("Error:", error)
         })
     } else {
-      data = employee
-      console.log(data);
+      data = {
+        ...employee,
+        identityCard: Number(employee.identityCard),
+        baseSalary: parseFloat(employee.baseSalary),
+      }
+      // console.log(data);
       fetch(
         `http://localhost:3000/employee/create-employee/${companyID}/${departmentSelected}`,
         {
@@ -202,9 +207,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
   const handleChange = e => {
     const name = e.target.name
     let value = e.target.value
-    if (name === "identityCard" || name === "baseSalary") {
-      value = parseFloat(value)
-    }
+
     if (name === "department") {
       setDepartmentSelected(e.target.value)
       return
