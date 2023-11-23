@@ -1,6 +1,26 @@
+import { useState } from "react";
 import { SideBar } from "./Sidebar"
+import { useParams } from "react-router-dom";
 
 export function Employe(){
+    // const [employe,setEmploye]=useState([])
+    // const { emploID }=useParams()
+    // console.log(emploID)
+    // useEffect(() => {
+    //     fetch(`http://localhost:3000/find-employee/${emploID}`, {
+    //       method: "GET",
+    //       headers: { "Content-Type": "application/json" },
+    //     })
+    //       .then((response) => response.json())
+    //       .then((data) => {
+    //         console.log("Success:", data);
+    //         setEmploye(data);
+    //       })
+    //       .catch((error) => {
+    //         console.error("Error:", error);
+    //       });
+    //   }, []);
+    //   console.log(employe)
 
     return(
         <>
