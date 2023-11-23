@@ -116,10 +116,10 @@ export function PrePayroll() {
   }
   
   return (
-    <div className="flex">
+    <div className="h-full">
       <SideBar />
-      <main className="w-screen h-screen p-10 flex flex-col gap-10">
-        <section className="flex justify-between items-center">
+      <main className="w-screen  p-10 flex flex-col gap-10 items-end">
+        <section className="flex justify-between items-center w-4/5">
           <h1 className="text-3xl">Pre-Nomina</h1>
           <form className="flex gap-2">
             <select
@@ -148,7 +148,7 @@ export function PrePayroll() {
         ) : (
           payroll?.length > 0 ? (
             <>
-              <table className="bg-grisClaro rounded-md shadow-right-dark w-full px-4 border-separate border-spacing-0 border-spacing-y-4">
+              <table className="bg-grisClaro rounded-md shadow-right-dark px-4 border-separate border-spacing-0 border-spacing-y-4 w-4/5">
                 <thead className="px-5">
                   <tr>
                     <th className="p-4 text-lg text-start">Empleado</th>

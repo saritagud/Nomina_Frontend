@@ -8,41 +8,44 @@ export function FormDepartament({ setModalDepartament }) {
   const navegar = useNavigate();
   const [name, setName] = useState("");
   const companyId = JSON.parse(localStorage.getItem("company")).id;
-  const { Admin } = userRoles
+  const { Admin } = userRoles;
 
   // Comprueba que el componente siga teniendo una sesion activa y el rol sea permitido
-  const auth = authComponent([Admin])
-  if (!auth) return navegar('/admin')
-
+  const auth = authComponent([Admin]);
+  if (!auth) return navegar("/admin");
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const data = {
-      name: name,
-      companyId: companyId,
-    };
+    if (!name) {
+      console.log("Debes rellenar todos los campos");
+    } else {
+      const data = {
+        name: name,
+        companyId: companyId,
+      };
 
-    fetch(`http://localhost:3000/department/create-department/${companyId}`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data.newApartment);
-        if (data.newApartment) {
-          setModalDepartament(false);
-          navegar("/admin");
-        } else {
-          console.log("Error:", data.error);
-        }
+      fetch(`http://localhost:3000/department/create-department/${companyId}`, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data.newApartment);
+          if (data.newApartment) {
+            setModalDepartament(false);
+            navegar("/admin");
+          } else {
+            console.log("Error:", data.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
   };
   return (
     <>

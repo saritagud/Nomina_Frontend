@@ -31,41 +31,61 @@ export function Register() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
 
-    const userData = {
-      name: name,
-      lastName: lastName,
-      email: email,
-      phone: phone,
-      address: address,
-      password: password,
-      role: role,
-    };
+    if (
+      !name ||
+      !lastName ||
+      !email ||
+      !phone ||
+      !address ||
+      !password ||
+      !role
+    ) {
+      console.log("Es necesario rellenar todos los campos");
+    } else if (!emailRegex.test(email)) {
+      console.log("Email no valido");
+    } else if (!passwordRegex.test(password)) {
+      console.log(
+        "La contraseña debe ser de al menos 6 caracteres, incluir una mayúscula y un número."
+      );
+    } else {
+      const userData = {
+        name: name,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+        address: address,
+        password: password,
+        role: role,
+      };
 
-    // console.log(userData);
-    fetch(`http://localhost:3000/user/signup/${companyId}`, {
-      method: "POST",
-      body: JSON.stringify(userData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        if (data.message) {
-          if (rol == SuperAdmin) {
-            navegar("/");
-          } else if (rol == Admin) {
-            navegar("/admin");
-          }
-        } else {
-          console.log("Error:", data.error);
-        }
+      // console.log(userData);
+      fetch(`http://localhost:3000/user/signup/${companyID}`, {
+        method: "POST",
+        body: JSON.stringify(userData),
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data);
+          if (data.message) {
+            if (rol == SuperAdmin) {
+              navegar("/");
+            } else if (rol == Admin) {
+              navegar("/admin");
+            }
+          } else {
+            console.log("Error:", data.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
   };
 
   return (
@@ -150,8 +170,8 @@ export function Register() {
                 <option value="0" disabled>
                   -- Seleccionar --
                 </option>
-                <option value="Admin">Admin</option>
-                <option value="User">User</option>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
               </select>
             </div>
             <div className="text-center">

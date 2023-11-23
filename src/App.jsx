@@ -15,6 +15,7 @@ import { Employe } from "./Components/Employe";
 import ProtectedRouter from "./Components/ProtectedRouter";
 import { userRoles } from "./logic/constantes";
 import { UserInfo } from "./Components/InforUser";
+import { Departaments } from "./Components/Departaments";
 function App() {
   const { SuperAdmin, Admin, User } = userRoles;
   return (
@@ -59,6 +60,7 @@ function App() {
           <Route path="/configuraciones" element={<Settings />} />
           <Route path="/empleado/:emploID" element={<Employe />} />
           <Route path="/infouser/:id" element={<UserInfo />} />
+          <Route path="/departamentos" element={<Departaments />} />
         </Route>
       </Routes>
     </div>
