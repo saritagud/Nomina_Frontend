@@ -4,19 +4,20 @@ import { SideBar } from "./Sidebar";
 import { Link } from 'react-router-dom';
 import { FormEmployeed } from './FormEmployeed';
 import ModalDelete from './ModalDelete';
-//
+import { deleteEmployee } from '../services/employees';
+
 export function Employees() {
   const [employees, setEmployees] = useState([])
   const [employeeSelect, setEmployeeSelect] = useState(null)
   const [modalDelete, setModalDelete] = useState(false)
   const [modalEdit, setModalEdit] = useState(false)
   const [modalAdd, setModalAdd] = useState(false)
-  // const companyID = JSON.parse(localStorage.getItem('company')).id
+  const companyID = JSON.parse(localStorage.getItem('company')).id
   // const token = JSON.parse(localStorage.getItem('token'))
 
   useEffect(() => {
     // Realizar solicitud GET para obtener datos de empleados desde la API
-    fetch(`http://localhost:3000/employee/all`, {
+    fetch(`http://localhost:3000/employee/all-company/${companyID}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +35,7 @@ export function Employees() {
       .catch((error) => {
         console.error('Error al obtener datos de empleados:', error);
       });
-  }, []);
+  }, [companyID]);
 
   return (
     <div className="flex">
@@ -87,7 +88,7 @@ export function Employees() {
           </tbody>
         </table>
         {modalDelete && (
-          <ModalDelete peticion={'hola'} setStateModal={setModalDelete}/>
+          <ModalDelete peticion={deleteEmployee} setStateModal={setModalDelete} id={employeeSelect}/>
         )}
         {modalEdit && (
           <FormEmployeed dataEdit={employeeSelect} setStateModal={setModalEdit}/>
