@@ -1,63 +1,395 @@
-import { BiArrowBack } from "react-icons/bi";
-import { userRoles } from "../logic/constantes";
-import { authComponent } from "../logic/authComponent";
-import { useNavigate } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi"
+import { userRoles } from "../logic/constantes"
+import { authComponent } from "../logic/authComponent"
+import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { formatearFecha } from "../logic/functions"
 
-export function FormEmployeed({setModalRegister}) {
+export function FormEmployeed({ dataEdit = null, setStateModal }) {
   const navegar = useNavigate()
   const { Admin, User } = userRoles
+  const [departments, setDepartments] = useState([])
+  const [departmentSelected, setDepartmentSelected] = useState("0")
+  const [employee, setEmployee] = useState({
+    name: '',
+    lastName: '',
+    identityCard: '',
+    birthdate: '',
+    gender: '0',
+    address: '',
+    email: '',
+    phone: '',
+    civilStatus: '0',
+    startDate: '',
+    charge: '',
+    baseSalary: '',
+  })
+  const companyID = JSON.parse(localStorage.getItem("company")).id
+  console.log(employee);
+
+  useEffect(() => {
+    if (dataEdit) {
+      setEmployee({
+        ...dataEdit,
+        birthdate: formatearFecha(dataEdit.birthdate),
+        startDate: formatearFecha(dataEdit.startDate),
+      })
+      setDepartmentSelected(dataEdit.departmentId)
+      console.log(dataEdit);
+    }
+
+    fetch(`http://localhost:3000/department/all/${companyID}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        // console.log("Success:", data.departments);
+        if (data.departments) {
+          setDepartments(data.departments)
+        } else {
+          console.log("Error:", data.error)
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error)
+      })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Comprueba que el componente siga teniendo una sesion activa y el rol sea permitido
   const auth = authComponent([Admin, User])
-  if (!auth) return navegar('/admin')
+  if (!auth) return navegar("/admin")
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    let data = {}
+
+    if (employee.name == '') return console.error('El campo Nombre no puede estar vacio')
+    if (employee.lastName == '') return console.error('El campo Apellido no puede estar vacio')
+    if (employee.identityCard == '') return console.error('El campo Cedula no puede estar vacio')
+    if (employee.birthdate == '') return console.error('El campo Fecha de nacimiento no puede estar vacio')
+    if (employee.gender == '0') return console.error('El campo Genero no puede estar vacio')
+    if (employee.address == '') return console.error('El campo Direcccion no puede estar vacio')
+    if (employee.email == '') return console.error('El campo Email no puede estar vacio')
+    if (employee.phone == '') return console.error('El campo Telefono no puede estar vacio')
+    if (employee.civilStatus == '0') return console.error('El campo Estado Civil no puede estar vacio')
+    if (employee.startDate == '') return console.error('El campo Fecha de inicio no puede estar vacio')
+    if (employee.charge == '') return console.error('El campo Cargo no puede estar vacio')
+    if (employee.baseSalary == '') return console.error('El campo Salario Base no puede estar vacio')
+    if (!departmentSelected) return console.error('El campo Departamento no puede estar vacio')
+
+    // FALTA: Validar cuando aun no han editado ningun dato
+    if (dataEdit) {
+      if (employee.name !== dataEdit.name) 
+        data = {
+          ...data,
+          name: employee.name
+        }
+      if (employee.lastName !== dataEdit.lastName) 
+        data = {
+          ...data,
+          lastName: employee.lastName
+        }
+      if (employee.identityCard !== dataEdit.identityCard) 
+        data = {
+          ...data,
+          identityCard: employee.identityCard
+        }
+      if (employee.birthdate !== dataEdit.birthdate) 
+        data = {
+          ...data,
+          birthdate: employee.birthdate
+        }
+      if (employee.gender !== dataEdit.gender) 
+        data = {
+          ...data,
+          gender: employee.gender
+        }
+      if (employee.address !== dataEdit.address) 
+        data = {
+          ...data,
+          address: employee.address
+        }
+      if (employee.email !== dataEdit.email) 
+        data = {
+          ...data,
+          email: employee.email
+        }
+      if (employee.phone !== dataEdit.phone) 
+        data = {
+          ...data,
+          phone: employee.phone
+        }
+      if (employee.civilStatus !== dataEdit.civilStatus) 
+        data = {
+          ...data,
+          civilStatus: employee.civilStatus
+        }
+      if (employee.startDate !== dataEdit.startDate) 
+        data = {
+          ...data,
+          startDate: employee.startDate
+        }
+      if (employee.charge !== dataEdit.charge) 
+        data = {
+          ...data,
+          charge: employee.charge
+        }
+      if (employee.baseSalary !== dataEdit.baseSalary) 
+        data = {
+          ...data,
+          baseSalary: employee.baseSalary
+        }
+      if (departmentSelected !== dataEdit.departmentId) 
+        data = {
+          ...data,
+          department: departmentSelected
+        }
+      
+      fetch(
+        `http://localhost:3000/employee/edit-employee/${dataEdit.id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+        .then(response => response.json())
+        .then(data => {
+          console.log("Success:", data.message)
+          if (data.message) {
+            setStateModal(false);
+          } else {
+            console.log("Error:", data.error)
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error)
+        })
+    } else {
+      data = employee
+      console.log(data);
+      fetch(
+        `http://localhost:3000/employee/create-employee/${companyID}/${departmentSelected}`,
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+        .then(response => response.json())
+        .then(data => {
+          console.log("Success:", data.newEmployee)
+          if (data.newEmployee) {
+            setStateModal(false);
+          } else {
+            console.log("Error:", data.error)
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error)
+        })
+    }
+  }
+
+  const handleChange = e => {
+    const name = e.target.name
+    let value = e.target.value
+    if (name === "identityCard" || name === "baseSalary") {
+      value = parseFloat(value)
+    }
+    if (name === "department") {
+      setDepartmentSelected(e.target.value)
+      return
+    }
+    setEmployee({
+      ...employee,
+      [name]: value
+    })
+  }
 
   return (
-    <section className="absolute top-0 left-0 bottom-0 right-0 bg-grisClaro flex justify-center items-center">
-      <BiArrowBack className="absolute top-2 left-3 z-10 text-3xl cursor-pointer" onClick={() => setModalRegister(false)}></BiArrowBack>
-      <form className="grid grid-cols-2 gap-x-20 gap-y-3">
+    <section className="fixed top-0 left-0 bottom-0 right-0 bg-grisClaro flex justify-center items-center z-20">
+      <BiArrowBack
+        className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"
+        onClick={() => setStateModal(false)}
+      ></BiArrowBack>
+      <form
+        className="grid grid-cols-2 gap-x-20 gap-y-3"
+        onSubmit={handleSubmit}
+      >
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
-            <label htmlFor="name" className="text-xl">Nombre</label>
-            <input type="text" name="name" id="name" className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80" placeholder="Ingresa el nombre"/>
+            <label
+              htmlFor="name"
+              className="text-xl"
+            >
+              Nombre
+            </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+              placeholder="Ingresa el nombre"
+              value={employee.name}
+              onChange={handleChange}
+            />
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="last_name" className="text-xl">Apellido</label>
-            <input type="text" name="last_name" id="last_name" className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80" placeholder="Ingresa el apellido"/>
+            <label
+              htmlFor="lastName"
+              className="text-xl"
+            >
+              Apellido
+            </label>
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+              placeholder="Ingresa el apellido"
+              value={employee.lastName}
+              onChange={handleChange}
+            />
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="CI" className="text-xl">Cedula</label>
-            <input type="tel" name="CI" id="CI" className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80" placeholder="Ingresa la cedula"/>
+            <label
+              htmlFor="identityCard"
+              className="text-xl"
+            >
+              Cedula
+            </label>
+            <input
+              type="number"
+              name="identityCard"
+              id="identityCard"
+              className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+              value={employee.identityCard}
+              placeholder="Ingresa la cedula"
+              onChange={handleChange}
+            />
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="birthdate" className="text-xl">Fecha de nacimiento</label>
-            <input type="date" name="birthdate" id="birthdate" className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"/>
+            <label
+              htmlFor="birthdate"
+              className="text-xl"
+            >
+              Fecha de nacimiento
+            </label>
+            <input
+              type="date"
+              name="birthdate"
+              id="birthdate"
+              className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+              value={employee.birthdate}
+              onChange={handleChange}
+            />
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="gender" className="text-xl">Genero</label>
-            <select name="gender" id="gender" className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80">
-              <option value="0" disabled selected>-- Seleccionar --</option>
+            <label
+              htmlFor="gender"
+              className="text-xl"
+            >
+              Genero
+            </label>
+            <select
+              name="gender"
+              id="gender"
+              className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+              value={employee.gender}
+              onChange={handleChange}
+            >
+              <option
+                value="0"
+                disabled
+              >
+                -- Seleccionar --
+              </option>
               <option value="Masculino">Masculino</option>
               <option value="Femenino">Femenino</option>
             </select>
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="address" className="text-xl">Direccion</label>
-            <input type="text" name="address" id="address" className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80" placeholder="Ingresa la direccion"/>
+            <label
+              htmlFor="address"
+              className="text-xl"
+            >
+              Direccion
+            </label>
+            <input
+              type="text"
+              name="address"
+              id="address"
+              className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+              value={employee.address}
+              placeholder="Ingresa la direccion"
+              onChange={handleChange}
+            />
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="email" className="text-xl">Email</label>
-            <input type="email" name="email" id="email" className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80" placeholder="Ingresa el email"/>
+            <label
+              htmlFor="email"
+              className="text-xl"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+              value={employee.email}
+              placeholder="Ingresa el email"
+              onChange={handleChange}
+            />
           </div>
         </div>
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
-            <label htmlFor="phone" className="text-xl">Numero de telefono</label>
-            <input type="tel" name="phone" id="phone" className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80" placeholder="Ingresa el telefono"/>
+            <label
+              htmlFor="phone"
+              className="text-xl"
+            >
+              Numero de telefono
+            </label>
+            <input
+              type="tel"
+              name="phone"
+              id="phone"
+              className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+              value={employee.phone}
+              placeholder="Ingresa el telefono"
+              onChange={handleChange}
+            />
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="civil_status" className="text-xl">Estado Civil</label>
-            <select name="civil_status" id="civil_status" className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80">
-              <option value="0" disabled selected>-- Seleccionar --</option>
+            <label
+              htmlFor="civilStatus"
+              className="text-xl"
+            >
+              Estado Civil
+            </label>
+            <select
+              name="civilStatus"
+              id="civilStatus"
+              className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+              value={employee.civilStatus}
+              onChange={handleChange}
+            >
+              <option
+                value="0"
+                disabled
+              >
+                -- Seleccionar --
+              </option>
               <option value="Soltero/a">Soltero/a</option>
               <option value="Casado/a">Casado/a</option>
               <option value="Divorciado/a">Divorciado/a</option>
@@ -65,25 +397,93 @@ export function FormEmployeed({setModalRegister}) {
             </select>
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="start_date" className="text-xl">Fecha de inicio del cargo</label>
-            <input type="date" name="start_date" id="start_date" className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"/>
+            <label
+              htmlFor="startDate"
+              className="text-xl"
+            >
+              Fecha de inicio del cargo
+            </label>
+            <input
+              type="date"
+              name="startDate"
+              id="startDate"
+              className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+              value={employee.startDate}
+              onChange={handleChange}
+            />
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="charge" className="text-xl">Cargo</label>
-            <input type="text" name="charge" id="charge" className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80" placeholder="Ingresa el cargo"/>
+            <label
+              htmlFor="charge"
+              className="text-xl"
+            >
+              Cargo
+            </label>
+            <input
+              type="text"
+              name="charge"
+              id="charge"
+              className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+              value={employee.charge}
+              placeholder="Ingresa el cargo"
+              onChange={handleChange}
+            />
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="department" className="text-xl">Departamento</label>
-            <input type="text" name="department" id="department" className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80" placeholder="Ingresa el departamento"/>
+            <label
+              htmlFor="department"
+              className="text-xl"
+            >
+              Departamento
+            </label>
+            <select
+              name="department"
+              id="department"
+              className="bg-azulClaro px-3 py-2 rounded-md text-grisClaro outline-none w-80"
+              value={departmentSelected}
+              onChange={handleChange}
+            >
+              <option
+                value="0"
+                disabled
+              >
+                -- Elegir departamento --
+              </option>
+              {departments.map(department => (
+                <option
+                  key={department.id}
+                  value={department.id}
+                >
+                  {department.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="base_salary" className="text-xl">Salario Base</label>
-            <input type="text" name="base_salary" id="base_salary" className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80" placeholder="Ingresa el salario base"/>
+            <label
+              htmlFor="baseSalary"
+              className="text-xl"
+            >
+              Salario Base{" "}
+              <span className="text-sm">
+                {'(Para centimos usar punto ".")'}
+              </span>
+            </label>
+            <input
+              type="text"
+              name="baseSalary"
+              id="baseSalary"
+              className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+              value={employee.baseSalary}
+              placeholder="Ingresa el salario base"
+              onChange={handleChange}
+            />
           </div>
-          <button className="bg-azulOscuro mx-auto mt-auto px-3 py-2 font-bold text-grisClaro outline-none rounded-md">Registrar Usuario</button>
+          <button className="bg-azulOscuro mx-auto mt-auto px-3 py-2 font-bold text-grisClaro outline-none rounded-md">
+            Registrar Usuario
+          </button>
         </div>
       </form>
     </section>
-  );
+  )
 }
-  
