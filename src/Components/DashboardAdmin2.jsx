@@ -8,10 +8,10 @@ export function DashboardAdmin2() {
   let styleLink =
     "bg-grisOscuro h-24 border-black/40 border-r-4 border-b-4 w-full rounded-md text-lg text-center flex justify-center items-center";
   return (
-    <div className="flex h-full">
+    <div className="h-full">
       <SideBar />
-      <section className="flex flex-col justify-center h-full w-screen items-center p-20 gap-10 font-Quicksand text-center">
-        <section className="bg-grisOscuro rounded-md p-7 w-full flex justify-between h-36 shadow-right-dark ">
+      <section className="flex flex-col justify-center items-end p-20 gap-10 font-Quicksand text-center ">
+        <section className="bg-grisOscuro rounded-md p-7 flex justify-between h-36 shadow-right-dark w-4/5">
           <div className="flex flex-col justify-between h-full ">
             <p className="text-lg">Bienvenid@ {name}!</p>
 
@@ -19,7 +19,7 @@ export function DashboardAdmin2() {
           </div>
         </section>
 
-        <section className="flex justify-between w-full gap-10">
+        <section className="flex justify-between w-4/5 gap-10">
           <div className="flex flex-col gap-10 w-full">
             <Link className={styleLink} to={"/registro"}>
               Agregar Usuarios

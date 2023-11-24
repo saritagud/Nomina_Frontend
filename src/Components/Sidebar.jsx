@@ -25,10 +25,10 @@ export function SideBar() {
     navegar("/login");
   };
   return (
-    <div className="h-screen">
+    <div className="fixed ">
       <div
         className={` ${
-          open ? "w-64" : "w-20 "
+          open ? "w-64" : "w-20 h-screen"
         } bg-azulClaro p-5 h-full pt-20 relative duration-300`}
       >
         <FaArrowLeft
@@ -75,7 +75,7 @@ export function SideBar() {
             </Link>
 
             <div
-              className="flex  p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 hover:rounded-md border-t-2 border-grisClaro/60 mt-80
+              className="flex  p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 mt-80 border-t-2 border-grisClaro/70 hover:rounded-md  
               "
               onClick={logout}
             >
@@ -143,6 +143,19 @@ export function SideBar() {
                 <Link
                   className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
               "
+                  to={"/departamentos"}
+                >
+                  <FaClipboardList />
+                  <p
+                    className={`${!open && "hidden"} origin-left duration-200`}
+                  >
+                    Departamentos
+                  </p>
+                </Link>
+
+                <Link
+                  className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
+              "
                   to={"/configuraciones"}
                 >
                   <FaCog />
@@ -154,7 +167,7 @@ export function SideBar() {
                 </Link>
 
                 <div
-                  className="flex  p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 mt-28 border-t-2 border-grisClaro/70 hover:rounded-md  
+                  className="flex p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 mt-10 border-t-2 border-grisClaro/70 hover:rounded-md  
               "
                   onClick={logout}
                 >
@@ -200,7 +213,7 @@ export function SideBar() {
                       </p>
                     </Link>
                     <div
-                      className="flex  p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4  
+                      className="flex  p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 mt-10 border-t-2 border-grisClaro/70 hover:rounded-md  
               "
                       onClick={logout}
                     >

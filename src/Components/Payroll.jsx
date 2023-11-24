@@ -4,11 +4,11 @@ export function Payroll() {
   //const payroll = null // Asi se ve cuando entra a la vista
   const payroll = [5] // Colocar un numero en el arreglo para activar la tabla, dejar el arreglo vacio, simula que no hay empleados para esa nomina
   return (
-    <div className="flex">
+    <div className="h-full">
       <SideBar />
-      <main className="w-screen h-screen p-10 flex flex-col gap-10">
-        <section className="flex justify-between items-center">
-          <h1 className="text-3xl">Nomina</h1>
+      <main className="w-full p-10 flex flex-col gap-10 items-end ">
+        <section className="flex justify-between items-center w-4/5">
+          <h1 className="text-3xl text-left w-full">Nomina</h1>
           <form className="flex gap-2">
             <select
               name="payroll"
@@ -39,7 +39,7 @@ export function Payroll() {
         ) : (
           payroll?.length > 0 && (
             <>
-              <table className="bg-grisClaro rounded-md shadow-right-dark w-full px-4 border-separate border-spacing-0 border-spacing-y-4">
+              <table className="bg-grisClaro rounded-md shadow-right-dark  px-4 border-separate border-spacing-0 border-spacing-y-4 w-4/5">
                 <thead className="px-5">
                   <tr>
                     <th className="p-4 text-lg text-start">Empleado</th>
@@ -91,9 +91,131 @@ export function Payroll() {
                       Recursos Humanos
                     </td>
                   </tr>
+
+                  <tr className="bg-grisOscuro">
+                    <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
+                    <td className="p-4 text-lg">30</td>
+                    <td className="p-4 text-lg">20.000$</td>
+                    <td className="p-4 text-lg">500$</td>
+                    <td className="p-4 text-lg">100$</td>
+                    <td className="p-4 text-lg rounded-r-2xl">
+                      Recursos Humanos
+                    </td>
+                  </tr>
+
+                  <tr className="bg-grisOscuro">
+                    <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
+                    <td className="p-4 text-lg">30</td>
+                    <td className="p-4 text-lg">20.000$</td>
+                    <td className="p-4 text-lg">500$</td>
+                    <td className="p-4 text-lg">100$</td>
+                    <td className="p-4 text-lg rounded-r-2xl">
+                      Recursos Humanos
+                    </td>
+                  </tr>
+
+                  <tr className="bg-grisOscuro">
+                    <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
+                    <td className="p-4 text-lg">30</td>
+                    <td className="p-4 text-lg">20.000$</td>
+                    <td className="p-4 text-lg">500$</td>
+                    <td className="p-4 text-lg">100$</td>
+                    <td className="p-4 text-lg rounded-r-2xl">
+                      Recursos Humanos
+                    </td>
+                  </tr>
+
+                  <tr className="bg-grisOscuro">
+                    <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
+                    <td className="p-4 text-lg">30</td>
+                    <td className="p-4 text-lg">20.000$</td>
+                    <td className="p-4 text-lg">500$</td>
+                    <td className="p-4 text-lg">100$</td>
+                    <td className="p-4 text-lg rounded-r-2xl">
+                      Recursos Humanos
+                    </td>
+                  </tr>
+
+                  <tr className="bg-grisOscuro">
+                    <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
+                    <td className="p-4 text-lg">30</td>
+                    <td className="p-4 text-lg">20.000$</td>
+                    <td className="p-4 text-lg">500$</td>
+                    <td className="p-4 text-lg">100$</td>
+                    <td className="p-4 text-lg rounded-r-2xl">
+                      Recursos Humanos
+                    </td>
+                  </tr>
+
+                  <tr className="bg-grisOscuro">
+                    <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
+                    <td className="p-4 text-lg">30</td>
+                    <td className="p-4 text-lg">20.000$</td>
+                    <td className="p-4 text-lg">500$</td>
+                    <td className="p-4 text-lg">100$</td>
+                    <td className="p-4 text-lg rounded-r-2xl">
+                      Recursos Humanos
+                    </td>
+                  </tr>
+
+
+                  <tr className="bg-grisOscuro">
+                    <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
+                    <td className="p-4 text-lg">30</td>
+                    <td className="p-4 text-lg">20.000$</td>
+                    <td className="p-4 text-lg">500$</td>
+                    <td className="p-4 text-lg">100$</td>
+                    <td className="p-4 text-lg rounded-r-2xl">
+                      Recursos Humanos
+                    </td>
+                  </tr>
+
+                  <tr className="bg-grisOscuro">
+                    <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
+                    <td className="p-4 text-lg">30</td>
+                    <td className="p-4 text-lg">20.000$</td>
+                    <td className="p-4 text-lg">500$</td>
+                    <td className="p-4 text-lg">100$</td>
+                    <td className="p-4 text-lg rounded-r-2xl">
+                      Recursos Humanos
+                    </td>
+                  </tr>
+
+                  <tr className="bg-grisOscuro">
+                    <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
+                    <td className="p-4 text-lg">30</td>
+                    <td className="p-4 text-lg">20.000$</td>
+                    <td className="p-4 text-lg">500$</td>
+                    <td className="p-4 text-lg">100$</td>
+                    <td className="p-4 text-lg rounded-r-2xl">
+                      Recursos Humanos
+                    </td>
+                  </tr>
+
+                  <tr className="bg-grisOscuro">
+                    <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
+                    <td className="p-4 text-lg">30</td>
+                    <td className="p-4 text-lg">20.000$</td>
+                    <td className="p-4 text-lg">500$</td>
+                    <td className="p-4 text-lg">100$</td>
+                    <td className="p-4 text-lg rounded-r-2xl">
+                      Recursos Humanos
+                    </td>
+                  </tr>
+
+                  <tr className="bg-grisOscuro">
+                    <td className="p-4 text-lg rounded-l-2xl">Sara Gudiño</td>
+                    <td className="p-4 text-lg">30</td>
+                    <td className="p-4 text-lg">20.000$</td>
+                    <td className="p-4 text-lg">500$</td>
+                    <td className="p-4 text-lg">100$</td>
+                    <td className="p-4 text-lg rounded-r-2xl">
+                      Recursos Humanos
+                    </td>
+                  </tr>
                 </tbody>
               </table>
-              <section className="flex justify-between w-full px-5">
+              <section className="flex justify-between w-4/5 px-5 ">
                 <p className="bg-azulClaro px-5 py-3 rounded-md text-grisClaro font-semibold">
                   Total de pagos: 40
                 </p>
