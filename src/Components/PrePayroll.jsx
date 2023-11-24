@@ -95,17 +95,18 @@ export function PrePayroll() {
     //   }
     // ])
 
-    fetch(`http://localhost:3000/payroll/create-payroll/${companyID}/${departmentID}`, {
-      method: "POST",
+    fetch(`http://localhost:3000/payroll/generate-payroll/${companyID}/${departmentID}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log("Success:", data.newCompany);
+        console.log("Success:", data.newCompany);
         if (data.employees) {
           setPayroll(data.employees)
+          setDepartmentSelected(departmentID)
         } else {
           console.log("Error:", data.error);
         }

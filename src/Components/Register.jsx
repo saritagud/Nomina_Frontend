@@ -12,7 +12,7 @@ export function Register() {
   const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
-  const companyId = JSON.parse(localStorage.getItem("company")).id;
+  const companyID = JSON.parse(localStorage.getItem("company")).id;
   const rol = JSON.parse(localStorage.getItem("user")).role;
 
   const { SuperAdmin, Admin } = userRoles;
