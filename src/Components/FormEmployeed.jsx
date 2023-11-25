@@ -223,11 +223,12 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
   }
 
   return (
-    <section className="fixed top-0 left-0 bottom-0 right-0 bg-grisClaro flex justify-center items-center z-20">
-      <BiArrowBack
-        className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"
-        onClick={() => setStateModal(false)}
-      ></BiArrowBack>
+    <section className="fixed top-0 left-0 bottom-0 right-0 bg-grisClaro flex flex-col items-center justify-center z-20">
+    <h1 className="text-4xl font-bold mb-6">Registro de Empleados</h1>
+    <BiArrowBack
+      className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"
+      onClick={() => setStateModal(false)}
+    />
       <form
         className="grid grid-cols-2 gap-x-20 gap-y-3"
         onSubmit={handleSubmit}

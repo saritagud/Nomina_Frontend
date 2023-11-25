@@ -94,7 +94,9 @@ export function Register() {
     <>
       <section className="absolute top-0 left-0 bottom-0 right-0 bg-grisClaro flex flex-col justify-center items-center">
         <div onClick={back}>
-          <BiArrowBack className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"></BiArrowBack>
+          <BiArrowBack className="absolute top-2 left-3 z-10 text-3xl cursor-pointer">
+          </BiArrowBack>
+          <h1 className="text-4xl font-bold mb-6">Registrar Usuarios</h1>
         </div>
         <form className="w-full gap-x-20 gap-y-3 grid grid-cols-2 px-40">
           <div className="flex flex-col gap-3">
