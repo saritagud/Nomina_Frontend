@@ -54,7 +54,7 @@ export function CreateCompany({setModalCreateCompany}) {
           className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"
           onClick={() => setModalCreateCompany(false)}
         ></BiArrowBack>
-        <h2 className="text-3xl text-start ">Crear Empresa</h2>
+        <h1 className="text-4xl font-bold mb-6">Crear Empresa</h1>
         <form className="flex flex-col gap-5 " onSubmit={handleSubmit}>
           <label htmlFor="name" className="text-xl">
             Nombre
