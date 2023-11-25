@@ -6,12 +6,14 @@ import { FaEllipsisV } from "react-icons/fa";
 export function Departaments() {
   const [department, setDepartment] = useState([]);
   const companyID = JSON.parse(localStorage.getItem("company")).id;
+  const token = JSON.parse(localStorage.getItem("token"));
 
   useEffect(() => {
     fetch(`http://localhost:3000/department/all/${companyID}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
     })
       .then((response) => response.json())

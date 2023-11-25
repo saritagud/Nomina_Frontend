@@ -6,9 +6,16 @@ import { FaEllipsisV } from "react-icons/fa";
 export function Users() {
   const [users, setUsers] = useState([]);
   const companyID = JSON.parse(localStorage.getItem("company")).id;
+  const token = JSON.parse(localStorage.getItem("token"));
   useEffect(() => {
     // Realizar solicitud GET para obtener datos de usuarios
-    fetch(`http://localhost:3000/user/all-company/${companyID}`)
+    fetch(`http://localhost:3000/user/all-company/${companyID}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         // Verificar si la respuesta contiene la propiedad "users"

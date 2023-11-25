@@ -3,10 +3,15 @@ import { useState, useEffect } from "react";
 
 export function Companies() {
   const [company, setCompany] = useState([]);
+  const token = JSON.parse(localStorage.getItem("token"));
+  
   useEffect(() => {
     fetch("http://localhost:3000/company/all", {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
     })
       .then((response) => response.json())
       .then((data) => {

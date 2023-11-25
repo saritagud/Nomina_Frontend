@@ -9,6 +9,7 @@ export function AddDeductions({ setModalDeduction }) {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
   const [taxInformation, setTaxInformation] = useState("");
+  const token = JSON.parse(localStorage.getItem("token"));
 
   const { Admin } = userRoles;
 
@@ -33,6 +34,7 @@ export function AddDeductions({ setModalDeduction }) {
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
       })
         .then((response) => response.json())

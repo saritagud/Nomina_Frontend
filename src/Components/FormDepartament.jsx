@@ -8,6 +8,7 @@ export function FormDepartament({ setModalDepartament }) {
   const navegar = useNavigate();
   const [name, setName] = useState("");
   const companyId = JSON.parse(localStorage.getItem("company")).id;
+  const token = JSON.parse(localStorage.getItem("token"));
   const { Admin } = userRoles;
 
   // Comprueba que el componente siga teniendo una sesion activa y el rol sea permitido
@@ -30,6 +31,7 @@ export function FormDepartament({ setModalDepartament }) {
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
       })
         .then((response) => response.json())

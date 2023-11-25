@@ -13,7 +13,7 @@ export function Employees() {
   const [modalEdit, setModalEdit] = useState(false)
   const [modalAdd, setModalAdd] = useState(false)
   const companyID = JSON.parse(localStorage.getItem('company')).id
-  // const token = JSON.parse(localStorage.getItem('token'))
+  const token = JSON.parse(localStorage.getItem('token'))
 
   useEffect(() => {
     // Realizar solicitud GET para obtener datos de empleados desde la API
@@ -21,6 +21,7 @@ export function Employees() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
     })
       .then((response) => response.json())

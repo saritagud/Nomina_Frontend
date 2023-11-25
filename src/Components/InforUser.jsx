@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { SideBar } from "./Sidebar";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
@@ -7,9 +7,16 @@ export function UserInfo() {
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const companyID = JSON.parse(localStorage.getItem("company")).id;
+  const token = JSON.parse(localStorage.getItem("token"));
   useEffect(() => {
     // Realizar solicitud GET para obtener datos del usuario por su ID
-    fetch(`http://localhost:3000/user/all-company/${companyID}`)
+    fetch(`http://localhost:3000/user/all-company/${companyID}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         // Verificar si la respuesta contiene los datos del usuario
