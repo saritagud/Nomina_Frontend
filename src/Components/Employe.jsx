@@ -6,11 +6,15 @@ import { formatearFecha } from "../logic/functions";
 export function Employe() {
   const [employe, setEmploye] = useState([]);
   const { emploID } = useParams();
-  console.log(emploID);
+  const token = JSON.parse(localStorage.getItem("token"));
+  // console.log(emploID);
   useEffect(() => {
     fetch(`http://localhost:3000/employee/find-employee/${emploID}`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
     })
       .then((response) => response.json())
       .then((data) => {

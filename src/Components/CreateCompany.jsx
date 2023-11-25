@@ -8,6 +8,7 @@ export function CreateCompany({setModalCreateCompany}) {
   const navegar = useNavigate()
   const [name, setName] = useState("");
   const [type, setType] = useState("");
+  const token = JSON.parse(localStorage.getItem("token"));
   const { SuperAdmin } = userRoles
 
   // Comprueba que el componente siga teniendo una sesion activa y el rol sea permitido
@@ -27,6 +28,7 @@ export function CreateCompany({setModalCreateCompany}) {
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
     })
       .then((response) => response.json())

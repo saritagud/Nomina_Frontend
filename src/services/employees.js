@@ -5,7 +5,8 @@ export const deleteEmployee = (token, companyID, employeeID) => {
     {
       method: "DELETE",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       }
     }
   )

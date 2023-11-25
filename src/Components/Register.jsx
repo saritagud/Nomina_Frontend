@@ -14,6 +14,7 @@ export function Register() {
   const [role, setRole] = useState("");
   const companyID = JSON.parse(localStorage.getItem("company")).id;
   const rol = JSON.parse(localStorage.getItem("user")).role;
+  const token = JSON.parse(localStorage.getItem("token"));
 
   const { SuperAdmin, Admin } = userRoles;
 
@@ -67,6 +68,7 @@ export function Register() {
         body: JSON.stringify(userData),
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
         },
       })
         .then((response) => response.json())

@@ -25,7 +25,8 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
     baseSalary: '',
   })
   const companyID = JSON.parse(localStorage.getItem("company")).id
-  console.log(employee);
+  const token = JSON.parse(localStorage.getItem("token"));
+  // console.log(employee);
 
   useEffect(() => {
     if (dataEdit) {
@@ -36,13 +37,14 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
         baseSalary: dataEdit.baseSalary.toString(),
       })
       setDepartmentSelected(dataEdit.departmentId)
-      console.log(dataEdit);
+      // console.log(dataEdit);
     }
 
     fetch(`http://localhost:3000/department/all/${companyID}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       }
     })
       .then(response => response.json())
@@ -156,7 +158,8 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
           method: "PUT",
           body: JSON.stringify(data),
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           }
         }
       )
@@ -185,7 +188,8 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
           method: "POST",
           body: JSON.stringify(data),
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           }
         }
       )

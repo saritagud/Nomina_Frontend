@@ -11,13 +11,14 @@ export function PrePayroll() {
   const [employeeDelete, setEmployeeDelete] = useState(null)
   const [modalDelete, setModalDelete] = useState(false)
   const companyID = JSON.parse(localStorage.getItem('company')).id;
-  // const token = JSON.parse(localStorage.getItem('token'));
+  const token = JSON.parse(localStorage.getItem('token'));
 
   useEffect(() => {
     fetch(`http://localhost:3000/department/all/${companyID}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
     })
       .then((response) => response.json())
@@ -99,6 +100,7 @@ export function PrePayroll() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
     })
       .then((response) => response.json())
