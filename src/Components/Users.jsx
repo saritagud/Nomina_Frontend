@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaEllipsisV } from "react-icons/fa";
+import ModalDelete from "./ModalDelete";
+import { deleteUser } from "../services/users";
+import { deleteItemFromState } from "../logic/functions";
 
 export function Users() {
   const [users, setUsers] = useState([]);
+  const [userDelete, setUserDelete] = useState(null)
+  const [modalDelete, setModalDelete] = useState(false)
   const companyID = JSON.parse(localStorage.getItem("company")).id;
   const token = JSON.parse(localStorage.getItem("token"));
   useEffect(() => {
@@ -18,7 +23,7 @@ export function Users() {
       .then((response) => response.json())
       .then((data) => {
         // Verificar si la respuesta contiene la propiedad "users"
-        if (data && Array.isArray(data.users)) {
+        if (data.users) {
           setUsers(data.users); // Utilizar la propiedad "users" de la respuesta como el array de usuarios
         } else {
           console.error(
@@ -31,6 +36,16 @@ export function Users() {
         console.error("Error al obtener usuarios:", error);
       });
   }, []);
+
+  const confirmDelete = async () => {
+    const res = await deleteUser(token, companyID, userDelete)
+    if (res.message) {
+      const newState = deleteItemFromState(userDelete, [...users])
+      setUsers(newState)
+    } else {
+      console.error(res)
+    }
+  }
 
   return (
     <>
@@ -93,14 +108,11 @@ export function Users() {
                               Ver
                             </Link>
                             <button
-                              className="text-white w-28 rounded-md bg-azulClaro px-2 py-1 font-semibold"
-                              onClick={() => {}}
-                            >
-                              Editar
-                            </button>
-                            <button
                               className="text-white w-28 rounded-md bg-red-600 px-2 py-1 font-semibold"
-                              onClick={() => {}}
+                              onClick={() => {
+                                setUserDelete(user.id)
+                                setModalDelete(true)
+                              }}
                             >
                               Eliminar
                             </button>
@@ -112,6 +124,9 @@ export function Users() {
                 </table>
               </>
             )
+          )}
+          {modalDelete && (
+            <ModalDelete peticion={confirmDelete} setStateModal={setModalDelete} id={userDelete}/>
           )}
         </main>
       </div>
