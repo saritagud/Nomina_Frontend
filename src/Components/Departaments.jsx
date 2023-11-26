@@ -1,6 +1,4 @@
-import { SideBar } from "./Sidebar";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { FaEllipsisV } from "react-icons/fa";
 
 export function Departaments() {
@@ -32,13 +30,12 @@ export function Departaments() {
 
   return (
     <div className="h-full">
-      <SideBar />
-      <main className="w-screen  p-10 flex justify-end">
-        <section className="flex  flex-col w-4/5 gap-10">
+      <main className="w-full p-10 ">
+        <section className="flex flex-col w-full gap-10">
           <h1 className="text-3xl font-bold mt-10">Departamentos</h1>
           {department.map((departments) => (
             <div key={departments.id} className="flex items-center">
-              <div className="w-full flex justify-between items-center bg-grisClaro rounded-md mb-2 shadow-right-dark h-16">
+              <div className="w-full flex justify-between items-center bg-grisClaro rounded-md mb-2 shadow-right-dark h-16 border-2 border-grisOscuro">
                 <div className="w-full p-4 text-lg">{departments.name}</div>
                 <td className="relative p-4 text-lg rounded-r-2xl">
                   <input

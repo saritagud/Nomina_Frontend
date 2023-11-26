@@ -1,13 +1,11 @@
-import { SideBar } from "./Sidebar"
 
 export function Payroll() {
   //const payroll = null // Asi se ve cuando entra a la vista
   const payroll = [5] // Colocar un numero en el arreglo para activar la tabla, dejar el arreglo vacio, simula que no hay empleados para esa nomina
   return (
     <div className="h-full">
-      <SideBar />
-      <main className="w-full p-10 flex flex-col gap-10 items-end ">
-        <section className="flex justify-between items-center w-4/5">
+      <main className="w-full p-10 flex flex-col gap-10">
+        <section className="flex justify-between items-center ">
           <h1 className="text-3xl text-left w-full">Nomina</h1>
           <form className="flex gap-2">
             <select
@@ -39,7 +37,7 @@ export function Payroll() {
         ) : (
           payroll?.length > 0 && (
             <>
-              <table className="bg-grisClaro rounded-md shadow-right-dark  px-4 border-separate border-spacing-0 border-spacing-y-4 w-4/5">
+              <table className="bg-grisClaro rounded-md shadow-right-dark  px-4 border-separate border-spacing-0 border-spacing-y-4  border-2 border-grisOscuro">
                 <thead className="px-5">
                   <tr>
                     <th className="p-4 text-lg text-start">Empleado</th>
@@ -215,7 +213,7 @@ export function Payroll() {
                   </tr>
                 </tbody>
               </table>
-              <section className="flex justify-between w-4/5 px-5 ">
+              <section className="flex justify-between  px-5 ">
                 <p className="bg-azulClaro px-5 py-3 rounded-md text-grisClaro font-semibold">
                   Total de pagos: 40
                 </p>

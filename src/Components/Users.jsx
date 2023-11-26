@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { SideBar } from "./Sidebar";
 import { Link } from "react-router-dom";
 import { FaEllipsisV } from "react-icons/fa";
 
@@ -36,9 +35,8 @@ export function Users() {
   return (
     <>
       <div className="h-full">
-        <SideBar />
-        <main className="w-screen p-10 flex flex-col items-end gap-10">
-          <section className="flex justify-between items-center w-4/5">
+        <main className="w-full p-10 flex flex-col gap-10">
+          <section className="flex justify-between items-center w-full">
             <h1 className="text-3xl" style={{ fontWeight: "bold" }}>
               Usuarios
             </h1>
@@ -57,7 +55,7 @@ export function Users() {
           ) : (
             users?.length > 0 && (
               <>
-                <table className="bg-grisClaro rounded-md shadow-right-dark  px-4 border-separate border-spacing-0 border-spacing-y-4 w-4/5">
+                <table className="bg-grisClaro rounded-md shadow-right-dark  px-4 border-separate border-spacing-0 border-spacing-y-4 w-full">
                   <thead className="px-5">
                     <tr>
                       <th className="p-4 text-lg text-start">Nombre</th>
