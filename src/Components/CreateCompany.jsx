@@ -4,23 +4,33 @@ import { useNavigate } from "react-router-dom";
 import { authComponent } from "../logic/authComponent";
 import { userRoles } from "../logic/constantes";
 
-export function CreateCompany({setModalCreateCompany}) {
-  const navegar = useNavigate()
+export function CreateCompany({ setModalCreateCompany }) {
+  const navegar = useNavigate();
   const [name, setName] = useState("");
   const [type, setType] = useState("");
+  const [currency, setCurrency] = useState(""); 
+  const [country, setCountry] = useState(""); 
   const token = JSON.parse(localStorage.getItem("token"));
-  const { SuperAdmin } = userRoles
+  const { SuperAdmin } = userRoles;
 
-  // Comprueba que el componente siga teniendo una sesion activa y el rol sea permitido
-  const auth = authComponent([SuperAdmin])
-  if (!auth) return navegar('/')
+  
+  const auth = authComponent([SuperAdmin]);
+  if (!auth) return navegar("/");
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    
+    if (!name || !type || !currency || !country) {
+      console.log("Todos los campos son obligatorios");
+      return;
+    }
+
     const data = {
       name: name,
       type: type,
+      currency: currency, 
+      country: country, 
     };
 
     fetch("http://localhost:3000/company/create-company", {
@@ -28,16 +38,15 @@ export function CreateCompany({setModalCreateCompany}) {
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log("Success:", data.newCompany);
         if (data.newCompany) {
-          localStorage.setItem('company', JSON.stringify(data.newCompany))
-          setModalCreateCompany(false)
-          navegar('/registro')
+          localStorage.setItem("company", JSON.stringify(data.newCompany));
+          setModalCreateCompany(false);
+          navegar("/registro");
         } else {
           console.log("Error:", data.error);
         }
@@ -79,6 +88,32 @@ export function CreateCompany({setModalCreateCompany}) {
             onChange={(e) => setType(e.target.value)}
             className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
             placeholder="Ingresa el tipo de tu empresa"
+          />
+
+          <label htmlFor="currency" className="text-xl">
+            Moneda
+          </label>
+          <input
+            type="text"
+            name="currency"
+            id="currency"
+            value={currency}
+            onChange={(e) => setCurrency(e.target.value)}
+            className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+            placeholder="Ingresa la moneda de tu empresa"
+          />
+
+          <label htmlFor="country" className="text-xl">
+            País
+          </label>
+          <input
+            type="text"
+            name="country"
+            id="country"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+            placeholder="Ingresa el país de tu empresa"
           />
 
           <button className="bg-azulOscuro mx-auto px-3 py-2 font-bold text-grisClaro outline-none rounded-md mt-10">

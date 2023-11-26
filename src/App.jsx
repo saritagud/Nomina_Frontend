@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
+import React, { useState } from 'react';
 import { DashboardAdmin2 } from "./Components/DashboardAdmin2";
 import { DashboardSuperAdmin } from "./Components/DashboardSuperAdmin";
 import { Login } from "./Components/Login";
@@ -17,6 +18,7 @@ import { userRoles } from "./logic/constantes";
 import { UserInfo } from "./Components/InforUser";
 import { Departaments } from "./Components/Departaments";
 import { PayrollHistory } from "./Components/PayrollHistory";
+import { SideBar } from "./Components/Sidebar";
 
 function App() {
   const { SuperAdmin, Admin, User } = userRoles;
@@ -26,10 +28,16 @@ function App() {
 
   return (
     <div className="h-full">
+
+      {!isLoginPage && (
+        <SideBar open={isOpen} onToggle={() => setIsOpen(!isOpen)}/>
+      )}
       <Routes>
         <Route
           element={
-            <ProtectedRouter allowedRoles={[SuperAdmin]} redirectTo="/login" />
+            <ProtectedRouter 
+            allowedRoles={[SuperAdmin]} 
+            redirectTo="/login" />
           }
         >
           <Route index element={<DashboardSuperAdmin />} />
@@ -71,6 +79,7 @@ function App() {
         </Route>
       </Routes>
     </div>
+  
   );
 }
 //
