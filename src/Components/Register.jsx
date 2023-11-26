@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { userRoles } from "../logic/constantes";
 
 export function Register() {
@@ -17,14 +17,6 @@ export function Register() {
   const token = JSON.parse(localStorage.getItem("token"));
 
   const { SuperAdmin, Admin } = userRoles;
-
-  const back = () => {
-    if (rol == SuperAdmin) {
-      navegar("/");
-    } else if (rol == Admin) {
-      navegar("/admin");
-    }
-  };
 
   let styleInput =
     "bg-azulClaro p-4 rounded-md text-white placeholder:text-white placeholder:font-extralight w-full";
@@ -78,7 +70,7 @@ export function Register() {
             if (rol == SuperAdmin) {
               navegar("/");
             } else if (rol == Admin) {
-              navegar("/admin");
+              navegar("/usuarios");
             }
           } else {
             console.log("Error:", data.error);
@@ -93,11 +85,10 @@ export function Register() {
   return (
     <>
       <section className="absolute top-0 left-0 bottom-0 right-0 bg-grisClaro flex flex-col justify-center items-center">
-        <div onClick={back}>
-          <BiArrowBack className="absolute top-2 left-3 z-10 text-3xl cursor-pointer">
-          </BiArrowBack>
-          <h1 className="text-4xl font-bold mb-6">Registrar Usuarios</h1>
-        </div>
+        {rol === Admin && (
+          <BiArrowBack className="absolute top-2 left-3 z-10 text-3xl cursor-pointer" onClick={() => {navegar("/usuarios")}}/>
+        )}
+        <h1 className="text-4xl font-bold mb-16">Registrar Usuario</h1>
         <form className="w-full gap-x-20 gap-y-3 grid grid-cols-2 px-40">
           <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-1">

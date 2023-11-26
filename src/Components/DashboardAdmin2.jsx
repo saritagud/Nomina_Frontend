@@ -19,9 +19,6 @@ export function DashboardAdmin2() {
 
         <section className="flex justify-between w-full gap-10">
           <div className="flex flex-col gap-10 w-full">
-            <Link className={styleLink} to={"/registro"}>
-              Agregar Usuarios
-            </Link>
             <Link className={styleLink} to={"/usuarios"}>
               Ver usuarios
             </Link>

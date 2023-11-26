@@ -23,7 +23,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
     startDate: "",
     charge: "",
     baseSalary: "",
-    acount: "",
+    bankAccount: "",
   });
   const companyID = JSON.parse(localStorage.getItem("company")).id;
   const token = JSON.parse(localStorage.getItem("token"));
@@ -95,7 +95,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
       return console.error("El campo Cargo no puede estar vacio");
     if (employee.baseSalary == "")
       return console.error("El campo Salario Base no puede estar vacio");
-    if (employee.acount == "")
+    if (employee.bankAccount == "")
       return console.error("El campo Cuenta Bancaria no puede estar vacio");
     if (!departmentSelected)
       return console.error("El campo Departamento no puede estar vacio");
@@ -163,10 +163,10 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
           baseSalary: parseFloat(employee.baseSalary),
         };
 
-      if (employee.acount !== dataEdit.acount)
+      if (employee.bankAccount !== dataEdit.bankAccount)
         data = {
           ...data,
-          acount: employee.acount,
+          bankAccount: employee.bankAccount,
         };
       if (departmentSelected !== dataEdit.departmentId)
         data = {
@@ -214,8 +214,8 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data.newEmployee);
           if (data.newEmployee) {
+            console.log("Success:", data.newEmployee);
             setStateModal(false);
           } else {
             console.log("Error:", data.error);
@@ -465,15 +465,15 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label htmlFor="acount" className="text-xl">
+            <label htmlFor="bankAccount" className="text-xl">
               Cuenta Bancaria
             </label>
             <input
               type="text"
-              name="acount"
-              id="acount"
+              name="bankAccount"
+              id="bankAccount"
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
-              value={employee.acount}
+              value={employee.bankAccount}
               placeholder="Ingresa la cuenta bancaria"
               onChange={handleChange}
             />

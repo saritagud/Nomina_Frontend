@@ -14,3 +14,29 @@ export const formatearFecha = (fecha) => {
 
   return fechaFormateada
 }
+
+// Funcion para agregar un item a un Estado que sea un Arreglo
+export const addItemToState = (itemAdd, list) => {
+  list.push(itemAdd)
+  return list
+}
+
+// Funcion para editar un Item en una estado que sea un Arreglo de objetos
+export const udpateItemFromState = (itemUpdate, list) => {
+  const indexItem = list.findIndex(item => item.id === itemUpdate.id)
+
+  if (indexItem >= 0) {
+     list[indexItem] = itemUpdate
+     return list
+  }
+}
+
+// Funcion para eliminar un Item de un estado que sea un Arreglo de objetos
+export const deleteItemFromState = (itemDeleteID, list) => {
+  const indexItem = list.findIndex(item => item.id === itemDeleteID)
+
+  if (indexItem >= 0) {
+    list.splice(indexItem, 1)
+    return list
+  }
+}
