@@ -37,7 +37,12 @@ export function Login() {
           localStorage.setItem("user", JSON.stringify(data.userInfo));
           localStorage.setItem(
             "company",
-            JSON.stringify({ id: data.userInfo.companyId })
+            JSON.stringify(
+              { 
+                id: data.userInfo.companyId,
+                currency: data.currency.currency
+              }
+            )
           );
 
           if (data.userInfo.role == SuperAdmin) {
