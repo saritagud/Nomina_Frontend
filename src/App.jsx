@@ -16,6 +16,8 @@ import ProtectedRouter from "./Components/ProtectedRouter";
 import { userRoles } from "./logic/constantes";
 import { UserInfo } from "./Components/InforUser";
 import { Departaments } from "./Components/Departaments";
+import { PayrollHistory } from "./Components/PayrollHistory";
+
 function App() {
   const { SuperAdmin, Admin, User } = userRoles;
   const [isOpen, setIsOpen] = useState(true);
@@ -65,6 +67,7 @@ function App() {
           <Route path="/empleado/:emploID" element={<Employe />} />
           <Route path="/infouser/:id" element={<UserInfo />} />
           <Route path="/departamentos" element={<Departaments />} />
+          <Route path="/payrollhistory" element={<PayrollHistory />} />
         </Route>
       </Routes>
     </div>
