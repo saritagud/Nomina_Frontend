@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   FaCalculator,
   FaArrowLeft,
@@ -12,12 +11,15 @@ import { AiFillHome } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { userRoles } from "../logic/constantes";
 
-export function SideBar() {
-  const [open, setOpen] = useState(true);
+export function SideBar({ open, onToggle }) {
   const navegar = useNavigate();
   const { SuperAdmin, Admin, User } = userRoles;
-  const rol = JSON.parse(localStorage.getItem("user")).role;
-  const name = JSON.parse(localStorage.getItem("user")).name;
+  const rol = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).role
+    : null;
+    const name = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).name
+    : null;
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -25,16 +27,16 @@ export function SideBar() {
     navegar("/login");
   };
   return (
-    <div className="fixed ">
+    <div className="fixed">
       <div
         className={` ${
-          open ? "w-64" : "w-20 h-screen"
+          open ? "w-64 h-screen" : "w-20 h-screen"
         } bg-azulClaro p-5 h-full pt-20 relative duration-300`}
       >
         <FaArrowLeft
           className={`absolute cursor-pointer -right-3 top-9 p-2 text-3xl text-white border-white bg-blue-400
           border-2 rounded-full  ${!open && "rotate-180"}`}
-          onClick={() => setOpen(!open)}
+          onClick={onToggle}
         />
         <div className="flex gap-x-4 items-center ">
           <FaUserCircle
@@ -110,7 +112,7 @@ export function SideBar() {
                   <p
                     className={`${!open && "hidden"} origin-left duration-200`}
                   >
-                    Nóminas
+                    Nómina
                   </p>
                 </Link>
 

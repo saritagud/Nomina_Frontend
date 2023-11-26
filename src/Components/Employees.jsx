@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { FaEllipsisV } from 'react-icons/fa';
-import { SideBar } from "./Sidebar";
 import { Link } from 'react-router-dom';
 import { FormEmployeed } from './FormEmployeed';
 import ModalDelete from './ModalDelete';
@@ -40,9 +39,8 @@ export function Employees() {
 
   return (
     <div className="h-full">
-      <SideBar />
-      <main className="w-screen p-10 flex flex-col gap-10 items-end">
-        <div className="flex justify-between mb-5 w-4/5">
+      <main className="w-full p-10 flex flex-col gap-10 ">
+        <div className="flex justify-between mb-5 ">
           <h1 className="text-4xl font-bold">Empleados</h1>
           <div className="flex items-center">
             <button className="bg-azulClaro px-8 py-3 rounded-md placeholder-grisClaro text-grisClaro outline-none font-semibold text-center" onClick={() => {setModalAdd(true)}}>
@@ -50,7 +48,7 @@ export function Employees() {
             </button>
           </div>
         </div>
-        <table className="bg-grisClaro rounded-md shadow-right-dark px-4 border-separate border-spacing-0 border-spacing-y-4 w-4/5">
+        <table className="bg-grisClaro rounded-md shadow-right-dark px-4 border-separate border-spacing-0 border-spacing-y-4 border-2 border-grisOscuro">
           <thead className="px-5">
             <tr>
               <th className="p-4 text-lg text-start">Empleado</th>

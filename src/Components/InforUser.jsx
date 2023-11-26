@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { SideBar } from "./Sidebar";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
@@ -39,8 +38,7 @@ export function UserInfo() {
   return (
     <>
       <div className="h-full">
-        <SideBar />
-        <main className="w-screen p-10 flex flex-col items-end gap-10">
+        <main className="w-full p-10 flex flex-col gap-10">
           <section className="relative">
             <div className="absolute top-0 right-0 flex space-x-4 mt-2 mr-4 z-10">
               <Link
@@ -59,7 +57,7 @@ export function UserInfo() {
           </section>
 
           {user ? (
-            <div className="bg-grisClaro rounded-md shadow-right-dark p-8 mt-9 w-4/5">
+            <div className="bg-grisClaro rounded-md shadow-right-dark p-8 mt-9 w-full">
               {" "}
               {/* Ajuste del padding para aumentar el tamaño */}
               <table className="w-full ">

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { DashboardAdmin2 } from "./Components/DashboardAdmin2";
 import { DashboardSuperAdmin } from "./Components/DashboardSuperAdmin";
 import { Login } from "./Components/Login";
@@ -16,10 +16,12 @@ import ProtectedRouter from "./Components/ProtectedRouter";
 import { userRoles } from "./logic/constantes";
 import { UserInfo } from "./Components/InforUser";
 import { Departaments } from "./Components/Departaments";
-import { PayrollHistory } from "./Components/PayrollHistory";
-
 function App() {
   const { SuperAdmin, Admin, User } = userRoles;
+  const [isOpen, setIsOpen] = useState(true);
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/login";
+
   return (
     <div className="h-full">
       <Routes>
@@ -63,7 +65,6 @@ function App() {
           <Route path="/empleado/:emploID" element={<Employe />} />
           <Route path="/infouser/:id" element={<UserInfo />} />
           <Route path="/departamentos" element={<Departaments />} />
-          <Route path="/payrollhistory" element={<PayrollHistory />} />
         </Route>
       </Routes>
     </div>

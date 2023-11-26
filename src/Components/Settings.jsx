@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { SideBar } from "./Sidebar";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export function Settings() {
@@ -14,9 +13,8 @@ export function Settings() {
 
   return (
     <div className="h-full">
-      <SideBar />
-      <main className="w-screen  p-10 flex justify-end">
-        <section className="flex  flex-col w-4/5 gap-5">
+      <main className="w-full p-10 flex ">
+        <section className="flex flex-col w-full gap-5">
           <h1 className="text-3xl font-bold">Configuraciones</h1>
           {empleyoees?.map((empleado) => (
             <div key={empleado.id} className="flex items-center">

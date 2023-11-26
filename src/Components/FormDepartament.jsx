@@ -51,7 +51,7 @@ export function FormDepartament({ setModalDepartament }) {
   };
   return (
     <>
-      <section className="absolute top-0 left-0 bottom-0 right-0 bg-grisClaro flex flex-col justify-center items-center gap-10">
+      <section className="absolute top-0 left-0 bottom-0 right-0 bg-grisClaro flex flex-col justify-center items-center">
         <BiArrowBack
           className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"
           onClick={() => setModalDepartament(false)}
@@ -67,7 +67,7 @@ export function FormDepartament({ setModalDepartament }) {
             id="name"
             onChange={(e) => setName(e.target.value)}
             className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
-            placeholder="Ingresa el nombre de tu empresa"
+            placeholder="Ingresa el nombre del departamento"
           />
 
           <button className="bg-azulOscuro mx-auto px-3 py-2 font-bold text-grisClaro outline-none rounded-md mt-10">
