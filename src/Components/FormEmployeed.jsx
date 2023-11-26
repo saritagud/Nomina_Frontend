@@ -1,30 +1,31 @@
-import { BiArrowBack } from "react-icons/bi"
-import { userRoles } from "../logic/constantes"
-import { authComponent } from "../logic/authComponent"
-import { useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
-import { formatearFecha } from "../logic/functions"
+import { BiArrowBack } from "react-icons/bi";
+import { userRoles } from "../logic/constantes";
+import { authComponent } from "../logic/authComponent";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { formatearFecha } from "../logic/functions";
 
 export function FormEmployeed({ dataEdit = null, setStateModal }) {
-  const navegar = useNavigate()
-  const { Admin, User } = userRoles
-  const [departments, setDepartments] = useState([])
-  const [departmentSelected, setDepartmentSelected] = useState("0")
+  const navegar = useNavigate();
+  const { Admin, User } = userRoles;
+  const [departments, setDepartments] = useState([]);
+  const [departmentSelected, setDepartmentSelected] = useState("0");
   const [employee, setEmployee] = useState({
-    name: '',
-    lastName: '',
-    identityCard: '',
-    birthdate: '',
-    gender: '0',
-    address: '',
-    email: '',
-    phone: '',
-    civilStatus: '0',
-    startDate: '',
-    charge: '',
-    baseSalary: '',
-  })
-  const companyID = JSON.parse(localStorage.getItem("company")).id
+    name: "",
+    lastName: "",
+    identityCard: "",
+    birthdate: "",
+    gender: "0",
+    address: "",
+    email: "",
+    phone: "",
+    civilStatus: "0",
+    startDate: "",
+    charge: "",
+    baseSalary: "",
+    acount: "",
+  });
+  const companyID = JSON.parse(localStorage.getItem("company")).id;
   const token = JSON.parse(localStorage.getItem("token"));
   // console.log(employee);
 
@@ -35,8 +36,8 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
         birthdate: formatearFecha(dataEdit.birthdate),
         startDate: formatearFecha(dataEdit.startDate),
         baseSalary: dataEdit.baseSalary.toString(),
-      })
-      setDepartmentSelected(dataEdit.departmentId)
+      });
+      setDepartmentSelected(dataEdit.departmentId);
       // console.log(dataEdit);
     }
 
@@ -44,144 +45,162 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         // console.log("Success:", data.departments);
         if (data.departments) {
-          setDepartments(data.departments)
+          setDepartments(data.departments);
         } else {
-          console.log("Error:", data.error)
+          console.log("Error:", data.error);
         }
       })
-      .catch(error => {
-        console.error("Error:", error)
-      })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Comprueba que el componente siga teniendo una sesion activa y el rol sea permitido
-  const auth = authComponent([Admin, User])
-  if (!auth) return navegar("/admin")
+  const auth = authComponent([Admin, User]);
+  if (!auth) return navegar("/admin");
 
-  const handleSubmit = event => {
-    event.preventDefault()
-    let data = {}
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let data = {};
 
-    if (employee.name == '') return console.error('El campo Nombre no puede estar vacio')
-    if (employee.lastName == '') return console.error('El campo Apellido no puede estar vacio')
-    if (employee.identityCard == '') return console.error('El campo Cedula no puede estar vacio')
-    if (employee.birthdate == '') return console.error('El campo Fecha de nacimiento no puede estar vacio')
-    if (employee.gender == '0') return console.error('El campo Genero no puede estar vacio')
-    if (employee.address == '') return console.error('El campo Direcccion no puede estar vacio')
-    if (employee.email == '') return console.error('El campo Email no puede estar vacio')
-    if (employee.phone == '') return console.error('El campo Telefono no puede estar vacio')
-    if (employee.civilStatus == '0') return console.error('El campo Estado Civil no puede estar vacio')
-    if (employee.startDate == '') return console.error('El campo Fecha de inicio no puede estar vacio')
-    if (employee.charge == '') return console.error('El campo Cargo no puede estar vacio')
-    if (employee.baseSalary == '') return console.error('El campo Salario Base no puede estar vacio')
-    if (!departmentSelected) return console.error('El campo Departamento no puede estar vacio')
+    if (employee.name == "")
+      return console.error("El campo Nombre no puede estar vacio");
+    if (employee.lastName == "")
+      return console.error("El campo Apellido no puede estar vacio");
+    if (employee.identityCard == "")
+      return console.error("El campo Cedula no puede estar vacio");
+    if (employee.birthdate == "")
+      return console.error("El campo Fecha de nacimiento no puede estar vacio");
+    if (employee.gender == "0")
+      return console.error("El campo Genero no puede estar vacio");
+    if (employee.address == "")
+      return console.error("El campo Direcccion no puede estar vacio");
+    if (employee.email == "")
+      return console.error("El campo Email no puede estar vacio");
+    if (employee.phone == "")
+      return console.error("El campo Telefono no puede estar vacio");
+    if (employee.civilStatus == "0")
+      return console.error("El campo Estado Civil no puede estar vacio");
+    if (employee.startDate == "")
+      return console.error("El campo Fecha de inicio no puede estar vacio");
+    if (employee.charge == "")
+      return console.error("El campo Cargo no puede estar vacio");
+    if (employee.baseSalary == "")
+      return console.error("El campo Salario Base no puede estar vacio");
+    if (employee.acount == "")
+      return console.error("El campo Cuenta Bancaria no puede estar vacio");
+    if (!departmentSelected)
+      return console.error("El campo Departamento no puede estar vacio");
 
     // FALTA: Validar cuando aun no han editado ningun dato
     if (dataEdit) {
-      if (employee.name !== dataEdit.name) 
+      if (employee.name !== dataEdit.name)
         data = {
           ...data,
-          name: employee.name
-        }
-      if (employee.lastName !== dataEdit.lastName) 
+          name: employee.name,
+        };
+      if (employee.lastName !== dataEdit.lastName)
         data = {
           ...data,
-          lastName: employee.lastName
-        }
-      if (employee.identityCard !== dataEdit.identityCard) 
+          lastName: employee.lastName,
+        };
+      if (employee.identityCard !== dataEdit.identityCard)
         data = {
           ...data,
-          identityCard: Number(employee.identityCard)
-        }
-      if (employee.birthdate !== formatearFecha(dataEdit.birthdate)) 
+          identityCard: Number(employee.identityCard),
+        };
+      if (employee.birthdate !== formatearFecha(dataEdit.birthdate))
         data = {
           ...data,
-          birthdate: employee.birthdate
-        }
-      if (employee.gender !== dataEdit.gender) 
+          birthdate: employee.birthdate,
+        };
+      if (employee.gender !== dataEdit.gender)
         data = {
           ...data,
-          gender: employee.gender
-        }
-      if (employee.address !== dataEdit.address) 
+          gender: employee.gender,
+        };
+      if (employee.address !== dataEdit.address)
         data = {
           ...data,
-          address: employee.address
-        }
-      if (employee.email !== dataEdit.email) 
+          address: employee.address,
+        };
+      if (employee.email !== dataEdit.email)
         data = {
           ...data,
-          email: employee.email
-        }
-      if (employee.phone !== dataEdit.phone) 
+          email: employee.email,
+        };
+      if (employee.phone !== dataEdit.phone)
         data = {
           ...data,
-          phone: employee.phone
-        }
-      if (employee.civilStatus !== dataEdit.civilStatus) 
+          phone: employee.phone,
+        };
+      if (employee.civilStatus !== dataEdit.civilStatus)
         data = {
           ...data,
-          civilStatus: employee.civilStatus
-        }
-      if (employee.startDate !== formatearFecha(dataEdit.startDate)) 
+          civilStatus: employee.civilStatus,
+        };
+      if (employee.startDate !== formatearFecha(dataEdit.startDate))
         data = {
           ...data,
-          startDate: employee.startDate
-        }
-      if (employee.charge !== dataEdit.charge) 
+          startDate: employee.startDate,
+        };
+      if (employee.charge !== dataEdit.charge)
         data = {
           ...data,
-          charge: employee.charge
-        }
-      if (employee.baseSalary !== dataEdit.baseSalary) 
+          charge: employee.charge,
+        };
+      if (employee.baseSalary !== dataEdit.baseSalary)
         data = {
           ...data,
-          baseSalary: parseFloat(employee.baseSalary)
-        }
-      if (departmentSelected !== dataEdit.departmentId) 
+          baseSalary: parseFloat(employee.baseSalary),
+        };
+
+      if (employee.acount !== dataEdit.acount)
         data = {
           ...data,
-          department: departmentSelected
-        }
-      
-      fetch(
-        `http://localhost:3000/employee/edit-employee/${dataEdit.id}`,
-        {
-          method: "PUT",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          }
-        }
-      )
-        .then(response => response.json())
-        .then(data => {
-          console.log("Success:", data.message)
+          acount: employee.acount,
+        };
+      if (departmentSelected !== dataEdit.departmentId)
+        data = {
+          ...data,
+          department: departmentSelected,
+        };
+
+      fetch(`http://localhost:3000/employee/edit-employee/${dataEdit.id}`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data.message);
           if (data.message) {
             setStateModal(false);
           } else {
-            console.log("Error:", data)
+            console.log("Error:", data);
           }
         })
-        .catch(error => {
-          console.error("Error:", error)
-        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     } else {
       data = {
         ...employee,
         identityCard: Number(employee.identityCard),
         baseSalary: parseFloat(employee.baseSalary),
-      }
-      // console.log(data);
+      };
+      console.log(data);
       fetch(
         `http://localhost:3000/employee/create-employee/${companyID}/${departmentSelected}`,
         {
@@ -189,56 +208,53 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
           body: JSON.stringify(data),
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         }
       )
-        .then(response => response.json())
-        .then(data => {
-          console.log("Success:", data.newEmployee)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Success:", data.newEmployee);
           if (data.newEmployee) {
             setStateModal(false);
           } else {
-            console.log("Error:", data.error)
+            console.log("Error:", data.error);
           }
         })
-        .catch(error => {
-          console.error("Error:", error)
-        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
-  }
+  };
 
-  const handleChange = e => {
-    const name = e.target.name
-    let value = e.target.value
+  const handleChange = (e) => {
+    const name = e.target.name;
+    let value = e.target.value;
 
     if (name === "department") {
-      setDepartmentSelected(e.target.value)
-      return
+      setDepartmentSelected(e.target.value);
+      return;
     }
     setEmployee({
       ...employee,
-      [name]: value
-    })
-  }
+      [name]: value,
+    });
+  };
 
   return (
-    <section className="fixed top-0 left-0 bottom-0 right-0 bg-grisClaro flex flex-col items-center justify-center z-20">
-    <h1 className="text-4xl font-bold mb-6">Registro de Empleados</h1>
-    <BiArrowBack
-      className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"
-      onClick={() => setStateModal(false)}
-    />
+    <section className="fixed top-0 left-0 bottom-0 right-0 bg-grisClaro flex flex-col items-center justify-center z-20 min-h-screen gap-10">
+      <h1 className="text-4xl font-bold">Registro de Empleados</h1>
+      <BiArrowBack
+        className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"
+        onClick={() => setStateModal(false)}
+      />
       <form
-        className="grid grid-cols-2 gap-x-20 gap-y-3"
+        className="grid grid-cols-3 gap-x-20 gap-y-3"
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
-            <label
-              htmlFor="name"
-              className="text-xl"
-            >
+            <label htmlFor="name" className="text-xl">
               Nombre
             </label>
             <input
@@ -252,10 +268,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
             />
           </div>
           <div className="flex flex-col gap-1">
-            <label
-              htmlFor="lastName"
-              className="text-xl"
-            >
+            <label htmlFor="lastName" className="text-xl">
               Apellido
             </label>
             <input
@@ -269,10 +282,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
             />
           </div>
           <div className="flex flex-col gap-1">
-            <label
-              htmlFor="identityCard"
-              className="text-xl"
-            >
+            <label htmlFor="identityCard" className="text-xl">
               Cedula
             </label>
             <input
@@ -286,10 +296,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
             />
           </div>
           <div className="flex flex-col gap-1">
-            <label
-              htmlFor="birthdate"
-              className="text-xl"
-            >
+            <label htmlFor="birthdate" className="text-xl">
               Fecha de nacimiento
             </label>
             <input
@@ -302,12 +309,11 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
             />
           </div>
           <div className="flex flex-col gap-1">
-            <label
-              htmlFor="gender"
-              className="text-xl"
-            >
-              Genero
-            </label>
+            <div className="flex flex-col gap-1">
+              <label htmlFor="gender" className="text-xl">
+                Genero
+              </label>
+            </div>
             <select
               name="gender"
               id="gender"
@@ -315,21 +321,18 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
               value={employee.gender}
               onChange={handleChange}
             >
-              <option
-                value="0"
-                disabled
-              >
+              <option value="0" disabled>
                 -- Seleccionar --
               </option>
               <option value="Masculino">Masculino</option>
               <option value="Femenino">Femenino</option>
             </select>
           </div>
+        </div>
+
+        <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
-            <label
-              htmlFor="address"
-              className="text-xl"
-            >
+            <label htmlFor="address" className="text-xl">
               Direccion
             </label>
             <input
@@ -343,10 +346,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
             />
           </div>
           <div className="flex flex-col gap-1">
-            <label
-              htmlFor="email"
-              className="text-xl"
-            >
+            <label htmlFor="email" className="text-xl">
               Email
             </label>
             <input
@@ -359,13 +359,9 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
               onChange={handleChange}
             />
           </div>
-        </div>
-        <div className="flex flex-col gap-3">
+
           <div className="flex flex-col gap-1">
-            <label
-              htmlFor="phone"
-              className="text-xl"
-            >
+            <label htmlFor="phone" className="text-xl">
               Numero de telefono
             </label>
             <input
@@ -379,10 +375,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
             />
           </div>
           <div className="flex flex-col gap-1">
-            <label
-              htmlFor="civilStatus"
-              className="text-xl"
-            >
+            <label htmlFor="civilStatus" className="text-xl">
               Estado Civil
             </label>
             <select
@@ -392,10 +385,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
               value={employee.civilStatus}
               onChange={handleChange}
             >
-              <option
-                value="0"
-                disabled
-              >
+              <option value="0" disabled>
                 -- Seleccionar --
               </option>
               <option value="Soltero/a">Soltero/a</option>
@@ -404,11 +394,9 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
               <option value="Viudo/a">Viudo/a</option>
             </select>
           </div>
+
           <div className="flex flex-col gap-1">
-            <label
-              htmlFor="startDate"
-              className="text-xl"
-            >
+            <label htmlFor="startDate" className="text-xl">
               Fecha de inicio del cargo
             </label>
             <input
@@ -420,11 +408,11 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
               onChange={handleChange}
             />
           </div>
+        </div>
+
+        <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
-            <label
-              htmlFor="charge"
-              className="text-xl"
-            >
+            <label htmlFor="charge" className="text-xl">
               Cargo
             </label>
             <input
@@ -438,10 +426,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
             />
           </div>
           <div className="flex flex-col gap-1">
-            <label
-              htmlFor="department"
-              className="text-xl"
-            >
+            <label htmlFor="department" className="text-xl">
               Departamento
             </label>
             <select
@@ -451,27 +436,18 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
               value={departmentSelected}
               onChange={handleChange}
             >
-              <option
-                value="0"
-                disabled
-              >
+              <option value="0" disabled>
                 -- Elegir departamento --
               </option>
-              {departments.map(department => (
-                <option
-                  key={department.id}
-                  value={department.id}
-                >
+              {departments.map((department) => (
+                <option key={department.id} value={department.id}>
                   {department.name}
                 </option>
               ))}
             </select>
           </div>
           <div className="flex flex-col gap-1">
-            <label
-              htmlFor="baseSalary"
-              className="text-xl"
-            >
+            <label htmlFor="baseSalary" className="text-xl">
               Salario Base{" "}
               <span className="text-sm">
                 {'(Para centimos usar punto ".")'}
@@ -487,11 +463,26 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
               onChange={handleChange}
             />
           </div>
-          <button className="bg-azulOscuro mx-auto mt-auto px-3 py-2 font-bold text-grisClaro outline-none rounded-md">
+
+          <div className="flex flex-col gap-1">
+            <label htmlFor="acount" className="text-xl">
+              Cuenta Bancaria
+            </label>
+            <input
+              type="text"
+              name="acount"
+              id="acount"
+              className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+              value={employee.acount}
+              placeholder="Ingresa la cuenta bancaria"
+              onChange={handleChange}
+            />
+          </div>
+          <button className="bg-azulOscuro mx-auto mt-5 px-3 py-2 font-bold text-grisClaro outline-none rounded-md">
             Registrar Usuario
           </button>
         </div>
       </form>
     </section>
-  )
+  );
 }

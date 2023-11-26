@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { DashboardAdmin2 } from "./Components/DashboardAdmin2";
 import { DashboardSuperAdmin } from "./Components/DashboardSuperAdmin";
 import { Login } from "./Components/Login";
@@ -16,53 +16,72 @@ import ProtectedRouter from "./Components/ProtectedRouter";
 import { userRoles } from "./logic/constantes";
 import { UserInfo } from "./Components/InforUser";
 import { Departaments } from "./Components/Departaments";
+import { SideBar } from "./Components/Sidebar";
+import { useState } from "react";
 function App() {
   const { SuperAdmin, Admin, User } = userRoles;
+  const [isOpen, setIsOpen] = useState(true);
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/login";
+
   return (
-    <div className="h-full">
+    <div className="h-full w-full">
+      {!isLoginPage && (
+        <SideBar open={isOpen} onToggle={() => setIsOpen(!isOpen)} />
+      )}
+
       <Routes>
-        <Route
-          element={
-            <ProtectedRouter allowedRoles={[SuperAdmin]} redirectTo="/login" />
-          }
-        >
-          <Route index element={<DashboardSuperAdmin />} />
-          <Route path="/empresas" element={<Companies />} />
-        </Route>
         <Route path="/login" element={<Login />} />
-        <Route
-          element={
-            <ProtectedRouter
-              allowedRoles={[SuperAdmin, Admin]}
-              redirectTo="/login"
-            />
-          }
-        >
-          <Route path="/registro" element={<Register />} />
-          <Route path="/usuarios" element={<Users />} />
-        </Route>
-        <Route
-          element={
-            <ProtectedRouter
-              allowedRoles={[SuperAdmin, Admin, User]}
-              redirectTo="/login"
-            />
-          }
-        >
-          <Route path="/admin" element={<DashboardAdmin2 />} />
-        </Route>
-        <Route element={<ProtectedRouter allowedRoles={[Admin, User]} />}>
-          <Route path="/pre-nomina" element={<PrePayroll />} />
-          <Route path="/nomina" element={<Payroll />} />
-          <Route path="/deducciones" element={<Deductions />} />
-          <Route path="/percepciones" element={<Perceptions />} />
-          <Route path="/empleados" element={<Employees />} />
-          <Route path="/configuraciones" element={<Settings />} />
-          <Route path="/empleado/:emploID" element={<Employe />} />
-          <Route path="/infouser/:id" element={<UserInfo />} />
-          <Route path="/departamentos" element={<Departaments />} />
-        </Route>
       </Routes>
+
+      <div className={` ${isOpen ? "w-4/5 ml-64" : "w-[90%] ml-32"}`}>
+        <Routes>
+          <Route
+            element={
+              <ProtectedRouter
+                allowedRoles={[SuperAdmin]}
+                redirectTo="/login"
+              />
+            }
+          >
+            <Route index element={<DashboardSuperAdmin />} />
+            <Route path="/empresas" element={<Companies />} />
+          </Route>
+
+          <Route
+            element={
+              <ProtectedRouter
+                allowedRoles={[SuperAdmin, Admin]}
+                redirectTo="/login"
+              />
+            }
+          >
+            <Route path="/registro" element={<Register />} />
+            <Route path="/usuarios" element={<Users />} />
+          </Route>
+          <Route
+            element={
+              <ProtectedRouter
+                allowedRoles={[SuperAdmin, Admin, User]}
+                redirectTo="/login"
+              />
+            }
+          >
+            <Route path="/admin" element={<DashboardAdmin2 />} />
+          </Route>
+          <Route element={<ProtectedRouter allowedRoles={[Admin, User]} />}>
+            <Route path="/pre-nomina" element={<PrePayroll />} />
+            <Route path="/nomina" element={<Payroll />} />
+            <Route path="/deducciones" element={<Deductions />} />
+            <Route path="/percepciones" element={<Perceptions />} />
+            <Route path="/empleados" element={<Employees />} />
+            <Route path="/configuraciones" element={<Settings />} />
+            <Route path="/empleado/:emploID" element={<Employe />} />
+            <Route path="/infouser/:id" element={<UserInfo />} />
+            <Route path="/departamentos" element={<Departaments />} />
+          </Route>
+        </Routes>
+      </div>
     </div>
   );
 }

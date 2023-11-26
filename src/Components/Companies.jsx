@@ -1,16 +1,15 @@
-import { SideBar } from "./Sidebar";
 import { useState, useEffect } from "react";
 
 export function Companies() {
   const [company, setCompany] = useState([]);
   const token = JSON.parse(localStorage.getItem("token"));
-  
+
   useEffect(() => {
     fetch("http://localhost:3000/company/all", {
       method: "GET",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
@@ -23,12 +22,11 @@ export function Companies() {
       });
   }, []);
 
-  console.log(company)
+  console.log(company);
 
   return (
     <>
       <div className="flex">
-        <SideBar />
         <main className="w-screen h-screen p-10 flex flex-col gap-10">
           <section className="flex justify-between items-center">
             <h1 className="text-3xl">Empresas creadas</h1>
@@ -51,7 +49,9 @@ export function Companies() {
                         {companys.name}
                       </td>
                       <td className="p-4 text-lg">{companys.type}</td>
-                      <button className="bg-azulClaro p-2 mt-2 text-white w-1/2 rounded-md">Seleccionar</button>
+                      <button className="bg-azulClaro p-2 mt-2 text-white w-1/2 rounded-md">
+                        Seleccionar
+                      </button>
                     </tr>
                   </tbody>
                 ))}

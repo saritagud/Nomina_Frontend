@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { SideBar } from "./Sidebar";
 import { useParams } from "react-router-dom";
 import { formatearFecha } from "../logic/functions";
 
@@ -11,9 +10,9 @@ export function Employe() {
   useEffect(() => {
     fetch(`http://localhost:3000/employee/find-employee/${emploID}`, {
       method: "GET",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
@@ -29,9 +28,8 @@ export function Employe() {
 
   return (
     <>
-      <SideBar />
-      <div className="flex justify-end h-full">
-        <main className="p-10 flex flex-col gap-4 w-4/5">
+      <div className="h-full">
+        <main className="p-10 flex flex-col gap-4 w-full">
           {employe && (
             <>
               <section className="flex justify-between items-center">
@@ -99,17 +97,17 @@ export function Employe() {
                     </div>
                   </div>
                 </section>
-                  <div className="flex justify-end m-2">
-                    <div className="flex items-center gap-3">
+                <div className="flex justify-end m-2">
+                  <div className="flex items-center gap-3">
                     <p>Agregar: </p>
-                      <button className="bg-azulClaro p-2 pr-6 pl-6 text-white rounded-md">
-                        Agregar Deduccion
-                      </button>
-                      <button className="bg-azulClaro p-2 pr-6 pl-6 text-white rounded-md">
-                        Agregar Percepcion
-                      </button>
-                    </div>
+                    <button className="bg-azulClaro p-2 pr-6 pl-6 text-white rounded-md">
+                      Agregar Deduccion
+                    </button>
+                    <button className="bg-azulClaro p-2 pr-6 pl-6 text-white rounded-md">
+                      Agregar Percepcion
+                    </button>
                   </div>
+                </div>
               </>
             </>
           )}
