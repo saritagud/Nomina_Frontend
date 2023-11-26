@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { SideBar } from "./Sidebar";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
@@ -39,7 +38,6 @@ export function UserInfo() {
   return (
     <>
       <div className="h-full">
-
         <main className="w-full p-10 flex flex-col gap-10">
           <section className="relative">
             <div className="absolute top-0 right-0 flex space-x-4 mt-2 mr-4 z-10">
