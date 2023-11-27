@@ -1,8 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { FormDepartament } from "./FormDepartament";
 export function DashboardAdmin2() {
-  const [modalDepartament, setModalDepartament] = useState(false);
   const name = JSON.parse(localStorage.getItem("user")).name;
   let styleLink =
     "bg-grisOscuro h-24 w-full rounded-md text-lg text-center flex justify-center items-center border-2 border-grisOscuro shadow-right-dark";
@@ -36,18 +33,12 @@ export function DashboardAdmin2() {
               Nominas
             </Link>
 
-            <button
-              className={styleLink}
-              onClick={() => setModalDepartament(!modalDepartament)}
-            >
-              Crear departamento
-            </button>
+            <Link className={styleLink} to={"/departamentos"}>
+              Departamentos
+            </Link>
           </div>
         </section>
       </section>
-      {modalDepartament && (
-        <FormDepartament setModalDepartament={setModalDepartament} />
-      )}
     </div>
   );
 }
