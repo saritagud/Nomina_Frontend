@@ -5,6 +5,8 @@ import {
   FaClipboardList,
   FaCog,
   FaBookmark,
+  FaHistory,
+  FaBriefcase 
 } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
 import { AiFillHome } from "react-icons/ai";
@@ -17,7 +19,7 @@ export function SideBar({ open, onToggle }) {
   const rol = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")).role
     : null;
-    const name = localStorage.getItem("user")
+  const name = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")).name
     : null;
   const logout = () => {
@@ -30,8 +32,8 @@ export function SideBar({ open, onToggle }) {
     <div className="fixed">
       <div
         className={` ${
-          open ? "w-64 h-screen" : "w-20 h-screen"
-        } bg-azulClaro p-5 h-full pt-20 relative duration-300`}
+          open ? "w-64 h-screen " : "w-20 h-screen"
+        } bg-azulClaro p-5 h-full pt-10 relative duration-300`}
       >
         <FaArrowLeft
           className={`absolute cursor-pointer -right-3 top-9 p-2 text-3xl text-white border-white bg-blue-400
@@ -145,9 +147,22 @@ export function SideBar({ open, onToggle }) {
                 <Link
                   className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
               "
+                  to={"/historial"}
+                >
+                  <FaHistory  />
+                  <p
+                    className={`${!open && "hidden"} origin-left duration-200`}
+                  >
+                    Nóminas
+                  </p>
+                </Link>
+
+                <Link
+                  className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
+              "
                   to={"/departamentos"}
                 >
-                  <FaClipboardList />
+                  <FaBriefcase />
                   <p
                     className={`${!open && "hidden"} origin-left duration-200`}
                   >
@@ -164,18 +179,19 @@ export function SideBar({ open, onToggle }) {
                   <p
                     className={`${!open && "hidden"} origin-left duration-200`}
                   >
-                    Configuraciones
+                    Empresa
                   </p>
                 </Link>
+                
 
                 <div
-                  className="flex p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 mt-10 border-t-2 border-grisClaro/70 hover:rounded-md  
+                  className="flex p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 border-t-2 border-grisClaro/70 hover:rounded-md fixed bottom-2
               "
                   onClick={logout}
                 >
                   <CiLogout />
                   <p
-                    className={`${!open && "hidden"} origin-left duration-200`}
+                    className={`${!open && "hidden"} origin-left duration-200 w-40`}
                   >
                     Cerrar Sesion
                   </p>
@@ -196,7 +212,7 @@ export function SideBar({ open, onToggle }) {
                           !open && "hidden"
                         } origin-left duration-200`}
                       >
-                        Nóminas
+                        Nómina
                       </p>
                     </Link>
 

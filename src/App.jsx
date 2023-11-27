@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { DashboardAdmin2 } from "./Components/DashboardAdmin2";
 import { DashboardSuperAdmin } from "./Components/DashboardSuperAdmin";
 import { Login } from "./Components/Login";
@@ -28,58 +28,62 @@ function App() {
 
   return (
     <div className="h-full">
-
       {!isLoginPage && (
-        <SideBar open={isOpen} onToggle={() => setIsOpen(!isOpen)}/>
+        <SideBar open={isOpen} onToggle={() => setIsOpen(!isOpen)} />
       )}
       <Routes>
-        <Route
-          element={
-            <ProtectedRouter 
-            allowedRoles={[SuperAdmin]} 
-            redirectTo="/login" />
-          }
-        >
-          <Route index element={<DashboardSuperAdmin />} />
-          <Route path="/empresas" element={<Companies />} />
-        </Route>
         <Route path="/login" element={<Login />} />
-        <Route
-          element={
-            <ProtectedRouter
-              allowedRoles={[SuperAdmin, Admin]}
-              redirectTo="/login"
-            />
-          }
-        >
-          <Route path="/registro" element={<Register />} />
-          <Route path="/usuarios" element={<Users />} />
-        </Route>
-        <Route
-          element={
-            <ProtectedRouter
-              allowedRoles={[SuperAdmin, Admin, User]}
-              redirectTo="/login"
-            />
-          }
-        >
-          <Route path="/admin" element={<DashboardAdmin2 />} />
-        </Route>
-        <Route element={<ProtectedRouter allowedRoles={[Admin, User]} />}>
-          <Route path="/pre-nomina" element={<PrePayroll />} />
-          <Route path="/nomina" element={<Payroll />} />
-          <Route path="/deducciones" element={<Deductions />} />
-          <Route path="/percepciones" element={<Perceptions />} />
-          <Route path="/empleados" element={<Employees />} />
-          <Route path="/configuraciones" element={<Settings />} />
-          <Route path="/empleado/:emploID" element={<Employe />} />
-          <Route path="/infouser/:id" element={<UserInfo />} />
-          <Route path="/departamentos" element={<Departaments />} />
-          <Route path="/payrollhistory" element={<PayrollHistory />} />
-        </Route>
       </Routes>
+
+      <div  className={` ${isOpen ? "w-4/5 ml-64" : "w-[90%] ml-32"}`}>
+        <Routes>
+          <Route
+            element={
+              <ProtectedRouter
+                allowedRoles={[SuperAdmin]}
+                redirectTo="/login"
+              />
+            }
+          >
+            <Route index element={<DashboardSuperAdmin />} />
+            <Route path="/empresas" element={<Companies />} />
+          </Route>
+          <Route
+            element={
+              <ProtectedRouter
+                allowedRoles={[SuperAdmin, Admin]}
+                redirectTo="/login"
+              />
+            }
+          >
+            <Route path="/registro" element={<Register />} />
+            <Route path="/usuarios" element={<Users />} />
+          </Route>
+          <Route
+            element={
+              <ProtectedRouter
+                allowedRoles={[SuperAdmin, Admin, User]}
+                redirectTo="/login"
+              />
+            }
+          >
+            <Route path="/admin" element={<DashboardAdmin2 />} />
+          </Route>
+          <Route element={<ProtectedRouter allowedRoles={[Admin, User]} />}>
+            <Route path="/pre-nomina" element={<PrePayroll />} />
+            <Route path="/nomina" element={<Payroll />} />
+            <Route path="/deducciones" element={<Deductions />} />
+            <Route path="/percepciones" element={<Perceptions />} />
+            <Route path="/empleados" element={<Employees />} />
+            <Route path="/configuraciones" element={<Settings />} />
+            <Route path="/empleado/:emploID" element={<Employe />} />
+            <Route path="/infouser/:id" element={<UserInfo />} />
+            <Route path="/departamentos" element={<Departaments />} />
+            <Route path="/historial" element={<PayrollHistory />} />
+          </Route>
+        </Routes>
+      </div>
     </div>
-  
   );
 }
 //
