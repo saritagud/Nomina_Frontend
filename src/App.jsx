@@ -58,6 +58,7 @@ function App() {
           >
             <Route path="/registro" element={<Register />} />
             <Route path="/usuarios" element={<Users />} />
+            <Route path="/infouser/:id" element={<UserInfo />} />
           </Route>
           <Route
             element={
