@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { SideBar } from "./Sidebar";
 import { Link } from "react-router-dom";
 //
 
@@ -74,10 +73,9 @@ export function PayrollHistory() {
 
   return (
     <div className="flex h-full">
-      <SideBar />
       <main className="w-full flex flex-col items-center justify-center p-12 gap-10">
         <div className="flex gap-10">
-        <div className="flex flex-col items-center" style={{ marginLeft: '200px'}}>
+        <div className="flex flex-col items-center" >
           <div className="bg-blue-900 text-white px-10 py-1 rounded-md text-grisClaro font-semibold text-center mb-6 cursor-pointer" style={{ fontSize: '1.5rem' }}>
             Abiertas
         </div>
