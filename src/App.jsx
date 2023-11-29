@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import React, { useState } from "react";
+import { useState } from "react";
 import { DashboardAdmin2 } from "./Components/DashboardAdmin2";
 import { DashboardSuperAdmin } from "./Components/DashboardSuperAdmin";
 import { Login } from "./Components/Login";
@@ -73,8 +73,8 @@ function App() {
           <Route element={<ProtectedRouter allowedRoles={[Admin, User]} />}>
             <Route path="/pre-nomina" element={<PrePayroll />} />
             <Route path="/nomina" element={<Payroll />} />
-            <Route path="/deducciones" element={<Deductions />} />
-            <Route path="/percepciones" element={<Perceptions />} />
+            <Route path="/deducciones/:emploID" element={<Deductions />} />
+            <Route path="/percepciones/:emploID" element={<Perceptions />} />
             <Route path="/empleados" element={<Employees />} />
             <Route path="/configuraciones" element={<Settings />} />
             <Route path="/empleado/:emploID" element={<Employe />} />
