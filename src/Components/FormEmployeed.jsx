@@ -273,6 +273,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
               type="text"
               name="name"
               id="name"
+              autoFocus={!dataEdit}
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               placeholder="Ingresa el nombre"
               value={employee.name}

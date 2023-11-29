@@ -80,6 +80,7 @@ export function Login() {
             <input
               type="text"
               value={email}
+              autoFocus
               onChange={(e) => setEmail(e.target.value)}
               className={styleInput}
               placeholder="Ingresa tu email"
