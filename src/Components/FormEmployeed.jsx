@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { formatearFecha } from "../logic/functions";
 
-export function FormEmployeed({ dataEdit = null, setStateModal }) {
+export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
   const navegar = useNavigate();
   const { Admin, User } = userRoles;
   const [departments, setDepartments] = useState([]);
@@ -22,6 +22,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
     civilStatus: "0",
     startDate: "",
     charge: "",
+    condition: "0",
     baseSalary: "",
     bankAccount: "",
   });
@@ -67,8 +68,8 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
   const auth = authComponent([Admin, User]);
   if (!auth) return navegar("/admin");
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = () => {
+    // event.preventDefault();
     let data = {};
 
     if (employee.name == "")
@@ -93,6 +94,8 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
       return console.error("El campo Fecha de inicio no puede estar vacio");
     if (employee.charge == "")
       return console.error("El campo Cargo no puede estar vacio");
+    if (employee.condition == "0")
+      return console.error("El campo Condicion no puede estar vacio");
     if (employee.baseSalary == "")
       return console.error("El campo Salario Base no puede estar vacio");
     if (employee.bankAccount == "")
@@ -147,6 +150,11 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
           ...data,
           civilStatus: employee.civilStatus,
         };
+      if (employee.condition !== dataEdit.condition)
+        data = {
+          ...data,
+          condition: employee.condition,
+        };
       if (employee.startDate !== formatearFecha(dataEdit.startDate))
         data = {
           ...data,
@@ -184,8 +192,9 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Success:", data.message);
-          if (data.message) {
+          if (data.employee) {
+            // console.log("Success:", data.employee);
+            confirm(data.employee)
             setStateModal(false);
           } else {
             console.log("Error:", data);
@@ -200,7 +209,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
         identityCard: Number(employee.identityCard),
         baseSalary: parseFloat(employee.baseSalary),
       };
-      console.log(data);
+      // console.log(data);
       fetch(
         `http://localhost:3000/employee/create-employee/${companyID}/${departmentSelected}`,
         {
@@ -215,7 +224,8 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
         .then((response) => response.json())
         .then((data) => {
           if (data.newEmployee) {
-            console.log("Success:", data.newEmployee);
+            // console.log("Success:", data.newEmployee);
+            confirm(data.newEmployee)
             setStateModal(false);
           } else {
             console.log("Error:", data.error);
@@ -243,7 +253,9 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
 
   return (
     <section className="fixed top-0 left-0 bottom-0 right-0 bg-grisClaro flex flex-col items-center justify-center z-20 min-h-screen gap-10">
-      <h1 className="text-4xl font-bold">Registro de Empleados</h1>
+      <h1 className="text-4xl font-bold">
+        {dataEdit ? 'Editar Empleado' : 'Registro de Empleado'}
+      </h1>
       <BiArrowBack
         className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"
         onClick={() => setStateModal(false)}
@@ -424,6 +436,26 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
               placeholder="Ingresa el cargo"
               onChange={handleChange}
             />
+          </div>       
+          <div className="flex flex-col gap-1">
+            <label htmlFor="condition" className="text-xl">
+              Condicion
+            </label>
+            <select
+              name="condition"
+              id="condition"
+              className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+              value={employee.condition}
+              onChange={handleChange}
+            >
+              <option value="0" disabled>
+                -- Seleccionar --
+              </option>
+              <option value="Fijo">Fijo</option>
+              <option value="Contratado">Contratado</option>
+              <option value="Jubilado">Jubilado</option>
+              <option value="Incapacitado">Incapacitado</option>
+            </select>
           </div>
           <div className="flex flex-col gap-1">
             <label htmlFor="department" className="text-xl">
@@ -478,11 +510,14 @@ export function FormEmployeed({ dataEdit = null, setStateModal }) {
               onChange={handleChange}
             />
           </div>
-          <button className="bg-azulOscuro mx-auto mt-5 px-3 py-2 font-bold text-grisClaro outline-none rounded-md">
-            Registrar Usuario
-          </button>
+
         </div>
       </form>
+      <button 
+        className="bg-azulOscuro mx-auto mt-5 px-3 py-2 font-bold text-grisClaro outline-none rounded-md"
+        onClick={() => handleSubmit()}>
+        {dataEdit ? 'Guardar Cambios' : 'Registrar Empleado'}
+      </button>
     </section>
   );
 }

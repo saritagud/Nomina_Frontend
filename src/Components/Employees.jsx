@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import { FormEmployeed } from './FormEmployeed';
 import ModalDelete from './ModalDelete';
 import { deleteEmployee } from '../services/employees';
+import { addItemToState, deleteItemFromState } from '../logic/functions';
 
 export function Employees() {
   const [employees, setEmployees] = useState([])
   const [employeeSelect, setEmployeeSelect] = useState(null)
   const [modalDelete, setModalDelete] = useState(false)
-  const [modalEdit, setModalEdit] = useState(false)
   const [modalAdd, setModalAdd] = useState(false)
   const companyID = JSON.parse(localStorage.getItem('company')).id
   const token = JSON.parse(localStorage.getItem('token'))
@@ -37,6 +37,21 @@ export function Employees() {
       });
   }, [companyID]);
 
+  const confirmDelete = async () => {
+    const res = await deleteEmployee(token, companyID, employeeSelect)
+    if (res.message) {
+      const newState = deleteItemFromState(employeeSelect, [...employees])
+      setEmployees(newState)
+    } else {
+      console.error(res)
+    }
+  }
+
+  const confirmCreate = (data) => {
+    const newState = addItemToState(data, [...employees])
+    setEmployees(newState)
+  }
+  
   return (
     <div className="h-full">
       <main className="w-full p-10 flex flex-col gap-10 ">
@@ -72,10 +87,6 @@ export function Employees() {
                   </label>
                   <div className="hidden absolute peer-checked/action:flex gap-4 right-20 top-1/2 transform -translate-y-1/2 bg-grisClaro shadow-right-dark p-5 rounded-lg z-10">
                     <Link to={`/empleado/${employee.id}`} className="text-white w-28 text-center rounded-md bg-azulClaro px-2 py-1 font-semibold">Ver</Link>
-                    <button className="text-white w-28 rounded-md bg-azulClaro px-2 py-1 font-semibold" onClick={() => {
-                      setEmployeeSelect(employee)
-                      setModalEdit(true)
-                    }}>Editar</button>
                     <button className="text-white w-28 rounded-md bg-red-600 px-2 py-1 font-semibold" onClick={() => {
                       setEmployeeSelect(employee.id)
                       setModalDelete(true)
@@ -87,13 +98,10 @@ export function Employees() {
           </tbody>
         </table>
         {modalDelete && (
-          <ModalDelete peticion={deleteEmployee} setStateModal={setModalDelete} id={employeeSelect}/>
-        )}
-        {modalEdit && (
-          <FormEmployeed dataEdit={employeeSelect} setStateModal={setModalEdit}/>
+          <ModalDelete peticion={confirmDelete} setStateModal={setModalDelete}/>
         )}
         {modalAdd && (
-          <FormEmployeed setStateModal={setModalAdd}/>
+          <FormEmployeed setStateModal={setModalAdd} confirm={confirmCreate}/>
         )}
       </main>
     </div>
