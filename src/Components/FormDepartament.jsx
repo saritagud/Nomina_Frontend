@@ -89,6 +89,7 @@ export function FormDepartament({
             type="text"
             value={name}
             id="name"
+            autoFocus
             onChange={(e) => {
               setName(e.target.value);
             }}

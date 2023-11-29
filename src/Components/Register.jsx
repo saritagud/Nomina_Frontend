@@ -96,6 +96,7 @@ export function Register() {
               <input
                 type="text"
                 value={name}
+                autoFocus
                 onChange={(e) => setName(e.target.value)}
                 className={styleInput}
                 placeholder="Ingresa el nombre"
