@@ -25,7 +25,6 @@ export function Companies() {
       });
   }, []);
 
-  console.log(company);
 
   const handleEditClick = () => {
     setEditMode(true); // Cambiar a editMode a true al hacer clic en Editar
@@ -97,6 +96,9 @@ export function Companies() {
   const handleSaveChanges = (id) => {
     window.location.reload();
   };
+  const saveId=(id)=>{
+    localStorage.setItem("company", JSON.stringify(id));
+  }
 
   return (
     <>
@@ -164,7 +166,8 @@ export function Companies() {
                         <div className="hidden absolute peer-checked/action:flex gap-4 right-52 top-1/2 transform -translate-y-1/2 bg-grisClaro shadow-right-dark p-5 rounded-lg z-10">
                           <Link
                             className="text-white w-28 rounded-md bg-azulClaro px-2 py-1 font-semibold text-center"
-                            to={""}
+                            to={`/admin`}
+                            onClick={(e)=>saveId(companys)}
                           >
                             Ver
                           </Link>
