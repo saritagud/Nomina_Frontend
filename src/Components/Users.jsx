@@ -1,23 +1,25 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEllipsisV } from "react-icons/fa";
 import ModalDelete from "./ModalDelete";
 import { deleteUser } from "../services/users";
 import { deleteItemFromState } from "../logic/functions";
+import { BiArrowBack } from "react-icons/bi";
 
 export function Users() {
   const [users, setUsers] = useState([]);
-  const [userDelete, setUserDelete] = useState(null)
-  const [modalDelete, setModalDelete] = useState(false)
+  const [userDelete, setUserDelete] = useState(null);
+  const [modalDelete, setModalDelete] = useState(false);
   const companyID = JSON.parse(localStorage.getItem("company")).id;
   const token = JSON.parse(localStorage.getItem("token"));
+  const navegar = useNavigate();
   useEffect(() => {
     // Realizar solicitud GET para obtener datos de usuarios
     fetch(`http://localhost:3000/user/all-company/${companyID}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
@@ -38,23 +40,27 @@ export function Users() {
   }, []);
 
   const confirmDelete = async () => {
-    const res = await deleteUser(token, companyID, userDelete)
+    const res = await deleteUser(token, companyID, userDelete);
     if (res.message) {
-      const newState = deleteItemFromState(userDelete, [...users])
-      setUsers(newState)
+      const newState = deleteItemFromState(userDelete, [...users]);
+      setUsers(newState);
     } else {
-      console.error(res)
+      console.error(res);
     }
-  }
+  };
 
   return (
     <>
       <div className="h-full">
         <main className="w-full p-10 flex flex-col gap-10">
           <section className="flex justify-between items-center w-full">
-            <h1 className="text-3xl" style={{ fontWeight: "bold" }}>
-              Usuarios
-            </h1>
+            <div className="flex items-center gap-5">
+              <BiArrowBack
+                className="text-3xl cursor-pointer translate-y-[2px]"
+                onClick={() => navegar("/admin")}
+              />
+              <h1 className="text-3xl">Usuarios</h1>
+            </div>
             <form className="flex justify-center">
               <Link
                 className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-40 font-semibold text-center"
@@ -110,8 +116,8 @@ export function Users() {
                             <button
                               className="text-white w-28 rounded-md bg-red-600 px-2 py-1 font-semibold"
                               onClick={() => {
-                                setUserDelete(user.id)
-                                setModalDelete(true)
+                                setUserDelete(user.id);
+                                setModalDelete(true);
                               }}
                             >
                               Eliminar
@@ -126,7 +132,11 @@ export function Users() {
             )
           )}
           {modalDelete && (
-            <ModalDelete peticion={confirmDelete} setStateModal={setModalDelete} id={userDelete}/>
+            <ModalDelete
+              peticion={confirmDelete}
+              setStateModal={setModalDelete}
+              id={userDelete}
+            />
           )}
         </main>
       </div>

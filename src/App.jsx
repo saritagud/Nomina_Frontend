@@ -8,7 +8,7 @@ import { Payroll } from "./Components/Payroll";
 import { Deductions } from "./Components/Deductions";
 import { Perceptions } from "./Components/Perceptions";
 import { Employees } from "./Components/Employees";
-import { Settings } from "./Components/Settings";
+import { Company } from "./Components/Company";
 import { Companies } from "./Components/Companies";
 import { Users } from "./Components/Users";
 import { PrePayroll } from "./Components/PrePayroll";
@@ -35,7 +35,7 @@ function App() {
         <Route path="/login" element={<Login />} />
       </Routes>
 
-      <div  className={` ${isOpen ? "w-4/5 ml-64" : "w-[90%] ml-32"}`}>
+      <div className={` ${isOpen ? "w-4/5 ml-64" : "w-[90%] ml-32"}`}>
         <Routes>
           <Route
             element={
@@ -59,6 +59,7 @@ function App() {
             <Route path="/registro" element={<Register />} />
             <Route path="/usuarios" element={<Users />} />
             <Route path="/infouser/:id" element={<UserInfo />} />
+            <Route path="/empresa" element={<Company />} />
           </Route>
           <Route
             element={
@@ -76,7 +77,7 @@ function App() {
             <Route path="/deducciones/:emploID" element={<Deductions />} />
             <Route path="/percepciones/:emploID" element={<Perceptions />} />
             <Route path="/empleados" element={<Employees />} />
-            <Route path="/configuraciones" element={<Settings />} />
+
             <Route path="/empleado/:emploID" element={<Employe />} />
             <Route path="/infouser/:id" element={<UserInfo />} />
             <Route path="/departamentos" element={<Departaments />} />

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 export function DashboardAdmin2() {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user)
+  console.log(user);
   let styleLink =
     "bg-grisOscuro h-24 w-full rounded-md text-lg text-center flex justify-center items-center border-2 border-grisOscuro shadow-right-dark";
   return (
@@ -14,42 +14,43 @@ export function DashboardAdmin2() {
             <h1 className="text-3xl">Dashboard</h1>
           </div>
         </section>
-        {user.role==="admin"?
-        <section className="flex justify-between w-full gap-10">
-          <div className="flex flex-col gap-10 w-full">
-            <Link className={styleLink} to={"/usuarios"}>
-              Ver usuarios
-            </Link>
-            <Link className={styleLink} to={"/configuraciones"}>
-              Ver Configuraciones
-            </Link>
-          </div>
-          
-          <div className="flex flex-col gap-10 w-full">
-            <Link className={styleLink} to={"/pre-nomina"}>
-              Pre-Nomina
-            </Link>
+        {user.role === "admin" ? (
+          <section className="flex justify-between w-full gap-10">
+            <div className="flex flex-col gap-10 w-full">
+              <Link className={styleLink} to={"/usuarios"}>
+                Ver usuarios
+              </Link>
+              <Link className={styleLink} to={"/empresa"}>
+                Empresa
+              </Link>
+            </div>
 
-            <Link className={styleLink} to={"/nominas"}>
-              Nominas
-            </Link>
+            <div className="flex flex-col gap-10 w-full">
+              <Link className={styleLink} to={"/pre-nomina"}>
+                Pre-Nomina
+              </Link>
 
-            <Link className={styleLink} to={"/departamentos"}>
-              Departamentos
-            </Link>
-          </div>
-          </section>:
+              <Link className={styleLink} to={"/historial"}>
+                Nominas
+              </Link>
+
+              <Link className={styleLink} to={"/departamentos"}>
+                Departamentos
+              </Link>
+            </div>
+          </section>
+        ) : (
           <div className="flex justify-between w-full gap-10">
             <div className="flex gap-10 w-full">
               <Link className={styleLink} to={"/usuarios"}>
                 Ver usuarios
               </Link>
-              <Link className={styleLink} to={"/configuraciones"}>
-                Ver Configuraciones
+              <Link className={styleLink} to={"/empresa"}>
+                Empresa
               </Link>
             </div>
           </div>
-      }
+        )}
       </section>
     </div>
   );

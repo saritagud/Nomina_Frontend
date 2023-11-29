@@ -80,7 +80,9 @@ export function FormDepartament({
           className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"
           onClick={() => setModalDepartament(false)}
         ></BiArrowBack>
-        <h1 className="text-4xl font-bold mb-6">Crear Departamentos</h1>
+        <h1 className="text-4xl font-bold mb-10">
+          {update ? "Editar Departamento" : "Crear Departamento"}
+        </h1>
         <form className="flex flex-col gap-5 " onSubmit={handleSubmit}>
           <label htmlFor="name" className="text-xl">
             Nombre del departamento
