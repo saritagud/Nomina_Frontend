@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { formatearFecha } from "../logic/functions"
 import { FormEmployeed } from "./FormEmployeed"
 import { BiArrowBack } from "react-icons/bi"
 import { deleteEmployee } from "../services/employees"
 import ModalDelete from "./ModalDelete"
+import { getAllPerceptions } from "../services/perceptions"
+import { getAllDeductions } from "../services/deductions"
 
 export function Employe() {
   const navegar = useNavigate()
   const [employe, setEmploye] = useState([])
+  const [deductions, setDeductions] = useState([])
+  const [perceptions, setPerceptions] = useState([])
   const [modalEdit, setModalEdit] = useState(false)
   const [modalDelete, setModalDelete] = useState(false)
   const { emploID } = useParams()
@@ -33,6 +37,22 @@ export function Employe() {
       .catch(error => {
         console.error("Error:", error)
       })
+
+    const getPercep = async () => {
+      const res = await getAllPerceptions(token, emploID)
+      if (res?.perceptions) {
+        setPerceptions(res.perceptions)
+      }
+    }
+    getPercep()
+
+    const getDeduc = async () => {
+      const res = await getAllDeductions(token, emploID)
+      if (res?.deductions) {
+        setDeductions(res.deductions)
+      }
+    }
+    getDeduc()
   }, [])
   // console.log(employe);
 
@@ -41,7 +61,7 @@ export function Employe() {
   }
 
   const confirmDelete = async () => {
-    const res = await deleteEmployee(token, companyID, employe.id)
+    const res = await deleteEmployee(token, companyID, emploID)
     if (res.message) {
       // console.log(res.message)
       navegar("/empleados")
@@ -80,7 +100,7 @@ export function Employe() {
                 </div>
               </section>
               <>
-                <section className="bg-grisClaro rounded-md shadow-right-dark w-full pt-6 py-10 px-10 flex flex-col gap-10">
+                <section className="bg-grisClaro rounded-md shadow-right-dark w-full pt-6 py-10 px-10 flex flex-col gap-10 border-2 border-grisOscuro">
                   <h1 className="text-3xl font-bold">Informacion Personal</h1>
                   <div className="grid grid-cols-[auto,1fr,auto,1fr] gap-y-10 gap-x-10 px-5 items-center">
                     <p className="text-lg font-bold">Nombre</p>
@@ -118,22 +138,28 @@ export function Employe() {
                     <p className="text-lg font-bold">Cuenta</p>
                     <p className="text-lg break-words">{employe.bankAccount}</p>
                     <p className="text-lg font-bold">Salario Base</p>
-                    <p className="text-lg break-words">{employe.baseSalary}</p>
+                    <p className="text-lg break-words">{employe.baseSalary} {currency}</p>
                   </div>
                 </section>
                 <div className="flex justify-end m-2">
-                  <div className="flex items-center gap-3">
-                    <p>Agregar: </p>
-                    <button className="bg-azulClaro p-2 pr-6 pl-6 text-white rounded-md font-semibold">
-                      Percepcion
-                    </button>
-                    <button className="bg-azulClaro p-2 pr-6 pl-6 text-white rounded-md font-semibold">
-                      Deduccion
-                    </button>
+                  <div className="flex items-center gap-5">
+                    <p className="text-lg font-semibold">Ver: </p>
+                    <Link 
+                      className="bg-azulClaro p-2 pr-6 pl-6 text-white rounded-md font-semibold text-center"
+                      to={`/percepciones/${emploID}`}
+                    >
+                      Percepciones
+                    </Link>
+                    <Link 
+                      className="bg-azulClaro p-2 pr-6 pl-6 text-white rounded-md font-semibold text-center"
+                      to={`/deducciones/${emploID}`}  
+                    >
+                      Deducciones
+                    </Link>
                   </div>
                 </div>
                 {/* Esta seccion se debe modificar para obtener las percepciones y deducciones de la API */}
-                <section className="bg-grisClaro rounded-md shadow-right-dark w-full pt-6 py-10 px-10 flex flex-col gap-10">
+                <section className="bg-grisClaro rounded-md shadow-right-dark w-full pt-6 py-10 px-10 flex flex-col gap-10 border-2 border-grisOscuro">
                   <h1 className="text-3xl font-bold">Recibo</h1>
                   <table className="w-full table-auto border-collapse">
                     <thead className="w-full">
@@ -150,33 +176,33 @@ export function Employe() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="text-lg break-words py-3 px-3">
-                          {employe.charge}
-                        </td>
-                        <td className="text-lg break-words py-3 px-3">
-                          {employe.baseSalary} {currency}
-                        </td>
-                        <td className="text-lg break-words py-3 px-3 border-l-[1px] border-azulOscuro"></td>
-                      </tr>
-                      <tr>
-                        <td className="text-lg break-words py-3 px-3">
-                          {employe.charge}
-                        </td>
-                        <td className="text-lg break-words py-3 px-3">
-                          {employe.baseSalary} {currency}
-                        </td>
-                        <td className="text-lg break-words py-3 px-3 border-l-[1px] border-azulOscuro"></td>
-                      </tr>
-                      <tr>
-                        <td className="text-lg break-words py-3 px-3">
-                          {employe.charge}
-                        </td>
-                        <td className="text-lg break-words py-3 px-3 border-b-[1px] border-azulOscuro"></td>
-                        <td className="text-lg break-words py-3 px-3 border-b-[1px] border-l-[1px] border-azulOscuro">
-                          {employe.baseSalary} {currency}
-                        </td>
-                      </tr>
+                      {perceptions.map(perception => (
+                        (perception.application === 'Aplica' && perception.state === 'Activo') && (
+                          <tr key={perception.id}>
+                            <td className="text-lg break-words py-3 px-3">
+                              {perception.perceptionName.name}
+                            </td>
+                            <td className="text-lg break-words py-3 px-3">
+                              {perception.amount} {currency}
+                            </td>
+                            <td className="text-lg break-words py-3 px-3 border-l-[1px] border-azulOscuro"></td>
+                          </tr>
+                        )
+                      ))}
+                      {deductions.map(deduction => (
+                        (deduction.application === 'Aplica' && deduction.state === 'Activo') && (
+                          <tr key={deduction.id}>
+                            <td className="text-lg break-words py-3 px-3">
+                              {deduction.deductionName.name}
+                            </td>
+                            <td className="text-lg break-words py-3 px-3"></td>
+                            <td className="text-lg break-words py-3 px-3 border-l-[1px] border-azulOscuro">
+                              {deduction.percentage} %
+                            </td>
+                          </tr>
+                        )
+                      ))}
+                      {/* Aqui los totales */}
                       <tr>
                         <td className="text-xl py-1 px-3 font-bold">
                           Salario Bruto:
