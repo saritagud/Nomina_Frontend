@@ -2,20 +2,27 @@
 // Por ejemplo: Los roles de los usuarios
 
 export const userRoles = {
-   "SuperAdmin": 'superAdmin',
-   "Admin": 'admin',
-   "User": 'user'
+  SuperAdmin: "superAdmin",
+  Admin: "admin",
+  User: "user"
+}
+
+export const paymentPeriod = {
+  Semanal: "7",
+  PrimeraQuin: "15",
+  SegundaQuin: "16",
+  Mensual: "30"
 }
 
 export const coins = {
-   USD: '$',
-   VES: 'Bs',
-   EUR: '€',
-   COP: '$',
-   BRL: 'R$',
-   ARS: '$',
-   GBP: '£',
-   DEM: 'DM',
-   PTE: 'PTE',
-   MXN: '$'
- }
+  USD: "$",
+  VES: "Bs",
+  EUR: "€",
+  COP: "$",
+  BRL: "R$",
+  ARS: "$",
+  GBP: "£",
+  DEM: "DM",
+  PTE: "PTE",
+  MXN: "$"
+}

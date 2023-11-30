@@ -1,6 +1,50 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaEllipsisV } from "react-icons/fa";
+import { generatePayrollPDF } from "../logic/functionsPDF"
+
+const employees = [
+  {
+    id: 1,
+    name: 'Alexander Jose',
+    lastName: 'Avendaño Ramirez',
+    indentityCard: '29694896',
+    charge: 'Full Stack',
+    condition: 'Fijo',
+    grossSalary: 400.50,
+    netSalary: 385
+  },
+  {
+    id: 2,
+    name: 'Luis',
+    lastName: 'Jose',
+    indentityCard: '29694896',
+    charge: 'Backend',
+    condition: 'Fijo',
+    grossSalary: 400.50,
+    netSalary: 385
+  },
+  {
+    id: 3,
+    name: 'Sara',
+    lastName: 'Gud',
+    indentityCard: '29694896',
+    charge: 'FrontEnd',
+    condition: 'Fijo',
+    grossSalary: 400.50,
+    netSalary: 385
+  },
+  {
+    id: 4,
+    name: 'Atilio',
+    lastName: 'Jose',
+    indentityCard: '29694896',
+    charge: 'Rocket',
+    condition: 'Fijo',
+    grossSalary: 400.50,
+    netSalary: 385
+  }
+]
 
 export function Payroll() {
   const [statePayroll, setStatePayroll] = useState(
@@ -101,7 +145,8 @@ export function Payroll() {
                     Cerrar Nomina
                   </button>
 
-                  <button className="bg-azulClaro px-3 py-2 m-auto rounded-md placeholder-grisClaro text-grisClaro outline-none w-40 font-semibold">
+                  <button className="bg-azulClaro px-3 py-2 m-auto rounded-md placeholder-grisClaro text-grisClaro outline-none w-40 font-semibold"
+                    onClick={() => generatePayrollPDF(employees)}>
                     Descargar
                   </button>
                 </div>
