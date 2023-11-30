@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userRoles } from "../logic/constantes";
 import { authComponent } from "../logic/authComponent";
-
+import { succesAlert, errorAlert } from "./alerts/alerts";
 export function FormDepartament({
   setModalDepartament,
   fetchDepartaments,
@@ -56,19 +56,23 @@ export function FormDepartament({
         .then((data) => {
           console.log("Success:", data);
           if (data.newApartment) {
+            succesAlert("Se ha creado correctamente el departamento");
             setModalDepartament(false);
             fetchDepartaments();
             navegar("/departamentos");
           } else if (data.department) {
+            succesAlert("Se ha editado correctamente el departamento");
             setModalDepartament(false);
             fetchDepartaments();
             setUpdate(false);
             navegar("/departamentos");
           } else {
+            errorAlert("Ha ocurrido un error");
             console.log("Error:", data.error);
           }
         })
         .catch((error) => {
+          errorAlert("Ha ocurrido un error");
           console.error("Error:", error);
         });
     }

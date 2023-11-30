@@ -38,7 +38,7 @@ export function Companies() {
   };
 
   const confirmDelete = async () => {
-    const res = await deleteCompany(token, companyID);
+    const res = await deleteCompany(token, companyID, fetchCompanies);
     if (res.message) {
       const newState = deleteItemFromState(companyID, [...company]);
       setCompany(newState);
@@ -138,7 +138,7 @@ export function Companies() {
           <ModalDelete
             peticion={confirmDelete}
             setStateModal={setModalDelete}
-            fetchCompanies={fetchCompanies}
+            
           />
         )}
       </div>

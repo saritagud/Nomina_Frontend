@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { userRoles } from "../logic/constantes";
+import { succesAlert, errorAlert } from "./alerts/alerts";
 
 export function Register() {
   const navegar = useNavigate();
@@ -21,6 +22,7 @@ export function Register() {
   let styleInput =
     "bg-azulClaro p-4 rounded-md text-white placeholder:text-white placeholder:font-extralight w-full";
   let styleLabel = "text-lg";
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -68,11 +70,14 @@ export function Register() {
           console.log("Success:", data);
           if (data.message) {
             if (rol == SuperAdmin) {
+              succesAlert("Se ha creado correctamente el usuario");
               navegar("/");
             } else if (rol == Admin) {
+              succesAlert("Se ha creado correctamente el usuario");
               navegar("/usuarios");
             }
           } else {
+            errorAlert("Ha ocurrido un error al crear el usuario");
             console.log("Error:", data.error);
           }
         })

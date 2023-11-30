@@ -19,7 +19,7 @@ import { UserInfo } from "./Components/InforUser";
 import { Departaments } from "./Components/Departaments";
 import { PayrollHistory } from "./Components/PayrollHistory";
 import { SideBar } from "./Components/Sidebar";
-
+import { Toaster } from "react-hot-toast";
 function App() {
   const { SuperAdmin, Admin, User } = userRoles;
   const [isOpen, setIsOpen] = useState(true);
@@ -28,6 +28,9 @@ function App() {
 
   return (
     <div className="h-full">
+      <div>
+        <Toaster />
+      </div>
       {!isLoginPage && (
         <SideBar open={isOpen} onToggle={() => setIsOpen(!isOpen)} />
       )}

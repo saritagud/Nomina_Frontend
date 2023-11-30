@@ -110,7 +110,7 @@ export function AddPerceptions({ dataEdit = null, setStateModal, confirm }) {
     
     <section className="fixed top-0 left-0 bottom-0 right-0 bg-grisClaro flex flex-col items-center justify-center z-20 min-h-screen gap-10">
       <h1 className="text-4xl font-bold">
-        {dataEdit ? 'Editar datos de la percepcion' : 'Agrega una percepcion'}
+        {dataEdit ? 'Editar datos de la Percepción' : 'Agrega una Percepción'}
       </h1>
       <BiArrowBack
         className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"

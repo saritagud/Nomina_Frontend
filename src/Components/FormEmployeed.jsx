@@ -4,7 +4,7 @@ import { authComponent } from "../logic/authComponent";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { formatearFecha } from "../logic/functions";
-
+import { succesAlert, errorAlert } from "./alerts/alerts";
 export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
   const navegar = useNavigate();
   const { Admin, User } = userRoles;
@@ -194,13 +194,16 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
         .then((data) => {
           if (data.employee) {
             // console.log("Success:", data.employee);
-            confirm(data.employee)
+            succesAlert("Se ha editado correcatmente el empleado");
+            confirm(data.employee);
             setStateModal(false);
           } else {
+            errorAlert("Ha ocurrido un error al editar el empleado");
             console.log("Error:", data);
           }
         })
         .catch((error) => {
+          errorAlert("Ha ocurrido un error");
           console.error("Error:", error);
         });
     } else {
@@ -225,13 +228,16 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
         .then((data) => {
           if (data.newEmployee) {
             // console.log("Success:", data.newEmployee);
-            confirm(data.newEmployee)
+            succesAlert("Se ha creado correctamente el empleado");
+            confirm(data.newEmployee);
             setStateModal(false);
           } else {
+            errorAlert("Ha ocurrido un error al crear el empleado");
             console.log("Error:", data.error);
           }
         })
         .catch((error) => {
+          errorAlert("Ha ocurrido un error ");
           console.error("Error:", error);
         });
     }
@@ -254,7 +260,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
   return (
     <section className="fixed top-0 left-0 bottom-0 right-0 bg-grisClaro flex flex-col items-center justify-center z-20 min-h-screen gap-10">
       <h1 className="text-4xl font-bold">
-        {dataEdit ? 'Editar Empleado' : 'Registro de Empleado'}
+        {dataEdit ? "Editar Empleado" : "Registro de Empleado"}
       </h1>
       <BiArrowBack
         className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"
@@ -437,7 +443,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
               placeholder="Ingresa el cargo"
               onChange={handleChange}
             />
-          </div>       
+          </div>
           <div className="flex flex-col gap-1">
             <label htmlFor="condition" className="text-xl">
               Condicion
@@ -511,13 +517,13 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
               onChange={handleChange}
             />
           </div>
-
         </div>
       </form>
-      <button 
+      <button
         className="bg-azulOscuro mx-auto mt-5 px-3 py-2 font-bold text-grisClaro outline-none rounded-md"
-        onClick={() => handleSubmit()}>
-        {dataEdit ? 'Guardar Cambios' : 'Registrar Empleado'}
+        onClick={() => handleSubmit()}
+      >
+        {dataEdit ? "Guardar Cambios" : "Registrar Empleado"}
       </button>
     </section>
   );

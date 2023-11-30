@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authComponent } from "../logic/authComponent";
 import { userRoles } from "../logic/constantes";
+import toast from "react-hot-toast";
 
 export function CreateCompany({
   setModalCreateCompany,
@@ -64,6 +65,17 @@ export function CreateCompany({
       .then((data) => {
         if (data.newCompany) {
           localStorage.setItem("company", JSON.stringify(data.newCompany));
+          toast.success("Se ha creado correctamente la empresa", {
+            style: {
+              border: "1px solid #713200",
+              padding: "16px",
+              color: "#000000",
+            },
+            iconTheme: {
+              primary: "#045FF5",
+              secondary: "#021859",
+            },
+          });
           setModalCreateCompany(false);
           navegar("/registro");
         } else if (data.newCompanyInfo) {
@@ -93,7 +105,10 @@ export function CreateCompany({
         <h1 className="text-4xl font-bold mb-6">
           {update ? "Editar Empresa" : "Crear Empresa"}
         </h1>
-        <form className="flex flex-col justify-center items-center gap-10 " onSubmit={handleSubmit}>
+        <form
+          className="flex flex-col justify-center items-center gap-10 "
+          onSubmit={handleSubmit}
+        >
           <div className="flex gap-10">
             <div className="flex flex-col gap-5">
               <label htmlFor="name" className="text-xl">
