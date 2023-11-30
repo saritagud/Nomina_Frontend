@@ -52,33 +52,35 @@ export function Payroll() {
                     <td className="p-4 text-lg text-center">Contratada</td>
                     <td className="p-4 text-lg text-center">3 años</td>
                     <td className="p-4 text-lg text-center">10.000$</td>
-                    <td className="p-4 text-lg text-center">10.000$</td>
-                    <td className="relative p-4 text-lg rounded-r-2xl">
-                      <input
-                        type="checkbox"
-                        name={"action"}
-                        id={"action"}
-                        className="hidden peer/action"
-                      />
-                      <label htmlFor={"action"} className="cursor-pointer">
-                        <FaEllipsisV />
-                      </label>
-                      <div className="hidden absolute peer-checked/action:flex gap-4 right-20 top-1/2 transform -translate-y-1/2 bg-grisClaro shadow-right-dark p-5 rounded-lg z-10">
-                        <Link //to={`/empleado/${employee.id}`}
-                          className="text-white w-28 text-center rounded-md bg-azulClaro px-2 py-1 font-semibold"
-                        >
-                          Ver
-                        </Link>
-                        {statePayroll && (
-                          <button
-                            className="text-white w-28 rounded-md bg-red-600 px-2 py-1 font-semibold"
-                            onClick={() => {}}
-                          >
-                            Eliminar
-                          </button>
-                        )}
-                      </div>
+                    <td
+                      className={
+                        !statePayroll
+                          ? "p-4 text-lg text-center rounded-r-md"
+                          : "p-4 text-lg text-center"
+                      }
+                    >
+                      10.000$
                     </td>
+                    {statePayroll && (
+                      <td className="relative p-4 text-lg rounded-r-2xl">
+                        <input
+                          type="checkbox"
+                          name={"action"}
+                          id={"action"}
+                          className="hidden peer/action"
+                        />
+                        <label htmlFor={"action"} className="cursor-pointer">
+                          <FaEllipsisV />
+                        </label>
+                        <div className="hidden absolute peer-checked/action:flex gap-4 right-20 top-1/2 transform -translate-y-1/2 bg-grisClaro shadow-right-dark p-5 rounded-lg z-10">
+                          <Link //to={`/empleado/${employee.id}`}
+                            className="text-white w-28 text-center rounded-md bg-azulClaro px-2 py-1 font-semibold"
+                          >
+                            Ver
+                          </Link>
+                        </div>
+                      </td>
+                    )}
                   </tr>
                 </tbody>
               </table>
