@@ -1,5 +1,5 @@
 // Este archivo se utilizara para guardar peticiones a la API de deducciones
-
+import { succesAlert, errorAlert } from "../Components/alerts/alerts";
 export const getAllDeductionName = (token) => {
   const peticion = fetch(
     `http://localhost:3000/deductions/all-deductions-name`,
@@ -7,52 +7,49 @@ export const getAllDeductionName = (token) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   )
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       if (data.deductionsName) {
         // console.log("Success:", data.deductionsName);
-        return data
+        return data;
       } else {
-        console.log("Error:", data.error)
+        console.log("Error:", data.error);
       }
     })
-    .catch(error => {
-      console.error("Error:", error)
-    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 
-  return peticion
-}
+  return peticion;
+};
 
 export const getAllDeductions = (token, employeeId) => {
-  const peticion = fetch(
-    `http://localhost:3000/deductions/all/${employeeId}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
-    }
-  )
-    .then(response => response.json())
-    .then(data => {
+  const peticion = fetch(`http://localhost:3000/deductions/all/${employeeId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
       if (data.deductions) {
         // console.log("Success:", data.deductions);
-        return data
+        return data;
       } else {
-        console.log("Error:", data.error)
+        console.log("Error:", data.error);
       }
     })
-    .catch(error => {
-      console.error("Error:", error)
-    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 
-  return peticion
-}
+  return peticion;
+};
 
 export const createDeductionName = (token, data) => {
   const peticion = fetch(
@@ -62,25 +59,27 @@ export const createDeductionName = (token, data) => {
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   )
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       if (data.deduction) {
         // console.log("Success:", data.deduction);
-        return data.deduction
+        succesAlert("Se ha creado correctamente la deducción");
+        return data.deduction;
       } else {
-        console.log("Error:", data.error)
+        console.log("Error:", data.error);
       }
     })
-    .catch(error => {
-      console.error("Error:", error)
-    })
+    .catch((error) => {
+      errorAlert("Ha ocurrido un error al crear la deducción");
+      console.error("Error:", error);
+    });
 
-  return peticion
-}
+  return peticion;
+};
 
 export const createDeductionData = (token, employeeId, deductionId, data) => {
   const peticion = fetch(
@@ -90,25 +89,27 @@ export const createDeductionData = (token, employeeId, deductionId, data) => {
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   )
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       if (data.deductionData) {
         // console.log("Success:", data.deductionData);
-        return data.deductionData
+        succesAlert("Se ha creado correctamente la deducción");
+        return data.deductionData;
       } else {
-        console.log("Error:", data.error)
+        errorAlert("Ha ocurrido un error al crear la deducción");
+        console.log("Error:", data.error);
       }
     })
-    .catch(error => {
-      console.error("Error:", error)
-    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 
-  return peticion
-}
+  return peticion;
+};
 
 export const editDeductionData = (token, employeeId, deductionId, data) => {
   const peticion = fetch(
@@ -118,48 +119,53 @@ export const editDeductionData = (token, employeeId, deductionId, data) => {
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   )
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       if (data.deductionData) {
         // console.log("Success:", data.deductionData);
-        return data.deductionData
+        succesAlert("Se ha editado correctamente la deducción");
+        return data.deductionData;
       } else {
-        console.log("Error:", data.error)
+        errorAlert("Ha ocurrido un error al editar la deducción");
+        console.log("Error:", data.error);
       }
     })
-    .catch(error => {
-      console.error("Error:", error)
-    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 
-  return peticion
-}
+  return peticion;
+};
 
 export const deleteEmployee = (token, deductionDataId, employeeId) => {
-  const peticion = fetch(`http://localhost:3000/deductions/delete-deduction/${deductionDataId}/${employeeId}`,
+  const peticion = fetch(
+    `http://localhost:3000/deductions/delete-deduction/${deductionDataId}/${employeeId}`,
     {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     }
   )
-    .then(response => response.json())
-    .then(data => {
+    .then((response) => response.json())
+    .then((data) => {
       // console.log("Success:", data.message)
       if (data.message) {
-        return data
+        succesAlert("Se ha eliminado correctamente la deducción");
+        return data;
       } else {
-        console.log("Error:", data.error)
+        errorAlert("Ha ocurrido un error al eliminar la deducción");
+        console.log("Error:", data.error);
       }
     })
-    .catch(error => {
-      console.error("Error:", error)
-    })
-    
-  return peticion
-}
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+
+  return peticion;
+};

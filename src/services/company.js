@@ -1,8 +1,8 @@
-// Este archivo se utilizara para guardar peticiones a la API de departamentos
+// Este archivo se utilizara para guardar peticiones a la API de empresas
 import { succesAlert, errorAlert } from "../Components/alerts/alerts";
-export const deleteDepartment = (token, companyID, departamentID) => {
+export const deleteCompany = (token, companyID, fetchCompanies) => {
   const peticion = fetch(
-    `http://localhost:3000/department/delete-department/${companyID}/${departamentID}`,
+    `http://localhost:3000/company/delete-company/${companyID}`,
     {
       method: "DELETE",
       headers: {
@@ -15,10 +15,11 @@ export const deleteDepartment = (token, companyID, departamentID) => {
     .then((data) => {
       // console.log("Success:", data.message)
       if (data.message) {
-        succesAlert("Se ha eliminado correctamente el departamento");
+        fetchCompanies();
+        succesAlert("Se ha eliminado correctamente la empresa");
         return data;
       } else {
-        errorAlert("Ha ocurrido un error al eliminar el departamento");
+        errorAlert("Ha ocurrido un error al eliminar la empresa");
         console.log("Error:", data.error);
       }
     })

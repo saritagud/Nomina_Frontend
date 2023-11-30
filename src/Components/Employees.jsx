@@ -25,7 +25,7 @@ export function Employees() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log("Success:", data.employees);
+        console.log("Success:", data.employees);
         if (data.employees) {
           setEmployees(data.employees); // Establecer datos de empleados en el estado
         } else {
@@ -79,7 +79,7 @@ export function Employees() {
                   <td className="p-4 text-lg rounded-l-2xl">{employee.name}</td>
                   <td className="p-4 text-lg">{employee.identityCard}</td>
                   <td className="p-4 text-lg">{employee.charge}</td>
-                  <td className="p-4 text-lg">{employee.departamentId}</td>
+                  <td className="p-4 text-lg">{employee.departmentName.name}</td>
                   <td className="relative p-4 text-lg rounded-r-2xl">
                     <input type="checkbox" name={`action${employee.id}`} id={`action${employee.id}`} className="hidden peer/action"/>
                     <label htmlFor={`action${employee.id}`} className="cursor-pointer">

@@ -4,6 +4,7 @@ import { FormDepartament } from "./FormDepartament";
 import ModalDelete from "./ModalDelete";
 import { deleteDepartment } from "../services/departments";
 import { deleteItemFromState } from "../logic/functions";
+
 export function Departaments() {
   const [department, setDepartment] = useState([]);
   const [modalDepartament, setModalDepartament] = useState(false);

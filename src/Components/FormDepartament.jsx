@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userRoles } from "../logic/constantes";
 import { authComponent } from "../logic/authComponent";
-
+import { succesAlert, errorAlert } from "./alerts/alerts";
 export function FormDepartament({
   setModalDepartament,
   fetchDepartaments,
@@ -56,19 +56,23 @@ export function FormDepartament({
         .then((data) => {
           console.log("Success:", data);
           if (data.newApartment) {
+            succesAlert("Se ha creado correctamente el departamento");
             setModalDepartament(false);
             fetchDepartaments();
             navegar("/departamentos");
           } else if (data.department) {
+            succesAlert("Se ha editado correctamente el departamento");
             setModalDepartament(false);
             fetchDepartaments();
             setUpdate(false);
             navegar("/departamentos");
           } else {
+            errorAlert("Ha ocurrido un error");
             console.log("Error:", data.error);
           }
         })
         .catch((error) => {
+          errorAlert("Ha ocurrido un error");
           console.error("Error:", error);
         });
     }
@@ -80,7 +84,9 @@ export function FormDepartament({
           className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"
           onClick={() => setModalDepartament(false)}
         ></BiArrowBack>
-        <h1 className="text-4xl font-bold mb-6">Crear Departamentos</h1>
+        <h1 className="text-4xl font-bold mb-10">
+          {update ? "Editar Departamento" : "Crear Departamento"}
+        </h1>
         <form className="flex flex-col gap-5 " onSubmit={handleSubmit}>
           <label htmlFor="name" className="text-xl">
             Nombre del departamento

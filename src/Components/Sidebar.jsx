@@ -3,10 +3,10 @@ import {
   FaArrowLeft,
   FaUserCircle,
   FaClipboardList,
-  FaCog,
+  FaHotel,
   FaBookmark,
   FaHistory,
-  FaBriefcase 
+  FaBriefcase,
 } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
 import { AiFillHome } from "react-icons/ai";
@@ -79,12 +79,14 @@ export function SideBar({ open, onToggle }) {
             </Link>
 
             <div
-              className="flex  p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 mt-80 border-t-2 border-grisClaro/70 hover:rounded-md  
+              className="flex p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 border-t-2 border-grisClaro/70 hover:rounded-md fixed bottom-2
               "
               onClick={logout}
             >
               <CiLogout />
-              <p className={`${!open && "hidden"} origin-left duration-200`}>
+              <p
+                className={`${!open && "hidden"} origin-left duration-200 w-40`}
+              >
                 Cerrar Sesion
               </p>
             </div>
@@ -149,7 +151,7 @@ export function SideBar({ open, onToggle }) {
               "
                   to={"/historial"}
                 >
-                  <FaHistory  />
+                  <FaHistory />
                   <p
                     className={`${!open && "hidden"} origin-left duration-200`}
                   >
@@ -173,16 +175,15 @@ export function SideBar({ open, onToggle }) {
                 <Link
                   className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
               "
-                  to={"/configuraciones"}
+                  to={"/empresa"}
                 >
-                  <FaCog />
+                  <FaHotel />
                   <p
                     className={`${!open && "hidden"} origin-left duration-200`}
                   >
                     Empresa
                   </p>
                 </Link>
-                
 
                 <div
                   className="flex p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 border-t-2 border-grisClaro/70 hover:rounded-md fixed bottom-2
@@ -191,7 +192,9 @@ export function SideBar({ open, onToggle }) {
                 >
                   <CiLogout />
                   <p
-                    className={`${!open && "hidden"} origin-left duration-200 w-40`}
+                    className={`${
+                      !open && "hidden"
+                    } origin-left duration-200 w-40`}
                   >
                     Cerrar Sesion
                   </p>
@@ -230,8 +233,23 @@ export function SideBar({ open, onToggle }) {
                         Empleados
                       </p>
                     </Link>
+                    <Link
+                      className="flex rounded-md p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 
+              "
+                      to={"/empresa"}
+                    >
+                      <FaHotel />
+                      <p
+                        className={`${
+                          !open && "hidden"
+                        } origin-left duration-200`}
+                      >
+                        Empresa
+                      </p>
+                    </Link>
+
                     <div
-                      className="flex  p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 mt-10 border-t-2 border-grisClaro/70 hover:rounded-md  
+                      className="flex p-2 cursor-pointer hover:bg-white/50  text-white text-lg font-Quicksand items-center gap-x-4 border-t-2 border-grisClaro/70 hover:rounded-md fixed bottom-2
               "
                       onClick={logout}
                     >
@@ -239,7 +257,7 @@ export function SideBar({ open, onToggle }) {
                       <p
                         className={`${
                           !open && "hidden"
-                        } origin-left duration-200`}
+                        } origin-left duration-200 w-40`}
                       >
                         Cerrar Sesion
                       </p>
