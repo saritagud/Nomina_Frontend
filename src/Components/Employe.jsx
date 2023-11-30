@@ -10,7 +10,7 @@ import { getAllDeductions } from "../services/deductions"
 
 export function Employe() {
   const navegar = useNavigate()
-  const [employe, setEmploye] = useState([])
+  const [employe, setEmploye] = useState(null)
   const [deductions, setDeductions] = useState([])
   const [perceptions, setPerceptions] = useState([])
   const [modalEdit, setModalEdit] = useState(false)
@@ -134,7 +134,7 @@ export function Employe() {
                     <p className="text-lg font-bold">Cargo</p>
                     <p className="text-lg break-words">{employe.charge}</p>
                     <p className="text-lg font-bold">Departamento</p>
-                    <p className="text-lg break-words">{employe.department}</p>
+                    <p className="text-lg break-words">{employe.departmentName.name}</p>
                     <p className="text-lg font-bold">Cuenta</p>
                     <p className="text-lg break-words">{employe.bankAccount}</p>
                     <p className="text-lg font-bold">Salario Base</p>
