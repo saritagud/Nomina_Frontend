@@ -6,3 +6,16 @@ export const userRoles = {
    "Admin": 'admin',
    "User": 'user'
 }
+
+export const coins = {
+   USD: '$',
+   VES: 'Bs',
+   EUR: '€',
+   COP: '$',
+   BRL: 'R$',
+   ARS: '$',
+   GBP: '£',
+   DEM: 'DM',
+   PTE: 'PTE',
+   MXN: '$'
+ }

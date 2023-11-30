@@ -1,79 +1,86 @@
 import { useEffect, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
-import { createPerceptionName, getAllPerceptionsName } from "../services/perceptions";
+import {
+  createPerceptionName,
+  getAllPerceptionsName,
+} from "../services/perceptions";
 
 export function AddPerceptions({ dataEdit = null, setStateModal, confirm }) {
-  const token = JSON.parse(localStorage.getItem("token"))
-  const [nameCreated, setNameCreated] = useState(null)
-  const [selectedOther, setSelectedOther] = useState(false)
-  const [perceptionName, setPerceptionName] = useState('')
-  const [perceptionsNames, setPerceptionsNames] = useState([])
-  const [perceptionSelected, setPerceptionSelected] = useState('0')
+  const token = JSON.parse(localStorage.getItem("token"));
+  const [nameCreated, setNameCreated] = useState(null);
+  const [selectedOther, setSelectedOther] = useState(false);
+  const [perceptionName, setPerceptionName] = useState("");
+  const [perceptionsNames, setPerceptionsNames] = useState([]);
+  const [perceptionSelected, setPerceptionSelected] = useState("0");
   const [perceptionData, setPerceptionData] = useState({
-    amount: '',
-    application: '0',
-    state: '0'
-  })
+    amount: "",
+    application: "0",
+    state: "0",
+  });
 
   useEffect(() => {
     const getPercep = async () => {
-      const res = await getAllPerceptionsName(token)
+      const res = await getAllPerceptionsName(token);
       if (res?.perceptionsName) {
-        setPerceptionsNames(res.perceptionsName)
+        setPerceptionsNames(res.perceptionsName);
       }
-    }
-    getPercep()
+    };
+    getPercep();
     if (dataEdit) {
       setPerceptionData({
         amount: dataEdit.amount.toString(),
         application: dataEdit.application,
         state: dataEdit.state,
-      })
-      setPerceptionSelected(dataEdit.perceptionName.id)
+      });
+      setPerceptionSelected(dataEdit.perceptionName.id);
     }
-  }, [])
-  
-  
+  }, []);
+
   const handleChange = (e) => {
-    const { name, value } = e.target
-    if (name === 'perception') {
-      setPerceptionSelected(value)
-      if (value === 'other') {
-        setSelectedOther(true)
+    const { name, value } = e.target;
+    if (name === "perception") {
+      setPerceptionSelected(value);
+      if (value === "other") {
+        setSelectedOther(true);
       } else if (selectedOther === true) {
-        setSelectedOther(false)
-        setPerceptionName('')
-        setNameCreated(null)
+        setSelectedOther(false);
+        setPerceptionName("");
+        setNameCreated(null);
       }
     } else {
       setPerceptionData({
         ...perceptionData,
-        [name]: value
-      })
+        [name]: value,
+      });
     }
-  }
+  };
 
-  const handleCreateName = async e => {
-    e.preventDefault()
-    const res = await createPerceptionName(token, {name: perceptionName})
+  const handleCreateName = async (e) => {
+    e.preventDefault();
+    const res = await createPerceptionName(token, { name: perceptionName });
     if (res?.name) {
       // console.log('Success: ', res.name);
-      setNameCreated(res)
+      setNameCreated(res);
     } else {
-      console.error(res)
+      console.error(res);
     }
-  }
+  };
 
   const handleSubmit = async () => {
-    let data = {}
+    let data = {};
 
-    if (perceptionSelected === '0') return console.error('Debes seleccionar el tipo de percepcion')
-    if (perceptionSelected === 'other') {
-      if (perceptionName === '') return console.error('Debes ingresar el nombre de la percepcion')
+    if (perceptionSelected === "0")
+      return console.error("Debes seleccionar el tipo de percepcion");
+    if (perceptionSelected === "other") {
+      if (perceptionName === "")
+        return console.error("Debes ingresar el nombre de la percepcion");
     }
-    if (perceptionData.amount === '') return console.error('Debes ingresar el Monto de la percepcion')
-    if (perceptionData.application === '0') return console.error('Debes seleccionar la Aplicacion de la percepcion')
-    if (perceptionData.state === '0') return console.error('Debes seleccionar el Estado de la percepcion')
+    if (perceptionData.amount === "")
+      return console.error("Debes ingresar el Monto de la percepcion");
+    if (perceptionData.application === "0")
+      return console.error("Debes seleccionar la Aplicacion de la percepcion");
+    if (perceptionData.state === "0")
+      return console.error("Debes seleccionar el Estado de la percepcion");
 
     if (dataEdit) {
       if (perceptionData.amount !== dataEdit.amount)
@@ -92,7 +99,7 @@ export function AddPerceptions({ dataEdit = null, setStateModal, confirm }) {
           state: perceptionData.state,
         };
 
-      confirm(data, dataEdit.id)
+      confirm(data, dataEdit.id);
     } else {
       data = {
         ...perceptionData,
@@ -100,26 +107,22 @@ export function AddPerceptions({ dataEdit = null, setStateModal, confirm }) {
       };
       console.log(data);
       if (nameCreated?.id) {
-        confirm(data, nameCreated.id)
+        confirm(data, nameCreated.id);
       } else {
-        confirm(data, perceptionSelected)
+        confirm(data, perceptionSelected);
       }
     }
-  }
+  };
   return (
-    
     <section className="fixed top-0 left-0 bottom-0 right-0 bg-grisClaro flex flex-col items-center justify-center z-20 min-h-screen gap-10">
       <h1 className="text-4xl font-bold">
-        {dataEdit ? 'Editar datos de la Percepción' : 'Agrega una Percepción'}
+        {dataEdit ? "Editar datos de la percepcion" : "Agrega una percepcion"}
       </h1>
       <BiArrowBack
         className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"
         onClick={() => setStateModal(false)}
       />
-      <form
-        className="flex flex-col gap-10"
-        onSubmit={handleSubmit}
-      >
+      <form className="flex flex-col gap-10" onSubmit={handleSubmit}>
         <section className="flex gap-10">
           <div className="flex flex-col gap-1">
             <label htmlFor="perception" className="text-xl">
@@ -141,9 +144,7 @@ export function AddPerceptions({ dataEdit = null, setStateModal, confirm }) {
                   {perception.name}
                 </option>
               ))}
-              <option value="other">
-                Otro
-              </option>
+              <option value="other">Otro</option>
             </select>
           </div>
           {selectedOther && (
@@ -160,12 +161,13 @@ export function AddPerceptions({ dataEdit = null, setStateModal, confirm }) {
                   className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
                   placeholder="Ingresa el nombre"
                   value={perceptionName}
-                  onChange={e => setPerceptionName(e.target.value)}
+                  onChange={(e) => setPerceptionName(e.target.value)}
                 />
               </div>
-              <button 
+              <button
                 className="bg-azulOscuro mx-auto mt-auto px-3 py-2 font-bold text-grisClaro outline-none rounded-md"
-                onClick={handleCreateName}>
+                onClick={handleCreateName}
+              >
                 Crear nombre
               </button>
             </>
@@ -183,6 +185,7 @@ export function AddPerceptions({ dataEdit = null, setStateModal, confirm }) {
               type="text"
               name="amount"
               id="amount"
+              autoFocus
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               value={perceptionData.amount}
               placeholder="Ingresa un monto ( 100.50 )"
@@ -227,11 +230,12 @@ export function AddPerceptions({ dataEdit = null, setStateModal, confirm }) {
           </div>
         </div>
       </form>
-      <button 
+      <button
         className="bg-azulOscuro mx-auto mt-5 px-3 py-2 font-bold text-grisClaro outline-none rounded-md"
-        onClick={() => handleSubmit()}>
-        {dataEdit ? 'Guardar Cambios' : 'Agregar Percepcion'}
+        onClick={() => handleSubmit()}
+      >
+        {dataEdit ? "Guardar Cambios" : "Agregar Percepcion"}
       </button>
     </section>
-  )
+  );
 }

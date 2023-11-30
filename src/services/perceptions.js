@@ -131,7 +131,6 @@ export const editPerceptionData = (token, employeeId, perceptionId, data) => {
         return data.perceptionData;
       } else {
         errorAlert("Ha ocurrido un error al editar la percepción");
-
         console.log("Error:", data.error);
       }
     })
@@ -156,6 +155,7 @@ export const deleteEmployee = (token, perceptionDataId, employeeId) => {
     .then((response) => response.json())
     .then((data) => {
       // console.log("Success:", data.message)
+      succesAlert("Se ha eliminado correctamente la percepción");
       if (data.message) {
         return data;
       } else {

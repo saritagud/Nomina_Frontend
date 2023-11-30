@@ -37,12 +37,10 @@ export function Login() {
           localStorage.setItem("user", JSON.stringify(data.userInfo));
           localStorage.setItem(
             "company",
-            JSON.stringify(
-              { 
-                id: data.userInfo.companyId,
-                currency: data.currency.currency
-              }
-            )
+            JSON.stringify({
+              id: data.userInfo.companyId,
+              currency: data.currency.currency,
+            })
           );
 
           if (data.userInfo.role == SuperAdmin) {
@@ -90,6 +88,7 @@ export function Login() {
             <input
               type="password"
               value={password}
+              autoFocus
               onChange={(e) => setPassword(e.target.value)}
               className={styleInput}
               placeholder="Ingresa tu contraseña"

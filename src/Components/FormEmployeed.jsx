@@ -294,6 +294,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
               type="text"
               name="lastName"
               id="lastName"
+              autoFocus
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               placeholder="Ingresa el apellido"
               value={employee.lastName}
@@ -308,6 +309,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
               type="number"
               name="identityCard"
               id="identityCard"
+              autoFocus
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               value={employee.identityCard}
               placeholder="Ingresa la cedula"
@@ -322,6 +324,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
               type="date"
               name="birthdate"
               id="birthdate"
+              autoFocus
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               value={employee.birthdate}
               onChange={handleChange}
@@ -358,6 +361,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
               type="text"
               name="address"
               id="address"
+              autoFocus
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               value={employee.address}
               placeholder="Ingresa la direccion"
@@ -372,6 +376,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
               type="email"
               name="email"
               id="email"
+              autoFocus
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               value={employee.email}
               placeholder="Ingresa el email"
@@ -387,6 +392,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
               type="tel"
               name="phone"
               id="phone"
+              autoFocus
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               value={employee.phone}
               placeholder="Ingresa el telefono"
@@ -422,6 +428,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
               type="date"
               name="startDate"
               id="startDate"
+              autoFocus
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               value={employee.startDate}
               onChange={handleChange}
@@ -438,6 +445,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
               type="text"
               name="charge"
               id="charge"
+              autoFocus
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               value={employee.charge}
               placeholder="Ingresa el cargo"
@@ -451,6 +459,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
             <select
               name="condition"
               id="condition"
+              autoFocus
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               value={employee.condition}
               onChange={handleChange}
@@ -496,6 +505,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
               type="text"
               name="baseSalary"
               id="baseSalary"
+              autoFocus
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               value={employee.baseSalary}
               placeholder="Ingresa el salario base"
@@ -511,6 +521,7 @@ export function FormEmployeed({ dataEdit = null, setStateModal, confirm }) {
               type="text"
               name="bankAccount"
               id="bankAccount"
+              autoFocus
               className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
               value={employee.bankAccount}
               placeholder="Ingresa la cuenta bancaria"

@@ -1,9 +1,0 @@
-export function AddSettings(){
-
-    return(
-        <>
-            
-        </>
-    )
-
-}

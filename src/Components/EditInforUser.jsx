@@ -127,6 +127,7 @@ function EditInforUser({ dataEdit, setDataEdit, user, setUser, setEditMode }) {
             type="text"
             id="name"
             name="name"
+            autoFocus
             className="bg-grisClaro border-b border-azulOscuro rounded-md outline-azulOscuro px-2 text-lg break-words"
             value={dataEdit.name}
             onChange={handleChange}
@@ -138,6 +139,7 @@ function EditInforUser({ dataEdit, setDataEdit, user, setUser, setEditMode }) {
             type="text"
             id="phone"
             name="phone"
+            autoFocus
             className="bg-grisClaro border-b border-azulOscuro rounded-md outline-azulOscuro px-2 text-lg break-words"
             value={dataEdit.phone}
             onChange={handleChange}
@@ -149,6 +151,7 @@ function EditInforUser({ dataEdit, setDataEdit, user, setUser, setEditMode }) {
             type="text"
             id="lastName"
             name="lastName"
+            autoFocus
             className="bg-grisClaro border-b border-azulOscuro rounded-md outline-azulOscuro px-2 text-lg break-words"
             value={dataEdit.lastName}
             onChange={handleChange}
@@ -160,6 +163,7 @@ function EditInforUser({ dataEdit, setDataEdit, user, setUser, setEditMode }) {
             type="text"
             id="address"
             name="address"
+            autoFocus
             className="bg-grisClaro border-b border-azulOscuro rounded-md outline-azulOscuro px-2 text-lg break-words"
             value={dataEdit.address}
             onChange={handleChange}
@@ -171,6 +175,7 @@ function EditInforUser({ dataEdit, setDataEdit, user, setUser, setEditMode }) {
             type="email"
             id="email"
             name="email"
+            autoFocus
             className="bg-grisClaro border-b border-azulOscuro rounded-md outline-azulOscuro px-2 text-lg break-words"
             value={dataEdit.email}
             onChange={handleChange}

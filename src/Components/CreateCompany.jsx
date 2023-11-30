@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authComponent } from "../logic/authComponent";
 import { userRoles } from "../logic/constantes";
-import toast from "react-hot-toast";
+import { succesAlert, errorAlert } from "./alerts/alerts";
 
 export function CreateCompany({
   setModalCreateCompany,
@@ -65,25 +65,17 @@ export function CreateCompany({
       .then((data) => {
         if (data.newCompany) {
           localStorage.setItem("company", JSON.stringify(data.newCompany));
-          toast.success("Se ha creado correctamente la empresa", {
-            style: {
-              border: "1px solid #713200",
-              padding: "16px",
-              color: "#000000",
-            },
-            iconTheme: {
-              primary: "#045FF5",
-              secondary: "#021859",
-            },
-          });
+          succesAlert("Se ha creado correctamente la empresa");
           setModalCreateCompany(false);
           navegar("/registro");
         } else if (data.newCompanyInfo) {
+          succesAlert("Se ha creado editado la empresa");
           modal(false);
           setUpdate(false);
           fetchCompany();
           navegar("/empresa");
         } else {
+          errorAlert("Ha ocurrido un error")
           console.log("Error:", data.error);
         }
       })
@@ -118,6 +110,7 @@ export function CreateCompany({
                 type="text"
                 value={name}
                 id="name"
+                autoFocus
                 onChange={(e) => setName(e.target.value)}
                 className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
                 placeholder="Ingresa el nombre de tu empresa"
@@ -131,6 +124,7 @@ export function CreateCompany({
                 name="type"
                 id="type"
                 value={type}
+                autoFocus
                 onChange={(e) => setType(e.target.value)}
                 className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
                 placeholder="Ingresa el tipo de tu empresa"
@@ -146,6 +140,7 @@ export function CreateCompany({
                 name="currency"
                 id="currency"
                 value={currency}
+                autoFocus
                 onChange={(e) => setCurrency(e.target.value)}
                 className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
                 placeholder="Ingresa la moneda de tu empresa"
@@ -159,6 +154,7 @@ export function CreateCompany({
                 name="country"
                 id="country"
                 value={country}
+                autoFocus
                 onChange={(e) => setCountry(e.target.value)}
                 className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
                 placeholder="Ingresa el país de tu empresa"

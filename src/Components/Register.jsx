@@ -22,7 +22,6 @@ export function Register() {
   let styleInput =
     "bg-azulClaro p-4 rounded-md text-white placeholder:text-white placeholder:font-extralight w-full";
   let styleLabel = "text-lg";
-  
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -62,7 +61,7 @@ export function Register() {
         body: JSON.stringify(userData),
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
       })
         .then((response) => response.json())
@@ -91,7 +90,12 @@ export function Register() {
     <>
       <section className="absolute top-0 left-0 bottom-0 right-0 bg-grisClaro flex flex-col justify-center items-center">
         {rol === Admin && (
-          <BiArrowBack className="absolute top-2 left-3 z-10 text-3xl cursor-pointer" onClick={() => {navegar("/usuarios")}}/>
+          <BiArrowBack
+            className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"
+            onClick={() => {
+              navegar("/usuarios");
+            }}
+          />
         )}
         <h1 className="text-4xl font-bold mb-16">Registrar Usuario</h1>
         <form className="w-full gap-x-20 gap-y-3 grid grid-cols-2 px-40">
@@ -112,6 +116,7 @@ export function Register() {
               <input
                 type="text"
                 value={lastName}
+                autoFocus
                 onChange={(e) => setLast_name(e.target.value)}
                 className={styleInput}
                 placeholder="Ingresa el apellido"
@@ -122,6 +127,7 @@ export function Register() {
               <input
                 type="email"
                 value={email}
+                autoFocus
                 onChange={(e) => setEmail(e.target.value)}
                 className={styleInput}
                 placeholder="Ingresa el email"
@@ -132,6 +138,7 @@ export function Register() {
               <input
                 type="tel"
                 value={phone}
+                autoFocus
                 onChange={(e) => setPhone(e.target.value)}
                 className={styleInput}
                 placeholder="Ingresa el telefono"
@@ -144,6 +151,7 @@ export function Register() {
               <input
                 type="password"
                 value={password}
+                autoFocus
                 onChange={(e) => setPassword(e.target.value)}
                 className={styleInput}
                 placeholder="Ingresa tu contrasena"
@@ -154,6 +162,7 @@ export function Register() {
               <input
                 type="text"
                 value={address}
+                autoFocus
                 onChange={(e) => setAddress(e.target.value)}
                 className={styleInput}
                 placeholder="Ingresa tu direccion"
@@ -164,6 +173,7 @@ export function Register() {
               <select
                 name="role"
                 id="role"
+                autoFocus
                 className={styleInput}
                 onChange={(e) => setRole(e.target.value)}
                 defaultValue={"0"}
