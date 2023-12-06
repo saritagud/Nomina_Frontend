@@ -1,75 +1,28 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { getAllPayrolls } from "../services/payroll";
 //
 
 export function PayrollHistory() {
-  const [payrollsOpen, setPayrollsOpen] = useState([
-    {
-      id: 1,
-      name: "Nomina Empleados",
-      status: "Abierta",
-    },
-    {
-      id: 2,
-      name: "Nomina Empleados",
-      status: "Abierta",
-    },
-    {
-      id: 3,
-      name: "Nomina Empleados",
-      status: "Abierta",
-    },
-    {
-      id: 4,
-      name: "Nomina Empleados",
-      status: "Abierta",
-    },
-    {
-      id: 5,
-      name: "Nomina Empleados",
-      status: "Abierta",
-    },
-    {
-      id: 6,
-      name: "Nomina Empleados",
-      status: "Abierta",
-    },
-    // Otros datos de nóminas abiertas
-  ]);
+  const { id: companyID } = JSON.parse(localStorage.getItem("company"))
+  const token = JSON.parse(localStorage.getItem("token"))
 
-  const [payrollsClosed, setPayrollsClosed] = useState([
-    {
-      id: 1,
-      name: "Nomina Empleados",
-      status: "Cerrada",
-    },
-    {
-      id: 2,
-      name: "Nomina Empleados",
-      status: "Cerrada",
-    },
-    {
-      id: 3,
-      name: "Nomina Empleados",
-      status: "Cerrada",
-    },
-    {
-      id: 4,
-      name: "Nomina Empleados",
-      status: "Cerrada",
-    },
-    {
-      id: 5,
-      name: "Nomina Empleados",
-      status: "Cerrada",
-    },
-    {
-      id: 6,
-      name: "Nomina Empleados",
-      status: "Cerrada",
-    },
-    // Otros datos de nóminas cerradas
-  ]);
+  const [payrollsOpen, setPayrollsOpen] = useState([]);
+  const [payrollsClosed, setPayrollsClosed] = useState([]);
+
+  useEffect(() => {
+    const getPayrolls = async () => {
+      const res = await getAllPayrolls(token, companyID)
+      if (res.payrollsOpen) {
+        setPayrollsOpen(res.payrollsOpen)
+      }
+      if (res.payrollsClosed) {
+        setPayrollsClosed(res.payrollsClosed)
+      }
+    }
+    getPayrolls()
+  }, [])
 
   return (
     <div className="h-full">
@@ -91,9 +44,9 @@ export function PayrollHistory() {
                 {payrollsOpen.map((payroll) => (
                   <tr key={payroll.id} className="bg-grisOscuro">
                     <td className="p-4 text-lg rounded-l-2xl">
-                      {payroll.name}
+                      {payroll.title}
                     </td>
-                    <td className="p-4 text-lg">{payroll.status}</td>
+                    <td className="p-4 text-lg">{payroll.state}</td>
                     <td className="p-4 rounded-r-md">
                       <Link
                         to={`/nomina/${payroll.id}`}
@@ -125,9 +78,9 @@ export function PayrollHistory() {
                 {payrollsClosed.map((payroll) => (
                   <tr key={payroll.id} className="bg-grisOscuro">
                     <td className="p-4 text-lg rounded-l-2xl">
-                      {payroll.name}
+                      {payroll.title}
                     </td>
-                    <td className="p-4 text-lg">{payroll.status}</td>
+                    <td className="p-4 text-lg">{payroll.state}</td>
                     <td className="p-4 rounded-r-md">
                       <Link
                         to={`/nomina/${payroll.id}`}
