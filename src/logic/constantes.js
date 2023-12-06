@@ -14,6 +14,12 @@ export const paymentPeriod = {
   Mensual: "30"
 }
 
+export const statesPayroll = {
+  PreNomina: 'Pre-nomina',
+  Abierta: 'Abierta',
+  Cerrada: 'Cerrada'
+} 
+
 export const coins = {
   USD: "$",
   VES: "Bs",
