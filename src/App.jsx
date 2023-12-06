@@ -76,7 +76,7 @@ function App() {
           </Route>
           <Route element={<ProtectedRouter allowedRoles={[Admin, User]} />}>
             <Route path="/pre-nomina" element={<PrePayroll />} />
-            <Route path="/nomina" element={<Payroll />} />
+            <Route path="/nomina/:id" element={<Payroll />} />
             <Route path="/deducciones/:emploID" element={<Deductions />} />
             <Route path="/percepciones/:emploID" element={<Perceptions />} />
             <Route path="/empleados" element={<Employees />} />
