@@ -1,51 +1,86 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { FaEllipsisV } from "react-icons/fa";
-import { generatePayrollPDF } from "../logic/functionsPDF"
+import { generatePayrollPDF } from "../logic/functionsPDF";
 import { statesPayroll } from "../logic/constantes";
-import { deletePayroll, getPayroll, updateStatePayroll } from "../services/payroll";
+import {
+  deletePayroll,
+  getPayroll,
+  updateStatePayroll,
+} from "../services/payroll";
 import { formatTimeDifference } from "../logic/functions";
+import { saveAs } from "file-saver";
 import ModalDelete from "./ModalDelete";
 
 export function Payroll() {
-  const navegar = useNavigate()
-  const { id: payrollID } = useParams()
-  const { id: companyID, currency } = JSON.parse(localStorage.getItem("company"))
-  const token = JSON.parse(localStorage.getItem("token"))
-  const [modalDeletePayroll, setModalDeletePayroll] = useState(false)
+  const navegar = useNavigate();
+  const { id: payrollID } = useParams();
+  const { id: companyID, currency } = JSON.parse(
+    localStorage.getItem("company")
+  );
+  const token = JSON.parse(localStorage.getItem("token"));
+  const [modalDeletePayroll, setModalDeletePayroll] = useState(false);
   const [payroll, setPayroll] = useState([]);
 
   useEffect(() => {
     const getPayrollData = async () => {
-      const res = await getPayroll(token, companyID, payrollID)
+      const res = await getPayroll(token, companyID, payrollID);
       if (res.payroll) {
-        setPayroll(res.payroll)
+        setPayroll(res.payroll);
       }
-    }
-    getPayrollData()
-  }, [])
+    };
+    getPayrollData();
+  }, []);
 
   const confirmDeletePayroll = async () => {
     // Aqui va ir el codigo con la peticion para eliminar un empleado de esta pre-nomina
-    const res = await deletePayroll(token, payroll.id, companyID)
+    const res = await deletePayroll(token, payroll.id, companyID);
     if (res.message) {
-      navegar('/historial')
+      navegar("/historial");
     } else {
-      console.error(res)
+      console.error(res);
     }
-  }
-  
+  };
+
   const confirmClosePayroll = async () => {
-    const res = await updateStatePayroll(token, payroll.id, companyID, {state: statesPayroll.Cerrada})
+    const res = await updateStatePayroll(token, payroll.id, companyID, {
+      state: statesPayroll.Cerrada,
+    });
     if (res.message) {
       setPayroll({
         ...payroll,
-        state: statesPayroll.Cerrada
-      })
+        state: statesPayroll.Cerrada,
+      });
     } else {
-      console.error(res)
+      console.error(res);
     }
-  }
+  };
+
+  const txt = () => {
+    if (payroll?.employees) {
+      const dataTxt = payroll.employees.map((employee) => ({
+        name: employee?.employeeName?.name,
+        bankAccount: employee?.employeeName?.bankAccount,
+        currency: currency,
+        amount: (employee?.grossSalary + employee?.totalPerceptions - employee?.totalDeductions),
+      }));
+
+      const filteredBankAccounts = dataTxt.filter(
+        (employee) => employee.bankAccount !== undefined
+      );
+
+      if (filteredBankAccounts.length > 0) {
+        const lines = filteredBankAccounts.map(
+          (employee) =>
+            `${employee.name}  ${employee.bankAccount}  ${employee.amount}  ${employee.currency}`
+        );
+        const blob = new Blob([lines.join("\n")], {
+          type: "text/plain;charset=utf-8",
+        });
+        saveAs(blob, "cuentasBancarias.txt");
+      }
+    }
+  };
 
   // const [statePayroll, setStatePayroll] = useState(
   //   localStorage.getItem("statePayroll")
@@ -87,16 +122,24 @@ export function Payroll() {
                   </tr>
                 </thead>
                 <tbody className="px-5">
-                  {payroll.employees.map(employee => (
-                    <tr key={employee.employeeName.id} className="bg-grisOscuro">
+                  {payroll.employees.map((employee) => (
+                    <tr
+                      key={employee.employeeName.id}
+                      className="bg-grisOscuro"
+                    >
                       <td className="p-4 text-lg rounded-l-2xl max-w-[20ch]">
-                        {employee.employeeName.name} {employee.employeeName.lastName}
+                        {employee.employeeName.name}{" "}
+                        {employee.employeeName.lastName}
                       </td>
-                      <td className="p-4 text-lg">{employee.employeeName.identityCard}</td>
+                      <td className="p-4 text-lg">
+                        {employee.employeeName.identityCard}
+                      </td>
                       <td className="p-4 text-lg max-w-[20ch]">
                         {employee.employeeName.charge}
                       </td>
-                      <td className="p-4 text-lg">{employee.employeeName.condition}</td>
+                      <td className="p-4 text-lg">
+                        {employee.employeeName.condition}
+                      </td>
                       <td className="p-4 text-lg">
                         {formatTimeDifference(employee.employeeName.startDate)}
                       </td>
@@ -120,11 +163,14 @@ export function Payroll() {
                             id={`action${employee.employeeName.id}`}
                             className="hidden peer/action"
                           />
-                          <label htmlFor={`action${employee.employeeName.id}`} className="cursor-pointer">
+                          <label
+                            htmlFor={`action${employee.employeeName.id}`}
+                            className="cursor-pointer"
+                          >
                             <FaEllipsisV />
                           </label>
                           <div className="hidden absolute peer-checked/action:flex gap-4 right-20 top-1/2 transform -translate-y-1/2 bg-grisClaro shadow-right-dark p-5 rounded-lg z-10">
-                            <Link 
+                            <Link
                               to={`/empleado/${employee.employeeName.id}`}
                               className="text-white w-28 text-center rounded-md bg-azulClaro px-2 py-1 font-semibold"
                             >
@@ -165,9 +211,18 @@ export function Payroll() {
                     Cerrar Nomina
                   </button>
 
-                  <button className="bg-azulClaro px-3 py-2 m-auto rounded-md placeholder-grisClaro text-grisClaro outline-none w-40 font-semibold"
-                    onClick={() => generatePayrollPDF(payroll)}>
-                    Descargar
+                  <button
+                    className="bg-azulClaro px-3 py-2 m-auto rounded-md placeholder-grisClaro text-grisClaro outline-none w-40 font-semibold"
+                    onClick={() => generatePayrollPDF(payroll)}
+                  >
+                    Descargar PDF
+                  </button>
+
+                  <button
+                    className="bg-azulClaro px-3 py-2 m-auto rounded-md placeholder-grisClaro text-grisClaro outline-none w-40 font-semibold"
+                    onClick={txt}
+                  >
+                    Descargar TXT
                   </button>
                 </div>
               </section>

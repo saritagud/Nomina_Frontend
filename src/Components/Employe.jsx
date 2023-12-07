@@ -7,6 +7,7 @@ import { deleteEmployee } from "../services/employees"
 import ModalDelete from "./ModalDelete"
 import { getAllPerceptions } from "../services/perceptions"
 import { getAllDeductions } from "../services/deductions"
+import { generateReceiptPDF } from "../logic/functionsPDF"
 
 export function Employe() {
   const navegar = useNavigate()
@@ -21,6 +22,7 @@ export function Employe() {
     localStorage.getItem("company")
   )
   // console.log(emploID);
+  console.log(deductions)
   useEffect(() => {
     fetch(`http://localhost:3000/employee/find-employee/${emploID}`, {
       method: "GET",
@@ -225,7 +227,8 @@ export function Employe() {
                   </table>
                 </section>
                 <div className="flex justify-end items-center m-2">
-                  <button className="bg-azulClaro p-2 pr-6 pl-6 text-white rounded-md font-semibold">
+                  <button className="bg-azulClaro p-2 pr-6 pl-6 text-white rounded-md font-semibold"
+                  onClick={() => generateReceiptPDF(perceptions, deductions, employe.baseSalary)}>
                     Descargar Recibo
                   </button>
                 </div>

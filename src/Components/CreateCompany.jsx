@@ -7,7 +7,6 @@ import { succesAlert, errorAlert } from "./alerts/alerts";
 
 export function CreateCompany({
   setModalCreateCompany,
-  modal,
   update,
   setUpdate,
   infoUpdate,
@@ -69,13 +68,13 @@ export function CreateCompany({
           setModalCreateCompany(false);
           navegar("/registro");
         } else if (data.newCompanyInfo) {
-          succesAlert("Se ha creado editado la empresa");
-          modal(false);
+          succesAlert("Se ha editado la empresa");
+          setModalCreateCompany(false);
           setUpdate(false);
           fetchCompany();
           navegar("/empresa");
         } else {
-          errorAlert("Ha ocurrido un error")
+          errorAlert("Ha ocurrido un error");
           console.log("Error:", data.error);
         }
       })
@@ -91,7 +90,6 @@ export function CreateCompany({
           className="absolute top-2 left-3 z-10 text-3xl cursor-pointer"
           onClick={() => {
             setModalCreateCompany(false);
-            modal(false);
           }}
         ></BiArrowBack>
         <h1 className="text-4xl font-bold mb-6">
@@ -129,6 +127,20 @@ export function CreateCompany({
                 className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
                 placeholder="Ingresa el tipo de tu empresa"
               />
+
+              {/* <label htmlFor="type" className="text-xl">
+                Logo de la empresa
+              </label>
+              <input
+                type=""
+                name="type"
+                id="type"
+                value={type}
+                autoFocus
+                onChange={(e) => setType(e.target.value)}
+                className="bg-azulClaro px-3 py-2 rounded-md placeholder-grisClaro text-grisClaro outline-none w-80"
+                placeholder="Ingresa el tipo de tu empresa"
+              /> */}
             </div>
 
             <div className="flex flex-col gap-5">

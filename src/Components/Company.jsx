@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export function Company() {
   const [dataCompany, setDataCompany] = useState([]); //la data del fetch
-  const [modalCompany, setModalCompany] = useState(false); //para abrir el modal
+  const [modalCreateCompany, setModalCreateCompany] = useState(false); //para abrir el modal
   const [updateCompany, setUpdateCompany] = useState(false); //para saber que se va a editar
   const token = JSON.parse(localStorage.getItem("token"));
   const companyID = JSON.parse(localStorage.getItem("company")).id;
@@ -50,7 +50,7 @@ export function Company() {
             <button
               className="bg-azulClaro p-2 w-32 text-lg text-white rounded-md font-semibold"
               onClick={() => {
-                setModalCompany(true);
+                setModalCreateCompany(true);
                 setUpdateCompany(true);
               }}
             >
@@ -74,9 +74,9 @@ export function Company() {
           </div>
         </section>
       </section>
-      {modalCompany && (
+      {modalCreateCompany && (
         <CreateCompany
-          modal={setModalCompany} //para cerrar el modal
+          setModalCreateCompany={setModalCreateCompany} //para cerrar el modal
           update={updateCompany} //para saber si se va editar
           setUpdate={setUpdateCompany} //para cambiar el estado
           infoUpdate={dataCompany} //la info a editar
