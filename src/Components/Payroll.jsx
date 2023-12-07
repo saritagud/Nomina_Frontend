@@ -166,7 +166,7 @@ export function Payroll() {
                   </button>
 
                   <button className="bg-azulClaro px-3 py-2 m-auto rounded-md placeholder-grisClaro text-grisClaro outline-none w-40 font-semibold"
-                    onClick={() => generatePayrollPDF(payroll.employees)}>
+                    onClick={() => generatePayrollPDF(payroll)}>
                     Descargar
                   </button>
                 </div>

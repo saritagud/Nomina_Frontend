@@ -3,10 +3,12 @@ import jsPDF from "jspdf"
 import "jspdf-autotable"
 
 // Funcion para generar el PDF de una nomina
-export const generatePayrollPDF = employees => {
+export const generatePayrollPDF = payroll => {
+  const { currency } = JSON.parse(localStorage.getItem("company"))
   const doc = new jsPDF()
+  const { employees } = payroll
 
-  doc.text("Titulo de la Nomina", 85, 10)
+  doc.text(`${payroll.title}`, 100, 10, { align: 'center'})
 
   const columnas = [
     "Empleado",
@@ -23,23 +25,33 @@ export const generatePayrollPDF = employees => {
 
   employees.forEach(employee => {
     data.push([
-      `${employee.name} ${employee.lastName}`,
-      `${employee.indentityCard}`,
-      `${employee.charge}`,
-      `${employee.condition}`,
-      `${employee.grossSalary}`,
-      `${employee.netSalary}`
+      `${employee.employeeName.name} ${employee.employeeName.lastName}`,
+      `${employee.employeeName.identityCard}`,
+      `${employee.employeeName.charge}`,
+      `${employee.employeeName.condition}`,
+      `${employee.grossSalary} ${currency}`,
+      `${employee.netSalary} ${currency}`
     ])
     totalGrossSalary += employee.grossSalary
     totalNetSalary += employee.netSalary
   })
 
   data.push(["", "", "", "", "Total Salario Bruto", "Total Salario Neto"])
-  data.push(["", "", "", "", `${totalGrossSalary}`, `${totalNetSalary}`])
+  data.push(["", "", "", "", `${totalGrossSalary.toFixed(2)} ${currency}`, `${totalNetSalary.toFixed(2)} ${currency}`])
 
   doc.autoTable({
     startLY: 30,
     styles: { valign: "middle", cellPadding: 3 },
+    headStyles: {
+      fillColor: '#045FF5',
+    },
+    bodyStyles: {
+      textColor: '#0f172a'
+    },
+    columnStyles: { 
+      0: { cellWidth: 40 },
+      2: { cellWidth: 40 }
+    },
     head: [columnas],
     body: data
   })
